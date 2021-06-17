@@ -1,0 +1,14 @@
+.images{
+  text-align:center;
+  margin:5% auto;
+}
+.images a{
+  margin:0px 2%;
+  display:inline-block;
+  text-decoration:none;
+  color:midnightblue;
+}
+
+.home-box-icon{
+  font-size: 7vw;
+}

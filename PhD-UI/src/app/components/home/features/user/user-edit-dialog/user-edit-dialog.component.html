@@ -1,0 +1,40 @@
+<form [formGroup]="editForm" class="popup-card-width" autocomplete="off" [dir]="coreService.layout">
+
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <h2 mat-dialog-title>{{'Edit User' | translate}}</h2>
+    <mat-icon class="clickable" (click)="dialogRef.close()" matPrefix>close</mat-icon>
+  </div>
+
+  <mat-dialog-content>
+    <div>
+      <div>
+        <mat-form-field class="mrgn-b-xs full-wid" appearance="outline">
+          <mat-label>{{'Name' | translate}}</mat-label>
+          <input matInput formControlName="name" type="text" placeholder="{{'Name' | translate}}">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error *ngIf="errorHandling('name', 'required')">
+            {{'This field is required' | translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="mrgn-b-xs full-wid">
+          <label class="mrgn-r-xs">{{'Role' | translate}}</label>
+          <mat-radio-group formControlName="role">
+            <mat-radio-button class="mrgn-r-xs" value="Admin">{{'Admin' | translate}}</mat-radio-button>
+            <mat-radio-button value="Cashier">{{'Cashier' | translate}}</mat-radio-button>
+          </mat-radio-group>
+          <mat-error *ngIf="errorHandling('role', 'required')">
+            {{'This field is required' | translate}}
+          </mat-error>
+        </div>
+
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mrgn-b-xs pad-b-none" align="right">
+    <button type="button" mat-raised-button (click)="dialogRef.close()"
+      color="warn">{{'Close' | translate | uppercase}}</button>
+    <button (click)="update()" type="submit" [disabled]="!editForm.valid" mat-raised-button
+      color="primary">{{'Update' | translate | uppercase}}</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{21FEC53F-53AE-487D-8E01-DB53EF9E9FFD}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="API/Controllers/UsersController.cs">
+    <Files>
+      <File FileName="API/appsettings.json" Line="7" Column="69" />
+      <File FileName="API/Controllers/UsersController.cs" Line="35" Column="11" />
+      <File FileName="API/Startup.cs" Line="26" Column="6" />
+      <File FileName="API/Program.cs" Line="22" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Dr-Wessam-API" expanded="True">
+            <Node name="API" expanded="True">
+              <Node name="API" expanded="True">
+                <Node name="Controllers" expanded="True">
+                  <Node name="UsersController.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.API.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
