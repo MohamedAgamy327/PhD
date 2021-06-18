@@ -15,6 +15,7 @@ namespace Data.SeedData
                     {
                         Id = 1,
                         Name = "Admin",
+                        Email = "Admin@gmail.com",
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
                         IsRandomPassword = true,

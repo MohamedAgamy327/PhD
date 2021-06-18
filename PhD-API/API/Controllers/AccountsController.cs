@@ -28,7 +28,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<TokenDTO>> Login(UserForLoginDTO model)
         {
-            User user = await _userRepository.LoginAsync(model.Name, model.Password).ConfigureAwait(true);
+            User user = await _userRepository.LoginAsync(model.Email, model.Password).ConfigureAwait(true);
 
             if (user == null)
                 return Unauthorized(new ApiResponse(401, StringConsts.UNAUTHORIZED));

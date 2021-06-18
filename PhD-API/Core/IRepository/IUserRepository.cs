@@ -9,11 +9,11 @@ namespace Core.IRepository
         Task<User> AddAsync(User user);
         User Edit(User user);
         void Remove(User user);
-        Task<User> LoginAsync(string username, string password);
+        Task<User> LoginAsync(string email, string password);
         Task<User> GetAsync(int id);
         Task<IEnumerable<User>> GetAsync();
         Task<bool> IsExist(int id);
-        Task<bool> IsExist(string name);
-        Task<bool> IsExist(int id, string name);
+        Task<bool> IsExist(string email);
+        Task<bool> IsExist(int id, string email);
     }
 }

@@ -16,6 +16,11 @@ namespace API.Validator.User
                    .NotNull()
                    .NotEmpty();
 
+            RuleFor(x => x.Email)
+                  .NotNull()
+                  .NotEmpty()
+                  .EmailAddress();
+
             RuleFor(x => x.Role)
                    .NotNull()
                    .NotEmpty()

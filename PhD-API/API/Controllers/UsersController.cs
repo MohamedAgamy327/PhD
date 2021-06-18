@@ -40,7 +40,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> Post(UserForAddDTO model)
         {
-            if (await _userRepository.IsExist(model.Name).ConfigureAwait(true))
+            if (await _userRepository.IsExist(model.Email).ConfigureAwait(true))
                 return Conflict(new ApiResponse(409, StringConsts.EXISTED));
 
             User user = _mapper.Map<User>(model);
@@ -65,7 +65,7 @@ namespace API.Controllers
             if (!await _userRepository.IsExist(id).ConfigureAwait(true))
                 return NotFound(new ApiResponse(404, StringConcatenates.NotExist("User",id)));
 
-            if (await _userRepository.IsExist(model.Id, model.Name).ConfigureAwait(true))
+            if (await _userRepository.IsExist(model.Id, model.Email).ConfigureAwait(true))
                 return Conflict(new ApiResponse(409, StringConsts.EXISTED));
 
             User user = _mapper.Map<User>(model);

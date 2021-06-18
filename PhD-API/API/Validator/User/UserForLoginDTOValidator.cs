@@ -7,9 +7,10 @@ namespace API.Validator.User
     {
         public UserForLoginDTOValidator()
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.Email)
                    .NotNull()
-                   .NotEmpty();
+                   .NotEmpty()
+                   .EmailAddress();
 
             RuleFor(x => x.Password)
                    .NotNull()

@@ -2,13 +2,13 @@
 
 namespace Domain.Entities
 {
-    public class User : BaseEntity
+    public class Researcher : BaseEntity
     {
         public string Name { get; set; }
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool IsRandomPassword { get; set; }
-        public RoleEnum Role { get; set; }
+        public SearchStatusEnum SearchStatus { get; set; }
     }
 }

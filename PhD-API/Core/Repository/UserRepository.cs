@@ -34,9 +34,9 @@ namespace Core.Repository
         {
             return await _context.Users.OrderByDescending(o => o.Id).ToListAsync();
         }
-        public async Task<User> LoginAsync(string name, string password)
+        public async Task<User> LoginAsync(string email, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
 
             if (user == null)
                 return null;
@@ -54,13 +54,13 @@ namespace Core.Repository
         {
             return await _context.Users.AnyAsync(s => s.Id == id).ConfigureAwait(true);
         }
-        public async Task<bool> IsExist(string name)
+        public async Task<bool> IsExist(string email)
         {
-            return await _context.Users.AnyAsync(s => s.Name.ToLower() == name.ToLower()).ConfigureAwait(true);
+            return await _context.Users.AnyAsync(s => s.Email.ToLower() == email.ToLower()).ConfigureAwait(true);
         }
-        public async Task<bool> IsExist(int id, string name)
+        public async Task<bool> IsExist(int id, string email)
         {
-            return await _context.Users.AnyAsync(s => s.Id != id && s.Name.ToLower() == name.ToLower()).ConfigureAwait(true);
+            return await _context.Users.AnyAsync(s => s.Id != id && s.Email.ToLower() == email.ToLower()).ConfigureAwait(true);
         }
     }
 }
