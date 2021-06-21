@@ -8,10 +8,10 @@ namespace API.MappingProfile
     {
         public ResearcherMappingProfile()
         {
-            //CreateMap<ResearcherForAddDTO, Researcher>();
+            CreateMap<ResearcherForRegisterDTO, Researcher>();
             //CreateMap<ResearcherForEditDTO, Researcher>();
 
-            //CreateMap<Researcher, ResearcherForGetDTO>();
+            CreateMap<Researcher, ResearcherForGetDTO>();
         }
     }
 }

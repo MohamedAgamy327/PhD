@@ -1,8 +1,8 @@
 ﻿namespace API.DTO.Researcher
 {
-    public class ResearcherForRegisterDTO
+    public class ResearcherForLoginDTO
     {
-        public string Name { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

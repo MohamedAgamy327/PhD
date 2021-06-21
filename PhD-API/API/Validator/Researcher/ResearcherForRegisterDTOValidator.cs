@@ -1,11 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using API.DTO.Researcher;
+using FluentValidation;
 
 namespace API.Validator.Researcher
 {
-    public class ResearcherForRegisterDTOValidator
+    public class ResearcherForRegisterDTOValidator : AbstractValidator<ResearcherForRegisterDTO>
     {
+        public ResearcherForRegisterDTOValidator()
+        {
+            RuleFor(x => x.Name)
+                   .NotNull()
+                   .NotEmpty();
+
+            RuleFor(x => x.Email)
+                  .NotNull()
+                  .NotEmpty()
+                  .EmailAddress();
+
+        }
     }
 }

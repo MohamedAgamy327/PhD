@@ -6,143 +6,133 @@ using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Core.UnitOfWork;
-using System.Security.Claims;
-using System.Linq;
 using System;
-using Microsoft.AspNetCore.Authorization;
 using Core.IRepository;
 using Microsoft.AspNetCore.Http;
 using API.DTO.Account;
 using API.Errors;
 using Utilities.StaticHelpers;
+using Domain.Enums;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
     [ApiController]
     public class ResearchersController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IJWTManager _jwtManager;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IJWTManager _jwtManager;
         private readonly IResearcherRepository _researcherRepository;
 
-        public ResearchersController(IJWTManager jwtManager, IMapper mapper, IUnitOfWork unitOfWork, IResearcherRepository researcherRepository)
+        public ResearchersController(IMapper mapper, IJWTManager jwtManager, IUnitOfWork unitOfWork, IResearcherRepository researcherRepository)
         {
             _mapper = mapper;
-            _jwtManager = jwtManager;
             _unitOfWork = unitOfWork;
+            _jwtManager = jwtManager;
             _researcherRepository = researcherRepository;
         }
 
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ResearcherForGetDTO>> Post(ResearcherForAddDTO model)
-        //{
-        //    if (await _researcherRepository.IsExist(model.Name).ConfigureAwait(true))
-        //        return Conflict(new ApiResponse(409, StringConsts.EXISTED));
+        [HttpPost("Register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Register(ResearcherForRegisterDTO model)
+        {
+            if (await _researcherRepository.IsExist(model.Email).ConfigureAwait(true))
+                return Conflict(new ApiResponse(409, StringConsts.EXISTED));
 
-        //    Researcher researcher = _mapper.Map<Researcher>(model);
-        //    SecurePassword.CreatePasswordHash("123123", out byte[] passwordHash, out byte[] passwordSalt);
-        //    researcher.PasswordHash = passwordHash;
-        //    researcher.PasswordSalt = passwordSalt;
+            Researcher researcher = _mapper.Map<Researcher>(model);
+            string ranadomPassword = SecurePassword.GeneratePassword(8);
+            SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
+            researcher.PasswordHash = passwordHash;
+            researcher.PasswordSalt = passwordSalt;
 
-        //    await _researcherRepository.AddAsync(researcher).ConfigureAwait(true);
-        //    await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            await _researcherRepository.AddAsync(researcher).ConfigureAwait(true);
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-        //    ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
-        //    return Ok(researcherDto);
-        //}
+            Email.Send("PhD", "mohamedagamy327@gmail.com", "Register", ranadomPassword);
 
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ResearcherForGetDTO>> Put(int id, ResearcherForEditDTO model)
-        //{
-        //    if (id != model.Id)
-        //        return BadRequest(new ApiResponse(400, StringConcatenates.NotEqualIds(id, model.Id)));
+            return Ok();
+        }
 
-        //    if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
-        //        return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher",id)));
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<TokenDTO>> Login(ResearcherForLoginDTO model)
+        {
+            Researcher researcher = await _researcherRepository.LoginAsync(model.Email, model.Password).ConfigureAwait(true);
 
-        //    if (await _researcherRepository.IsExist(model.Id, model.Name).ConfigureAwait(true))
-        //        return Conflict(new ApiResponse(409, StringConsts.EXISTED));
+            if (researcher == null)
+                return Unauthorized(new ApiResponse(401, StringConsts.UNAUTHORIZED));
 
-        //    Researcher researcher = _mapper.Map<Researcher>(model);
-        //    Researcher oldResearcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
-        //    researcher.PasswordHash = oldResearcher.PasswordHash;
-        //    researcher.PasswordSalt = oldResearcher.PasswordSalt;
+            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(researcher) });
+        }
 
-        //    _researcherRepository.Edit(researcher);
-        //    await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+        [HttpPatch("searchStatus")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearcherForGetDTO>> PatchStatus( ResearcherForStatusDTO model)
+        {
 
-        //    ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
-        //    return Ok(researcherDto);
-        //}
+            if (!await _researcherRepository.IsExist(model.Id).ConfigureAwait(true))
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher", model.Id)));
 
-        //[HttpPatch("{id}/ChangePassword")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ResearcherForGetDTO>> ChangePassword(int id, ResearcherForChangePasswordDTO model)
-        //{
-        //    if (id != model.Id)
-        //        return BadRequest(new ApiResponse(400, StringConcatenates.NotEqualIds(id, model.Id)));
+            Researcher researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
+            Enum.TryParse(model.SearchStatus, out SearchStatusEnum status);
+            researcher.SearchStatus = status;
+            _researcherRepository.Edit(researcher);
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-        //    if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
-        //        return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher",id)));
 
-        //    Researcher researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
-        //    SecurePassword.CreatePasswordHash(model.Password, out byte[] passwordHash, out byte[] passwordSalt);
-        //    researcher.PasswordHash = passwordHash;
-        //    researcher.PasswordSalt = passwordSalt;
-        //    researcher.IsRandomPassword = false;
+            switch (status)
+            {
+                case SearchStatusEnum.Pending:
+                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Pending.ToString(), SearchStatusEnum.Pending.ToString());
+                    break;
+                case SearchStatusEnum.Accepted:
+                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Accepted.ToString(), SearchStatusEnum.Accepted.ToString());
+                    break;
+                case SearchStatusEnum.Rejected:
+                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Rejected.ToString(), SearchStatusEnum.Rejected.ToString());
+                    break;
+            }
 
-        //    _researcherRepository.Edit(researcher);
-        //    await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-        //    var claimsIdentity = Researcher.Identity as ClaimsIdentity;
-        //    int researcherId = Convert.ToInt32(claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value);
 
-        //    if (researcherId == id) return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(researcher) });
 
-        //    ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
-        //    return Ok(researcherDto);
-        //}
+            ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
+            return Ok(researcherDto);
+        }
 
-        //[HttpDelete("{id:int}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ResearcherForGetDTO>> Delete(int id)
-        //{
-        //    if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
-        //        return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher", id)));
+        [HttpPatch("{id}/ChangePassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> ChangePassword(int id, ResearcherForChangePasswordDTO model)
+        {
+            if (id != model.Id)
+                return BadRequest(new ApiResponse(400, StringConcatenates.NotEqualIds(id, model.Id)));
 
-        //    Researcher researcher = await _researcherRepository.GetAsync(id).ConfigureAwait(true);
+            if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher", id)));
 
-        //    _researcherRepository.Remove(researcher);
-        //    await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            Researcher researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
+            SecurePassword.CreatePasswordHash(model.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            researcher.PasswordHash = passwordHash;
+            researcher.PasswordSalt = passwordSalt;
+            researcher.IsRandomPassword = false;
 
-        //    ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
-        //    return Ok(researcherDto);
-        //}
+            _researcherRepository.Edit(researcher);
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-        //[HttpGet("{id:int}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ResearcherForGetDTO>> Get(int id)
-        //{
-        //    if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
-        //        return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher",id)));
+            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(researcher) });
 
-        //    Researcher researcher = await _researcherRepository.GetAsync(id).ConfigureAwait(true);
+        }
 
-        //    ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
-        //    return Ok(researcherDto);
-        //}
 
-        //[HttpGet]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<IReadOnlyList<ResearcherForGetDTO>>> Get()
-        //{
-        //    List<ResearcherForGetDTO> researchers = _mapper.Map<List<ResearcherForGetDTO>>(await _researcherRepository.GetAsync().ConfigureAwait(true));
-        //    return Ok(researchers);
-        //}
+        [HttpGet("{searchStatus}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IReadOnlyList<ResearcherForGetDTO>>> Get(string searchStatus)
+        {
+
+            Enum.TryParse(searchStatus, out SearchStatusEnum myStatus);
+            List<ResearcherForGetDTO> researchers = _mapper.Map<List<ResearcherForGetDTO>>(await _researcherRepository.GetAsync(myStatus).ConfigureAwait(true));
+            return Ok(researchers);
+        }
     }
 }
