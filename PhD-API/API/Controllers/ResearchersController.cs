@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.DTO.Researcher;
-using API.IHelpers;
+using API.DTO.Research;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,6 @@ using Core.UnitOfWork;
 using System;
 using Core.IRepository;
 using Microsoft.AspNetCore.Http;
-using API.DTO.Account;
 using API.Errors;
 using Utilities.StaticHelpers;
 using Domain.Enums;
@@ -22,72 +20,76 @@ namespace API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IJWTManager _jwtManager;
-        private readonly IResearcherRepository _researcherRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IResearchRepository _researcherRepository;
 
-        public ResearchersController(IMapper mapper, IJWTManager jwtManager, IUnitOfWork unitOfWork, IResearcherRepository researcherRepository)
+        public ResearchersController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researcherRepository, IUserRepository userRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _jwtManager = jwtManager;
             _researcherRepository = researcherRepository;
+            _userRepository = userRepository;
         }
 
         [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Register(ResearcherForRegisterDTO model)
-        {
-            if (await _researcherRepository.IsExist(model.Email).ConfigureAwait(true))
-                return Conflict(new ApiResponse(409, StringConsts.EXISTED));
-
-            Researcher researcher = _mapper.Map<Researcher>(model);
-            string ranadomPassword = SecurePassword.GeneratePassword(8);
+        public async Task<ActionResult> Register(ResearchForRegisterDTO model)
+        {          
             SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
-            researcher.PasswordHash = passwordHash;
-            researcher.PasswordSalt = passwordSalt;
+            User user = new User
+            {
+                Email=model.Email,
+                Name=model.Name,
+                Role=RoleEnum.Researcher,
+                IsRandomPassword=true,
+                PasswordSalt=passwordSalt,
+                PasswordHash=passwordHash
+            };
 
-            await _researcherRepository.AddAsync(researcher).ConfigureAwait(true);
+            await _userRepository.AddAsync(user).ConfigureAwait(true);
+
+            Research research = new Research
+            {
+                SearchStatus = SearchStatusEnum.Pending,
+                User = user,
+                UserId = user.Id
+            };
+
+            await _researcherRepository.AddAsync(research).ConfigureAwait(true);
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            Email.Send("PhD", "mohamedagamy327@gmail.com", "Register", ranadomPassword);
+            Email.Send("PhD", "mohamedagamy327@gmail.com", "Register", "Welcome Pending");
 
             return Ok();
         }
 
-        [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<TokenDTO>> Login(ResearcherForLoginDTO model)
-        {
-            Researcher researcher = await _researcherRepository.LoginAsync(model.Email, model.Password).ConfigureAwait(true);
-
-            if (researcher == null)
-                return Unauthorized(new ApiResponse(401, StringConsts.UNAUTHORIZED));
-
-            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(researcher) });
-        }
-
         [HttpPatch("searchStatus")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResearcherForGetDTO>> PatchStatus( ResearcherForStatusDTO model)
+        public async Task<ActionResult<ResearchForGetDTO>> PatchStatus( ResearchForStatusDTO model)
         {
 
             if (!await _researcherRepository.IsExist(model.Id).ConfigureAwait(true))
-                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher", model.Id)));
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", model.Id)));
 
-            Researcher researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
+            Research researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
             Enum.TryParse(model.SearchStatus, out SearchStatusEnum status);
             researcher.SearchStatus = status;
             _researcherRepository.Edit(researcher);
-            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
-
-
+       
             switch (status)
             {
+                case SearchStatusEnum.Accepted:
+                    string ranadomPassword = SecurePassword.GeneratePassword(8);
+                    User user = await _userRepository.GetAsync(model.Id).ConfigureAwait(true);
+                    SecurePassword.CreatePasswordHash(ranadomPassword, out byte[] passwordHash, out byte[] passwordSalt);
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+                    user.IsRandomPassword = true;
+                    _userRepository.Edit(user);
+                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Accepted.ToString(),$"{SearchStatusEnum.Accepted.ToString()} password is: {ranadomPassword}");
+                    break;
                 case SearchStatusEnum.Pending:
                     Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Pending.ToString(), SearchStatusEnum.Pending.ToString());
-                    break;
-                case SearchStatusEnum.Accepted:
-                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Accepted.ToString(), SearchStatusEnum.Accepted.ToString());
                     break;
                 case SearchStatusEnum.Rejected:
                     Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Rejected.ToString(), SearchStatusEnum.Rejected.ToString());
@@ -95,43 +97,26 @@ namespace API.Controllers
             }
 
 
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-
-            ResearcherForGetDTO researcherDto = _mapper.Map<ResearcherForGetDTO>(researcher);
+            ResearchForGetDTO researcherDto = _mapper.Map<ResearchForGetDTO>(researcher);
             return Ok(researcherDto);
         }
 
-        [HttpPatch("{id}/ChangePassword")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> ChangePassword(int id, ResearcherForChangePasswordDTO model)
+        public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get()
         {
-            if (id != model.Id)
-                return BadRequest(new ApiResponse(400, StringConcatenates.NotEqualIds(id, model.Id)));
-
-            if (!await _researcherRepository.IsExist(id).ConfigureAwait(true))
-                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Researcher", id)));
-
-            Researcher researcher = await _researcherRepository.GetAsync(model.Id).ConfigureAwait(true);
-            SecurePassword.CreatePasswordHash(model.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            researcher.PasswordHash = passwordHash;
-            researcher.PasswordSalt = passwordSalt;
-            researcher.IsRandomPassword = false;
-
-            _researcherRepository.Edit(researcher);
-            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
-
-            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(researcher) });
-
+            List<ResearchForGetDTO> researchers = _mapper.Map<List<ResearchForGetDTO>>(await _researcherRepository.GetAsync().ConfigureAwait(true));
+            return Ok(researchers);
         }
-
 
         [HttpGet("{searchStatus}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyList<ResearcherForGetDTO>>> Get(string searchStatus)
+        public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get(string searchStatus)
         {
-
             Enum.TryParse(searchStatus, out SearchStatusEnum myStatus);
-            List<ResearcherForGetDTO> researchers = _mapper.Map<List<ResearcherForGetDTO>>(await _researcherRepository.GetAsync(myStatus).ConfigureAwait(true));
+            List<ResearchForGetDTO> researchers = _mapper.Map<List<ResearchForGetDTO>>(await _researcherRepository.GetAsync(myStatus).ConfigureAwait(true));
             return Ok(researchers);
         }
     }

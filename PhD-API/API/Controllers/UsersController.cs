@@ -18,8 +18,7 @@ using Utilities.StaticHelpers;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Route("api/[controller]")]   
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -37,6 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> Post(UserForAddDTO model)
         {
@@ -56,6 +56,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> Put(int id, UserForEditDTO model)
         {
@@ -81,6 +82,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("{id}/ChangePassword")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> ChangePassword(int id, UserForChangePasswordDTO model)
         {
@@ -109,6 +111,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> Delete(int id)
         {
@@ -125,6 +128,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> Get(int id)
         {
@@ -138,6 +142,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<UserForGetDTO>>> Get()
         {

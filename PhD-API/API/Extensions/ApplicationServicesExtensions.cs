@@ -14,7 +14,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IJWTManager, JWTManager>();
             services.AddScoped<IUserRepository, UserRepository>();                 
-            services.AddScoped<IResearcherRepository, ResearcherRepository>();                 
+            services.AddScoped<IResearchRepository, ResearchRepository>();                 
             return services;
         }
     }

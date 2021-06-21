@@ -1,11 +1,11 @@
-﻿using API.DTO.Researcher;
+﻿using API.DTO.Research;
 using FluentValidation;
 
-namespace API.Validator.Researcher
+namespace API.Validator.Research
 {
-    public class ResearcherForRegisterDTOValidator : AbstractValidator<ResearcherForRegisterDTO>
+    public class ResearchForRegisterDTOValidator : AbstractValidator<ResearchForRegisterDTO>
     {
-        public ResearcherForRegisterDTOValidator()
+        public ResearchForRegisterDTOValidator()
         {
             RuleFor(x => x.Name)
                    .NotNull()

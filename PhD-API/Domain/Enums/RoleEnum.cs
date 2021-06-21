@@ -2,6 +2,6 @@
 {
     public enum RoleEnum
     {
-        Admin
+        Admin,Researcher
     }
 }

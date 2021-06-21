@@ -19,6 +19,6 @@ namespace Data.Context
             modelBuilder.Seed();
         }
         public DbSet<User> Users { get; set; }   
-        public DbSet<Researcher> Researchers { get; set; }   
+        public DbSet<Research> Researchs { get; set; }   
     }
 }

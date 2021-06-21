@@ -48,33 +48,5 @@ namespace API.Helpers
             return tokenHandler.WriteToken(token);
         }
 
-        public string GenerateToken(Researcher researcher)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim("id", researcher.Id.ToString()),
-                new Claim("name", researcher.Name),
-                new Claim(ClaimTypes.Role, "Researcher"),
-                new Claim("isRandomPassword", researcher.IsRandomPassword.ToString())
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(config.GetSection("AppSettings:Token").Value));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
-        }
     }
 }

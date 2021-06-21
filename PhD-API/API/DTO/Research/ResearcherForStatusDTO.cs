@@ -1,6 +1,6 @@
-﻿namespace API.DTO.Researcher
+﻿namespace API.DTO.Research
 {
-    public class ResearcherForStatusDTO
+    public class ResearchForStatusDTO
     {
         public int Id { get; set; }
         public string SearchStatus { get; set; }
