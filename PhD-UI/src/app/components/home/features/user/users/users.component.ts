@@ -9,7 +9,6 @@ import { ToastrService } from 'ngx-toastr';
 import { DeleteDialogComponent } from 'src/app/components/home';
 import { UserAddDialogComponent } from '../user-add-dialog/user-add-dialog.component';
 import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
-import { UserChangePasswordDialogComponent } from '../user-change-password-dialog/user-change-password-dialog.component';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,7 +24,7 @@ export class UsersComponent implements OnInit {
   filter: string;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'role', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'role', 'actions'];
   users: User[];
   dataSource = new MatTableDataSource<User>();
 
@@ -82,20 +81,6 @@ export class UsersComponent implements OnInit {
   showEdit(user: User) {
     const dialogRef = this.dialog.open(UserEditDialogComponent, {
       data: user
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.users.findIndex(f => f.id === result.id);
-        this.users[index] = result;
-        this.refreshData();
-      }
-    });
-  }
-
-  showChangePassword(id: number) {
-    const dialogRef = this.dialog.open(UserChangePasswordDialogComponent, {
-      data: id
     });
 
     dialogRef.afterClosed().subscribe(result => {

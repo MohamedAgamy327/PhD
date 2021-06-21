@@ -82,7 +82,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("{id}/ChangePassword")]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserForGetDTO>> ChangePassword(int id, UserForChangePasswordDTO model)
         {

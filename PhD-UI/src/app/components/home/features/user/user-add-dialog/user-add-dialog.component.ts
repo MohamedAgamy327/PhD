@@ -28,7 +28,8 @@ export class UserAddDialogComponent {
   createForm() {
     this.addForm = this.formBuilder.group({
       name: ['', Validators.required],
-      role: ['Cashier', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      role: ['Admin', Validators.required]
     });
   }
 

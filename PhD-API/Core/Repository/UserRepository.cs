@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Utilities.StaticHelpers;
+using Domain.Enums;
 
 namespace Core.Repository
 {
@@ -32,7 +33,7 @@ namespace Core.Repository
         }
         public async Task<IEnumerable<User>> GetAsync()
         {
-            return await _context.Users.OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Users.Where(w => w.Role == RoleEnum.Admin).OrderByDescending(o => o.Id).ToListAsync();
         }
         public async Task<User> LoginAsync(string email, string password)
         {

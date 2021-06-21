@@ -29,7 +29,8 @@ export class UserEditDialogComponent {
     this.editForm = this.formBuilder.group({
       id: [this.data.id],
       name: [this.data.name, Validators.required],
-      role: [this.data.role, Validators.required]
+      role: [this.data.role, Validators.required],
+      email: [this.data.email, [Validators.required, Validators.email]],
     });
   }
 

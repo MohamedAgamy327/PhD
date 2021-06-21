@@ -7,7 +7,7 @@ export const MenuItemList: MenuItem[] = [
     name: 'Home',
     type: 'link',
     icon: 'home',
-    roles: [RoleEnum.Admin]
+    roles: [RoleEnum.Admin, RoleEnum.Researcher]
   },
   {
     state: 'home/users',

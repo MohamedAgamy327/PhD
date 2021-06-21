@@ -48,6 +48,16 @@ export class CredentialService {
     }
   }
 
+  isResearcher() {
+    const user = this.getUser();
+    if (user.role === RoleEnum.Researcher) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
   logout() {
     localStorage.removeItem(ConstEnum.token);
     this.router.navigate(['/login']);

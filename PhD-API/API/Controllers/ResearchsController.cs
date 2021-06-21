@@ -16,14 +16,14 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ResearchersController : ControllerBase
+    public class ResearchsController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IResearchRepository _researcherRepository;
 
-        public ResearchersController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researcherRepository, IUserRepository userRepository)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researcherRepository, IUserRepository userRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -75,12 +75,12 @@ namespace API.Controllers
             Enum.TryParse(model.SearchStatus, out SearchStatusEnum status);
             researcher.SearchStatus = status;
             _researcherRepository.Edit(researcher);
-       
+
             switch (status)
             {
                 case SearchStatusEnum.Accepted:
                     string ranadomPassword = SecurePassword.GeneratePassword(8);
-                    User user = await _userRepository.GetAsync(model.Id).ConfigureAwait(true);
+                    User user = await _userRepository.GetAsync(researcher.UserId).ConfigureAwait(true);
                     SecurePassword.CreatePasswordHash(ranadomPassword, out byte[] passwordHash, out byte[] passwordSalt);
                     user.PasswordHash = passwordHash;
                     user.PasswordSalt = passwordSalt;
@@ -96,9 +96,7 @@ namespace API.Controllers
                     break;
             }
 
-
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
-
             ResearchForGetDTO researcherDto = _mapper.Map<ResearchForGetDTO>(researcher);
             return Ok(researcherDto);
         }
