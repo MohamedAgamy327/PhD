@@ -1,0 +1,85 @@
+<div class="table-manage-list">
+
+    <mat-card>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3rem">
+                <h4>{{'Researchs List' | translate}}</h4>
+
+                <mat-form-field class="filter-input" appearance="outline">
+                    <mat-label>{{'Search' | translate}}</mat-label>
+                    <input matInput type="text" [(ngModel)]="filter" autocomplete="off" (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                    <mat-icon matSuffix *ngIf="!filter">search</mat-icon>
+                    <mat-icon class="clickable" matSuffix *ngIf="filter" (click)="clearFilter()">close</mat-icon>
+                </mat-form-field>
+
+            </div>
+            <div class="mrgn-l-md mrgn-b-md " fxLayoutAlign="start center">
+                <mat-card-actions class="mat-pad-none margin-none">
+                    <button mat-raised-button mat-button-sm mat-fab color="primary" (click)="getResearchs()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+                </mat-card-actions>
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div class="table-responsive">
+            <table class="table table-hover table-middle th-fw-light mb-0" mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> {{'Name' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse clickable">{{element.userName}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> {{'Email' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse clickable">{{element.userEmail}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>{{'Status' | translate}}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse clickable">{{element.searchStatus | translate}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions" class="actions-padding">
+                    <th mat-header-cell *matHeaderCellDef class="actions-padding">{{'Actions' | translate}}</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <button (click)="showConfirm(element.id,'Pending')" mat-icon-button>
+              <mat-icon matTooltip="{{'Pend' | translate}}" aria-label="Pend" class="mat-icon-grey .table-icon">
+                search
+              </mat-icon>
+            </button>
+
+
+                        <button (click)="showConfirm(element.id,'Accepted')" mat-icon-button>
+              <mat-icon matTooltip="{{'Accept' | translate}}" aria-label="Accept" class="mat-icon-grey .table-icon">
+                check
+              </mat-icon>
+            </button>
+
+                        <button (click)="showConfirm(element.id,'Rejected')" mat-icon-button>
+              <mat-icon matTooltip="{{'Reject' | translate}}" aria-label="Reject" class="mat-icon-grey .table-icon">
+                close
+              </mat-icon>
+            </button>
+
+
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+        <div class="pagination">
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </mat-card>
+</div>

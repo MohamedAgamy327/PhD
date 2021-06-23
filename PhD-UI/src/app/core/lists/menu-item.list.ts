@@ -15,5 +15,12 @@ export const MenuItemList: MenuItem[] = [
     type: 'link',
     icon: 'person',
     roles: [RoleEnum.Admin]
+  },
+  {
+    state: 'home/researchs',
+    name: 'Researchs List',
+    type: 'link',
+    icon: 'work',
+    roles: [RoleEnum.Admin]
   }
 ];

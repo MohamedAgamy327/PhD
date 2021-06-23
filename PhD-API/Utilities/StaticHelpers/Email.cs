@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 
 namespace Utilities.StaticHelpers
@@ -19,7 +20,14 @@ namespace Utilities.StaticHelpers
                 {
                     smtp.EnableSsl = true;
                     smtp.Credentials = new NetworkCredential("agamytest2020@gmail.com", "Ma01063273270");
-                    smtp.Send(mail);
+                    try
+                    {
+                        smtp.Send(mail);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
         }

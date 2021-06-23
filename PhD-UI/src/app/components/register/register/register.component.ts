@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CredentialService, CoreService, ResearchService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { LoginSliderList } from 'src/app/core/lists';
@@ -51,10 +51,21 @@ export class RegisterComponent implements OnInit {
     this.researchService.register(this.registerForm.value).subscribe(
       (res: any) => {
         this.toastrService.success('Registered Successfully', 'Register');
-        this.registerForm.reset();
-        this.registerForm.markAsPristine();
-        this.registerForm.markAsUntouched();
+        this.resetForm(this.registerForm);
+        // this.registerForm.reset();
+        // this.registerForm.markAsPristine();
+        // this.registerForm.markAsUntouched();
       });
+  }
+
+  resetForm(formGroup: FormGroup) {
+    formGroup.reset();
+    let control: AbstractControl = null;
+    formGroup.markAsUntouched();
+    Object.keys(formGroup.controls).forEach((name) => {
+      control = formGroup.controls[name];
+      control.setErrors(null);
+    });
   }
 
 }

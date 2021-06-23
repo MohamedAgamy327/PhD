@@ -28,7 +28,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LanguageDropDownComponent,
     SideBarComponent,
     DeleteDialogComponent,
-    ConfirmDialogComponent,
+    ConfirmDialogComponent
   ],
   entryComponents: [
     DeleteDialogComponent,

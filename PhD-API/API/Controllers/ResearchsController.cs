@@ -34,16 +34,16 @@ namespace API.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Register(ResearchForRegisterDTO model)
-        {          
+        {
             SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
             User user = new User
             {
-                Email=model.Email,
-                Name=model.Name,
-                Role=RoleEnum.Researcher,
-                IsRandomPassword=true,
-                PasswordSalt=passwordSalt,
-                PasswordHash=passwordHash
+                Email = model.Email,
+                Name = model.Name,
+                Role = RoleEnum.Researcher,
+                IsRandomPassword = true,
+                PasswordSalt = passwordSalt,
+                PasswordHash = passwordHash
             };
 
             await _userRepository.AddAsync(user).ConfigureAwait(true);
@@ -58,14 +58,21 @@ namespace API.Controllers
             await _researcherRepository.AddAsync(research).ConfigureAwait(true);
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            Email.Send("PhD", "mohamedagamy327@gmail.com", "Register", "Welcome Pending");
+            string body = "Hi: " + user.Name + "<br/>";
+            body += "We have received your research, which has been passed to our specialists for review / approval. One of our representatives will be in contact soon. <br/>";
+            body += "Regards, " + "<br/>";
+            body += "PhD managment system";
+
+            string subject = "Register";
+
+            Email.Send("PhD", user.Email, subject, body);
 
             return Ok();
         }
 
         [HttpPatch("searchStatus")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResearchForGetDTO>> PatchStatus( ResearchForStatusDTO model)
+        public async Task<ActionResult<ResearchForGetDTO>> PatchStatus(ResearchForStatusDTO model)
         {
 
             if (!await _researcherRepository.IsExist(model.Id).ConfigureAwait(true))
@@ -75,7 +82,7 @@ namespace API.Controllers
             Enum.TryParse(model.SearchStatus, out SearchStatusEnum status);
             researcher.SearchStatus = status;
             _researcherRepository.Edit(researcher);
-
+            string body, subject;
             switch (status)
             {
                 case SearchStatusEnum.Accepted:
@@ -86,13 +93,35 @@ namespace API.Controllers
                     user.PasswordSalt = passwordSalt;
                     user.IsRandomPassword = true;
                     _userRepository.Edit(user);
-                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Accepted.ToString(),$"{SearchStatusEnum.Accepted.ToString()} password is: {ranadomPassword}");
+
+                    body = "Hi: " + user.Name + "<br/>";
+                    body += "Your research is accepted <br/>";
+                    body += "Your password is: " + ranadomPassword + "<br/>";
+                    body += "Regards, " + "<br/>";
+                    body += "PhD managment system";
+                    subject = "PhD Accepted";
+
+                    Email.Send("PhD", researcher.User.Email, subject, body);
                     break;
                 case SearchStatusEnum.Pending:
-                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Pending.ToString(), SearchStatusEnum.Pending.ToString());
+
+                    body = "Hi: " + researcher.User.Name + "<br/>";
+                    body += "We have received your research, which has been passed to our specialists for review / approval. One of our representatives will be in contact soon. <br/>";
+                    body += "Regards, " + "<br/>";
+                    body += "PhD managment system";
+                    subject = "PhD Pending";
+
+                    Email.Send("PhD", researcher.User.Email, subject, body);
                     break;
                 case SearchStatusEnum.Rejected:
-                    Email.Send("PhD", "mohamedagamy327@gmail.com", SearchStatusEnum.Rejected.ToString(), SearchStatusEnum.Rejected.ToString());
+
+                    body = "Hi: " + researcher.User.Name + "<br/>";
+                    body += "Your research is rejected <br/>";
+                    body += "Regards, " + "<br/>";
+                    body += "PhD managment system";
+                    subject = "PhD Rejection";
+
+                    Email.Send("PhD", researcher.User.Email, subject, body);
                     break;
             }
 
