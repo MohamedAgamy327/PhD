@@ -98,6 +98,15 @@ export class CoreService {
       }
     }
     this.translate.use(lang);
+    this.changeDirection(lang);
+  }
+
+
+  changeDirection(lang: any) {
+    if (lang == 'ar')
+      this.changeRTL(true);
+    else
+      this.changeRTL(false);
   }
 
 }

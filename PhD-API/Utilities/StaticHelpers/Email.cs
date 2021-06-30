@@ -18,18 +18,22 @@ namespace Utilities.StaticHelpers
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
+                    smtp.UseDefaultCredentials = false;
                     smtp.EnableSsl = true;
-                    smtp.Credentials = new NetworkCredential("agamytest2020@gmail.com", "Ma01063273270");
+                    smtp.Credentials = new NetworkCredential("agamytest2020@gmail.com", @"dkw47@W.\`EfRf7~");
+                  
                     try
                     {
                         smtp.Send(mail);
                     }
                     catch (Exception ex)
                     {
-
+                        throw new Exception(ex.Message);
                     }
                 }
             }
+
+
         }
     }
 }

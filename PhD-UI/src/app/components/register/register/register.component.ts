@@ -52,9 +52,6 @@ export class RegisterComponent implements OnInit {
       (res: any) => {
         this.toastrService.success('Registered Successfully', 'Register');
         this.resetForm(this.registerForm);
-        // this.registerForm.reset();
-        // this.registerForm.markAsPristine();
-        // this.registerForm.markAsUntouched();
       });
   }
 
