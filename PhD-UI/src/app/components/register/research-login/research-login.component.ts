@@ -8,12 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-research-login',
+  templateUrl: './research-login.component.html',
+  styleUrls: ['./research-login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class ResearchLoginComponent implements OnInit {
 
   loginForm: FormGroup;
   slideConfig = { slidesToShow: 1, slidesToScroll: 1, autoplay: true, autoplaySpeed: 1000, dots: false, arrows: false };
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.accountService.login(this.loginForm.value).subscribe(
+    this.accountService.researchLogin(this.loginForm.value).subscribe(
       (res: any) => {
 
         if (this.loginForm.value.rememberMe) {

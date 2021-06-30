@@ -1,6 +1,6 @@
 export interface Research {
   id: number;
-  userName: string;
-  userEmail: string;
-  searchStatus: string;
+  name: string;
+  email: string;
+  status: string;
 }

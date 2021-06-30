@@ -60,7 +60,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPatch("searchStatus")]
+        [HttpPatch("status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResearchForGetDTO>> PatchStatus(ResearchForStatusDTO model)
         {
@@ -88,6 +88,7 @@ namespace API.Controllers
                     body = "Hi: " + research.Name + "<br/>";
                     body += "Your research is accepted <br/>";
                     body += "Your password is: " + ranadomPassword + "<br/>";
+                    body +=  $"Get started from <a href={Request.Scheme}://{Request.Host}{Request.PathBase}//login target='_blank'> Here </a>"  + "<br/>";
                     body += "Regards, " + "<br/>";
                     body += "PhD managment system";
                     subject = "PhD Accepted";

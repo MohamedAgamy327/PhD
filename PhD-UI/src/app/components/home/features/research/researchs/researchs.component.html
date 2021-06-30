@@ -16,8 +16,8 @@
             <div class="mrgn-l-md mrgn-b-md " fxLayoutAlign="start center">
                 <mat-card-actions class="mat-pad-none margin-none">
                     <button mat-raised-button mat-button-sm mat-fab color="primary" (click)="getResearchs()">
-            <mat-icon>refresh</mat-icon>
-          </button>
+                        <mat-icon>refresh</mat-icon>
+                    </button>
                 </mat-card-actions>
             </div>
         </div>
@@ -28,21 +28,21 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> {{'Name' | translate}} </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="make-ellipse clickable">{{element.userName}} </div>
+                        <div class="make-ellipse clickable">{{element.name}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef> {{'Email' | translate}} </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="make-ellipse clickable">{{element.userEmail}} </div>
+                        <div class="make-ellipse clickable">{{element.email}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef>{{'Status' | translate}}</th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="make-ellipse clickable">{{element.searchStatus | translate}} </div>
+                        <div class="make-ellipse clickable">{{element.status | translate}} </div>
                     </td>
                 </ng-container>
 
@@ -51,23 +51,26 @@
                     <td mat-cell *matCellDef="let element">
 
                         <button (click)="showConfirm(element.id,'Pending')" mat-icon-button>
-              <mat-icon matTooltip="{{'Pend' | translate}}" aria-label="Pend" class="mat-icon-grey .table-icon">
-                search
-              </mat-icon>
-            </button>
+                            <mat-icon matTooltip="{{'Pend' | translate}}" aria-label="Pend"
+                                class="mat-icon-grey .table-icon">
+                                search
+                            </mat-icon>
+                        </button>
 
 
                         <button (click)="showConfirm(element.id,'Accepted')" mat-icon-button>
-              <mat-icon matTooltip="{{'Accept' | translate}}" aria-label="Accept" class="mat-icon-grey .table-icon">
-                check
-              </mat-icon>
-            </button>
+                            <mat-icon matTooltip="{{'Accept' | translate}}" aria-label="Accept"
+                                class="mat-icon-grey .table-icon">
+                                check
+                            </mat-icon>
+                        </button>
 
                         <button (click)="showConfirm(element.id,'Rejected')" mat-icon-button>
-              <mat-icon matTooltip="{{'Reject' | translate}}" aria-label="Reject" class="mat-icon-grey .table-icon">
-                close
-              </mat-icon>
-            </button>
+                            <mat-icon matTooltip="{{'Reject' | translate}}" aria-label="Reject"
+                                class="mat-icon-grey .table-icon">
+                                close
+                            </mat-icon>
+                        </button>
 
 
                     </td>

@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Research } from '../../models';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +19,7 @@ export class ResearchService {
   }
 
   changeStatus(model: any): Observable<any> {
-    return this.http.patch(`${environment.serverUrl}researchs/searchStatus`, model);
+    return this.http.patch(`${environment.serverUrl}researchs/status`, model);
   }
 
   getAll(): Observable<Research> {

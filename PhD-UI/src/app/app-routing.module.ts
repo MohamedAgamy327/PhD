@@ -2,12 +2,13 @@ import { PageNotFoundComponent } from './components';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard, LoginGuard } from './core/guards';
-import { LoginComponent, RegisterComponent } from './components/register';
+import { UserLoginComponent, RegisterComponent, ResearchLoginComponent } from './components/register';
 import { RoleEnum } from './core/enums';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'admin-login', component: UserLoginComponent, canActivate: [LoginGuard] },
+  { path: 'login', component: ResearchLoginComponent, canActivate: [LoginGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
   {
     path: 'home', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin, RoleEnum.Researcher] }, loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
