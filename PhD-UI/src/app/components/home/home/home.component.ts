@@ -28,7 +28,7 @@ export class HomeComponent implements AfterViewInit {
     public credentialService: CredentialService,
     public tourService: TourService
   ) {
-    this.initializeTour();
+    // this.initializeTour();
   }
 
   ngAfterViewInit(): void {
