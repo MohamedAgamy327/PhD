@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Enums;
+using Utilities.StaticHelpers;
 
 namespace Core.Repository
 {
@@ -26,17 +27,29 @@ namespace Core.Repository
             _context.Entry(researcher).State = EntityState.Modified;
             return researcher;
         }
+        public async Task<Research> LoginAsync(string email, string password)
+        {
+            var research = await _context.Researchs.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+
+            if (research == null)
+                return null;
+
+            if (!SecurePassword.VerifyPasswordHash(password, research.PasswordHash, research.PasswordSalt))
+                return null;
+
+            return research;
+        }
         public async Task<Research> GetAsync(int id)
         {
-            return await _context.Researchs.Include(d=>d.User).AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
+            return await _context.Researchs.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
         }
-        public async Task<IEnumerable<Research>> GetAsync(SearchStatusEnum status)
+        public async Task<IEnumerable<Research>> GetAsync(ResearchStatusEnum status)
         {
-            return await _context.Researchs.Include(d=>d.User).Where(w => w.SearchStatus == status).OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Researchs.Where(w => w.Status == status).OrderByDescending(o => o.Id).ToListAsync();
         }
         public async Task<IEnumerable<Research>> GetAsync()
         {
-            return await _context.Researchs.Include(d => d.User).OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Researchs.OrderByDescending(o => o.Id).ToListAsync();
         }
         public void Remove(Research researcher)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum SearchStatusEnum
+    public enum ResearchStatusEnum
     {
         Pending, Accepted, Rejected
     }

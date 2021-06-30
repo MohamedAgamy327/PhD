@@ -1,5 +1,4 @@
 ﻿using API.DTO.Account;
-using API.DTO.User;
 using API.Errors;
 using API.IHelpers;
 using Core.IRepository;
@@ -17,16 +16,18 @@ namespace API.Controllers
     {
         private readonly IJWTManager _jwtManager;
         private readonly IUserRepository _userRepository;
+        private readonly IResearchRepository _researchRepository;
 
-        public AccountsController(IJWTManager jwtManager, IUserRepository userRepository)
+        public AccountsController(IJWTManager jwtManager, IUserRepository userRepository, IResearchRepository researchRepository)
         {
             _jwtManager = jwtManager;
             _userRepository = userRepository;
+            _researchRepository = researchRepository;
         }
 
-        [HttpPost("login")]
+        [HttpPost("user/login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<TokenDTO>> Login(UserForLoginDTO model)
+        public async Task<ActionResult<TokenDTO>> UserLogin(LoginDTO model)
         {
             User user = await _userRepository.LoginAsync(model.Email, model.Password).ConfigureAwait(true);
 
@@ -34,6 +35,18 @@ namespace API.Controllers
                 return Unauthorized(new ApiResponse(401, StringConsts.UNAUTHORIZED));
 
             return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(user) });
+        }
+
+        [HttpPost("research/login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<TokenDTO>> ResearchLogin(LoginDTO model)
+        {
+            Research research = await _researchRepository.LoginAsync(model.Email, model.Password).ConfigureAwait(true);
+
+            if (research == null)
+                return Unauthorized(new ApiResponse(401, StringConsts.UNAUTHORIZED));
+
+            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(research) });
         }
 
     }

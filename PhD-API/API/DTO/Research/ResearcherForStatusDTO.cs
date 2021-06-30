@@ -3,6 +3,6 @@
     public class ResearchForStatusDTO
     {
         public int Id { get; set; }
-        public string SearchStatus { get; set; }
+        public string Status { get; set; }
     }
 }

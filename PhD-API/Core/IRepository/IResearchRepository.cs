@@ -11,7 +11,8 @@ namespace Core.IRepository
         Research Edit(Research researcher);
         void Remove(Research researcher);
         Task<Research> GetAsync(int id);
-        Task<IEnumerable<Research>> GetAsync(SearchStatusEnum status);
+        Task<Research> LoginAsync(string email, string password);
+        Task<IEnumerable<Research>> GetAsync(ResearchStatusEnum status);
         Task<IEnumerable<Research>> GetAsync();
         Task<bool> IsExist(int id);
     }

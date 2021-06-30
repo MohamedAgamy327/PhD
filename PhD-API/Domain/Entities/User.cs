@@ -10,6 +10,5 @@ namespace Domain.Entities
         public byte[] PasswordSalt { get; set; }
         public bool IsRandomPassword { get; set; }
         public RoleEnum Role { get; set; }
-        public Research Research { get; set; }
     }
 }

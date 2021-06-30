@@ -1,5 +1,4 @@
 ﻿using API.DTO.User;
-using Domain.Enums;
 using FluentValidation;
 
 namespace API.Validator.User
@@ -20,11 +19,6 @@ namespace API.Validator.User
                   .NotNull()
                   .NotEmpty()
                   .EmailAddress();
-
-            RuleFor(x => x.Role)
-                   .NotNull()
-                   .NotEmpty()
-                   .IsEnumName(typeof(RoleEnum));
         }
 
     }

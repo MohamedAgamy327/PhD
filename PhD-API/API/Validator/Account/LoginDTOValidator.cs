@@ -1,11 +1,11 @@
-﻿using API.DTO.User;
+﻿using API.DTO.Account;
 using FluentValidation;
 
-namespace API.Validator.User
+namespace API.Validator.Account
 {
-    public class UserForLoginDTOValidator : AbstractValidator<UserForLoginDTO>
+    public class LoginDTOValidator : AbstractValidator<LoginDTO>
     {
-        public UserForLoginDTOValidator()
+        public LoginDTOValidator()
         {
             RuleFor(x => x.Email)
                    .NotNull()

@@ -1,6 +1,6 @@
-﻿namespace API.DTO.User
+﻿namespace API.DTO.Account
 {
-    public class UserForLoginDTO
+    public class LoginDTO
     {
         public string Email { get; set; }
         public string Password { get; set; }

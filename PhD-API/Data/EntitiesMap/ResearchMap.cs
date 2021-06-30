@@ -9,8 +9,7 @@ namespace Data.EntitiesMap
         public void Configure(EntityTypeBuilder<Research> builder)
         {
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.SearchStatus).IsRequired();
-            builder.HasOne(d => d.User).WithOne(w => w.Research).HasForeignKey<Research>(h => h.UserId);
+            builder.Property(t => t.IsRandomPassword).HasDefaultValue(true);
         }
     }
 }
