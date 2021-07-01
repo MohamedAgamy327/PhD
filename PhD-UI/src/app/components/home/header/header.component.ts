@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { CoreService, CredentialService } from 'src/app/core/services';
 import { PageTitleService } from 'src/app/core/services/page-title.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UserChangePasswordDialogComponent } from '../features/user/user-change-password-dialog/user-change-password-dialog.component';
+import { ResearchChangePasswordDialogComponent } from '../features/research';
+import { UserChangePasswordDialogComponent } from '../features/user';
+import { RoleEnum } from 'src/app/core/enums';
 
 
 declare var require;
@@ -49,10 +51,14 @@ export class HeaderComponent implements OnInit {
     this.pageTitleService.title.subscribe((val: string) => {
       this.header = val;
     });
-
-    if (this.credentialService.getUser().isRandomPassword === 'True') {
-      this.changePassword();
+    const user = this.credentialService.getUser();
+    if (user.isRandomPassword === 'True' && user.role === RoleEnum.Admin) {
+      this.changeUserPassword();
     }
+    else if (user.isRandomPassword === 'True' && user.role === RoleEnum.Researcher) {
+      this.changeResearchPassword();
+    }
+
   }
 
   toggleSidebar() {
@@ -64,8 +70,18 @@ export class HeaderComponent implements OnInit {
     this.isFullscreen = !this.isFullscreen;
   }
 
-  changePassword() {
+  changeUserPassword() {
     const dialogRef = this.dialog.open(UserChangePasswordDialogComponent, {
+      data: this.credentialService.getUser().id,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
+  changeResearchPassword() {
+    const dialogRef = this.dialog.open(ResearchChangePasswordDialogComponent, {
       data: this.credentialService.getUser().id,
       disableClose: true
     });

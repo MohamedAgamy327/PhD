@@ -31,17 +31,6 @@
                 </mat-form-field>
 
 
-
-                <div class="mrgn-b-xs full-wid">
-                    <label class="mrgn-r-xs">{{'Role' | translate}}</label>
-                    <mat-radio-group formControlName="role">
-                        <mat-radio-button class="mrgn-r-xs" value="Admin">{{'Admin' | translate}}</mat-radio-button>
-                    </mat-radio-group>
-                    <mat-error *ngIf="errorHandling('role', 'required')">
-                        {{'This field is required' | translate}}
-                    </mat-error>
-                </div>
-
             </div>
         </div>
     </mat-dialog-content>

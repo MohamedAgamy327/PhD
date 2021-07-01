@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Http;
 using API.Errors;
 using Utilities.StaticHelpers;
 using Domain.Enums;
+using API.IHelpers;
+using Microsoft.AspNetCore.Authorization;
+using API.DTO.Account;
 
 namespace API.Controllers
 {
@@ -21,12 +24,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IResearchRepository _researchRepository;
+        private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _researchRepository = researchRepository;
+            _jwtManager = jwtManager;
         }
 
         [HttpPost("Register")]
@@ -41,7 +46,7 @@ namespace API.Controllers
                 Status = ResearchStatusEnum.Pending,
                 IsRandomPassword = true,
                 PasswordSalt = passwordSalt,
-                PasswordHash = passwordHash              
+                PasswordHash = passwordHash
             };
 
             await _researchRepository.AddAsync(research).ConfigureAwait(true);
@@ -60,7 +65,32 @@ namespace API.Controllers
             return Ok();
         }
 
+        [HttpPatch("{id}/ChangePassword")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearchForGetDTO>> ChangePassword(int id, ResearchForChangePasswordDTO model)
+        {
+            if (id != model.Id)
+                return BadRequest(new ApiResponse(400, StringConcatenates.NotEqualIds(id, model.Id)));
+
+            if (!await _researchRepository.IsExist(id).ConfigureAwait(true))
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", id)));
+
+            Research research = await _researchRepository.GetAsync(model.Id).ConfigureAwait(true);
+            SecurePassword.CreatePasswordHash(model.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            research.PasswordHash = passwordHash;
+            research.PasswordSalt = passwordSalt;
+            research.IsRandomPassword = false;
+
+            _researchRepository.Edit(research);
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+
+            return Ok(new TokenDTO { Token = _jwtManager.GenerateToken(research) });
+
+        }
+
         [HttpPatch("status")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResearchForGetDTO>> PatchStatus(ResearchForStatusDTO model)
         {
@@ -88,7 +118,7 @@ namespace API.Controllers
                     body = "Hi: " + research.Name + "<br/>";
                     body += "Your research is accepted <br/>";
                     body += "Your password is: " + ranadomPassword + "<br/>";
-                    body +=  $"Get started from <a href={Request.Scheme}://{Request.Host}{Request.PathBase}//login target='_blank'> Here </a>"  + "<br/>";
+                    body += $"Get started from <a href={Request.Scheme}://{Request.Host}{Request.PathBase}//login target='_blank'> Here </a>" + "<br/>";
                     body += "Regards, " + "<br/>";
                     body += "PhD managment system";
                     subject = "PhD Accepted";
@@ -123,6 +153,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get()
         {
@@ -131,6 +162,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{status}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get(string status)
         {
