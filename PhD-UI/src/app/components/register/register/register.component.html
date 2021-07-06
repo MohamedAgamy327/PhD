@@ -1,41 +1,148 @@
 <div [dir]="coreService.layout" class="gene-login login-v2 pad-y-xl">
     <div fxLayout="row" fxLayoutAlign="center start">
-        <div fxLayout="column" fxFlex="100" fxFlex.xs="90" fxFlex.sm="80" fxFlex.md="95" fxFlex.lg="70" fxFlex.xl="60">
+        <div fxLayout="column" fxFlex="100" fxFlex.xs="90" fxFlex.sm="90" fxFlex.md="90" fxFlex.lg="70" fxFlex.xl="60">
             <mat-toolbar-row fxLayoutAlign="space-between" fxLayout.xs="column" fxLayoutAlign.xs="center center" class="mrgn-x-md">
                 <div class="mrgn-b-md">
                     <img src="./assets/img/logo-sign.png">
                 </div>
             </mat-toolbar-row>
             <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="height-full pad-t-xl pad-b-xl form-wrap-row set-resp-space" fxLayoutGap.gt-md="15px">
-                <div fxLayout="column" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                <div fxLayout="column" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90">
                     <mat-card class="gene-login-v2 card-full-height card-full-width">
                         <div>
                             <div fxLayout="column" fxLayoutAlign="center center" class="mrgn-b-lg text-center">
                                 <h2>{{'Get Started With Register' | translate}}</h2>
                             </div>
                             <form autocomplete="off" [formGroup]="registerForm" fxLayoutAlign="center start">
-                                <div fxLayout="column" fxFlex.xs="100" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="70" fxFlex.xl="70" fxLayoutAlign="start">
+                                <div fxLayout="column" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" fxLayoutAlign="start">
 
-                                    <mat-form-field class="full-wid mrgn-b-md" appearance="outline">
-                                        <mat-label>{{'Name' | translate}}</mat-label>
-                                        <input class="mrgn-t-none" matInput placeholder="{{'Name' | translate}}" type="text" formControlName="name">
-                                        <span matSuffix><i class="material-icons">vpn_key</i></span>
-                                        <mat-error *ngIf="errorHandling('name', 'required')">
-                                            {{'This field is required' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
+                                    <!-- name phone email  -->
 
-                                    <mat-form-field class="full-wid mrgn-b-md" appearance="outline">
-                                        <mat-label>{{'Email' | translate}}</mat-label>
-                                        <input class="mrgn-t-none" matInput placeholder="{{'Email' | translate}}" formControlName="email" type="text">
-                                        <span matSuffix><i class="material-icons">verified_user</i></span>
-                                        <mat-error *ngIf="errorHandling('email', 'required')">
-                                            {{'This field is required' | translate}}
-                                        </mat-error>
-                                        <mat-error *ngIf="errorHandling('email', 'email')">
-                                            Email invalid format
-                                        </mat-error>
-                                    </mat-form-field>
+                                    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'Name' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'Name' | translate}}" type="text" formControlName="name">
+                                            <span matSuffix><i class="material-icons">vpn_key</i></span>
+                                            <mat-error *ngIf="errorHandling('name', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'Email' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'Email' | translate}}" formControlName="email" type="text">
+                                            <span matSuffix><i class="material-icons">verified_user</i></span>
+                                            <mat-error *ngIf="errorHandling('email', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                            <mat-error *ngIf="errorHandling('email', 'email')">
+                                                Email invalid format
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'Phone' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'Phone' | translate}}" type="text" formControlName="phone">
+                                            <span matSuffix><i class="material-icons">phone</i></span>
+                                            <mat-error *ngIf="errorHandling('phone', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                            <mat-error *ngIf="errorHandling('phone', 'pattern')">
+                                                {{'This field accept Number Only' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+
+
+                                    </div>
+
+                                    <!-- entity address -->
+                                    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+                                        <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'Entity' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'Entity' | translate}}" type="text" formControlName="entity">
+                                            <mat-error *ngIf="errorHandling('entity', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'Address' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'Address' | translate}}" formControlName="address" type="text">
+                                            <mat-error *ngIf="errorHandling('address', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <!-- fullTimeEmployeesNumber partTimeEmployeesNumber phDResearchersNumber  -->
+
+                                    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'FullTimeEmployeesNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'FullTimeEmployeesNumber' | translate}}" type="number" formControlName="fullTimeEmployeesNumber">
+                                            <mat-error *ngIf="errorHandling('fullTimeEmployeesNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'PartTimeEmployeesNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'PartTimeEmployeesNumber' | translate}}" formControlName="partTimeEmployeesNumber" type="number">
+
+                                            <mat-error *ngIf="errorHandling('partTimeEmployeesNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'PhDResearchersNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'PhDResearchersNumber' | translate}}" type="number" formControlName="phDResearchersNumber">
+                                            <mat-error *ngIf="errorHandling('phDResearchersNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <!-- mastersResearchersNumber bachelorsResearchersNumber techniciansNumber  -->
+
+                                    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'MastersResearchersNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'MastersResearchersNumber' | translate}}" type="number" formControlName="mastersResearchersNumber">
+                                            <mat-error *ngIf="errorHandling('mastersResearchersNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'BachelorsResearchersNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'BachelorsResearchersNumber' | translate}}" formControlName="bachelorsResearchersNumber" type="number">
+
+                                            <mat-error *ngIf="errorHandling('bachelorsResearchersNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                                            <mat-label>{{'TechniciansNumber' | translate}}</mat-label>
+                                            <input class="mrgn-t-none" matInput placeholder="{{'TechniciansNumber' | translate}}" type="number" formControlName="techniciansNumber">
+                                            <mat-error *ngIf="errorHandling('techniciansNumber', 'required')">
+                                                {{'This field is required' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                    </div>
+
 
 
                                     <div fxLayoutAlign="center start" class=" mrgn-b-lg">

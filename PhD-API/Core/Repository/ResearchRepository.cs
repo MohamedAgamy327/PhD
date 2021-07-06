@@ -45,11 +45,11 @@ namespace Core.Repository
         }
         public async Task<IEnumerable<Research>> GetAsync(ResearchStatusEnum status)
         {
-            return await _context.Researchs.Where(w => w.Status == status).OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Researchs.Where(w => w.Status == status && w.IsDeleted == false).OrderByDescending(o => o.Id).ToListAsync();
         }
         public async Task<IEnumerable<Research>> GetAsync()
         {
-            return await _context.Researchs.OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Researchs.Where(w => w.IsDeleted == false).OrderByDescending(o => o.Id).ToListAsync();
         }
         public void Remove(Research researcher)
         {

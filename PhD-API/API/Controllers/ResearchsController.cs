@@ -41,16 +41,12 @@ namespace API.Controllers
             if (await _researchRepository.IsExist(model.Email).ConfigureAwait(true))
                 return Conflict(new ApiResponse(409, StringConsts.EXISTED));
 
+            Research research = _mapper.Map<Research>(model);
+
             SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
-            Research research = new Research
-            {
-                Email = model.Email,
-                Name = model.Name,
-                Status = ResearchStatusEnum.Pending,
-                IsRandomPassword = true,
-                PasswordSalt = passwordSalt,
-                PasswordHash = passwordHash
-            };
+            research.PasswordSalt = passwordSalt;
+            research.PasswordHash = passwordHash;
+
 
             await _researchRepository.AddAsync(research).ConfigureAwait(true);
 
@@ -172,6 +168,39 @@ namespace API.Controllers
             Enum.TryParse(status, out ResearchStatusEnum myStatus);
             List<ResearchForGetDTO> researchs = _mapper.Map<List<ResearchForGetDTO>>(await _researchRepository.GetAsync(myStatus).ConfigureAwait(true));
             return Ok(researchs);
+        }
+
+        [HttpGet("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearchForGetDTO>> Get(int id)
+        {
+            if (!await _researchRepository.IsExist(id).ConfigureAwait(true))
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", id)));
+
+            Research research = await _researchRepository.GetAsync(id).ConfigureAwait(true);
+
+            ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
+            return Ok(researchDto);
+        }
+
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearchForGetDTO>> Delete(int id)
+        {
+            if (!await _researchRepository.IsExist(id).ConfigureAwait(true))
+                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", id)));
+
+            Research research = await _researchRepository.GetAsync(id).ConfigureAwait(true);
+
+            research.IsDeleted = true;
+            _researchRepository.Edit(research);
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+
+            ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
+            return Ok(researchDto);
         }
     }
 }

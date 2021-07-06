@@ -9,6 +9,7 @@ namespace API.MappingProfile
         public ResearcherMappingProfile()
         {
             CreateMap<Research, ResearchForGetDTO>();
+            CreateMap<ResearchForRegisterDTO, Research>();
         }
     }
 }

@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
-  ResearchsComponent
+  ResearchsComponent, ResearchShowComponent
 } from '.';
 
 const routes: Routes = [
   {
-    path: '', component: ResearchsComponent
+    path: '', children: [
+      { path: '', component: ResearchsComponent },
+      { path: ':id', component: ResearchShowComponent }
+    ]
+
   }
 ];
 

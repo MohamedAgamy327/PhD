@@ -22,7 +22,7 @@ export class ResearchsComponent implements OnInit {
   filter: string;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'email', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'entity', 'status', 'actions'];
   researchs: Research[];
   dataSource = new MatTableDataSource<Research>();
 
@@ -83,6 +83,28 @@ export class ResearchsComponent implements OnInit {
         this.toastrService.success('Changed Successfully', 'Status');
         const index = this.researchs.findIndex(f => f.id === res.id);
         this.researchs[index] = res;
+        this.refreshData();
+      });
+  }
+
+  showDelete(research: Research) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { type: 'research' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(research.id);
+      }
+    });
+  }
+
+  delete(id: number) {
+    this.researchService.delete(id).subscribe(
+      (res: any) => {
+        this.toastrService.success('Deleted Successfully', 'Delete');
+        const index = this.researchs.findIndex(f => f.id === res.id);
+        this.researchs.splice(index, 1);
         this.refreshData();
       });
   }

@@ -30,4 +30,12 @@ export class ResearchService {
     return this.http.patch(`${environment.serverUrl}researchs/${id}/changepassword`, model);
   }
 
+  delete(id: number): Observable<any> {
+    return this.http.delete<Research>(`${environment.serverUrl}researchs/${id}`);
+  }
+
+  get(id: number): Observable<Research> {
+    return this.http.get<Research>(`${environment.serverUrl}researchs/${id}`);
+  }
+
 }

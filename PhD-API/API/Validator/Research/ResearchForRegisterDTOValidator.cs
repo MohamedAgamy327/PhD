@@ -16,6 +16,39 @@ namespace API.Validator.Research
                   .NotEmpty()
                   .EmailAddress();
 
+            RuleFor(x => x.Phone)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(x => x.Entity)
+            .NotNull()
+            .NotEmpty();
+
+
+            RuleFor(x => x.Address)
+            .NotNull()
+            .NotEmpty();
+
+
+            RuleFor(x => x.FullTimeEmployeesNumber)
+            .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.PartTimeEmployeesNumber)
+                  .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.PhDResearchersNumber)
+       .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.MastersResearchersNumber)
+                  .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.BachelorsResearchersNumber)
+          .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.TechniciansNumber)
+      .GreaterThanOrEqualTo(0);
+
+
         }
     }
 }
