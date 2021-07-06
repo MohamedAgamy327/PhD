@@ -38,6 +38,9 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Register(ResearchForRegisterDTO model)
         {
+            if (await _researchRepository.IsExist(model.Email).ConfigureAwait(true))
+                return Conflict(new ApiResponse(409, StringConsts.EXISTED));
+
             SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
             Research research = new Research
             {

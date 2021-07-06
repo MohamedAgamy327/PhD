@@ -15,5 +15,6 @@ namespace Core.IRepository
         Task<IEnumerable<Research>> GetAsync(ResearchStatusEnum status);
         Task<IEnumerable<Research>> GetAsync();
         Task<bool> IsExist(int id);
+        Task<bool> IsExist(string email);
     }
 }

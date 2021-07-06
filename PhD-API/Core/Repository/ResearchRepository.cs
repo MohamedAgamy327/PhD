@@ -59,5 +59,9 @@ namespace Core.Repository
         {
             return await _context.Researchs.AnyAsync(s => s.Id == id).ConfigureAwait(true);
         }
+        public async Task<bool> IsExist(string email)
+        {
+            return await _context.Researchs.AnyAsync(s => s.Email == email).ConfigureAwait(true);
+        }
     }
 }
