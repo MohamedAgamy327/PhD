@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.EntitiesMap
 {
-    public class AnswerMap : IEntityTypeConfiguration<Answer>
+    public class QuestionMap : IEntityTypeConfiguration<Question>
     {
-        public void Configure(EntityTypeBuilder<Answer> builder)
+        public void Configure(EntityTypeBuilder<Question> builder)
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Content).IsRequired();
-            builder.HasOne(s => s.Question).WithMany(s => s.Answers).HasForeignKey(s => s.QuestionId);
         }
     }
 }

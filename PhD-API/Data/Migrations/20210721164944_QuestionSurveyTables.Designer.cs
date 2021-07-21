@@ -4,14 +4,16 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210721164944_QuestionSurveyTables")]
+    partial class QuestionSurveyTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,50 +40,6 @@ namespace Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "بحث أساسي",
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "بحث تطبيقي",
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Content = "تطوير تجريبي ",
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Content = " مستوى الشركة (أو المؤسسة الانتاجية ))",
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Content = "مستوى الصناعة  (أو القطاع الانتاجى )",
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Content = "مستوى الاقتصاد الوطنى ",
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Content = "مستوى اقليمى أو دولى  (المشروعات المشتركة ) ",
-                            QuestionId = 2
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Question", b =>
@@ -104,20 +62,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Questions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "3- نوع النشاط البحثى:",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "7- مستوى التطبيق البحثى",
-                            Type = 0
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Research", b =>
@@ -229,8 +173,8 @@ namespace Data.Migrations
                             Email = "Admin@gmail.com",
                             IsRandomPassword = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 88, 63, 15, 172, 186, 77, 168, 4, 131, 107, 4, 16, 150, 37, 4, 248, 89, 71, 108, 208, 40, 155, 178, 112, 178, 39, 204, 157, 83, 18, 114, 186, 38, 164, 149, 247, 64, 15, 181, 156, 124, 1, 209, 136, 180, 88, 208, 139, 239, 145, 28, 219, 43, 52, 248, 89, 250, 182, 170, 204, 158, 97, 155, 35 },
-                            PasswordSalt = new byte[] { 39, 119, 254, 63, 155, 89, 79, 199, 71, 235, 50, 46, 212, 141, 242, 185, 146, 159, 118, 95, 201, 9, 100, 44, 137, 115, 237, 129, 230, 205, 193, 96, 196, 141, 170, 175, 81, 166, 207, 234, 64, 207, 51, 16, 119, 136, 85, 251, 56, 129, 79, 129, 42, 152, 75, 157, 88, 252, 85, 1, 244, 147, 83, 61, 119, 213, 203, 135, 171, 14, 148, 116, 92, 20, 3, 253, 175, 101, 169, 74, 177, 91, 243, 80, 236, 2, 138, 81, 81, 60, 203, 243, 41, 179, 119, 234, 231, 15, 139, 162, 10, 195, 173, 124, 54, 76, 130, 200, 17, 33, 52, 139, 31, 62, 78, 107, 36, 31, 182, 36, 89, 8, 242, 244, 229, 242, 99, 167 },
+                            PasswordHash = new byte[] { 121, 207, 91, 37, 172, 64, 83, 112, 130, 84, 186, 246, 70, 227, 19, 0, 80, 229, 40, 197, 137, 160, 132, 59, 34, 159, 236, 222, 161, 131, 50, 3, 142, 56, 38, 101, 85, 59, 124, 227, 170, 231, 194, 66, 251, 33, 248, 111, 198, 8, 77, 123, 214, 77, 25, 182, 254, 141, 113, 244, 192, 182, 70, 229 },
+                            PasswordSalt = new byte[] { 79, 24, 58, 133, 40, 99, 163, 246, 75, 236, 37, 194, 98, 189, 174, 132, 195, 160, 252, 83, 253, 224, 160, 9, 120, 65, 84, 255, 190, 144, 139, 45, 191, 213, 184, 146, 87, 178, 249, 179, 20, 207, 79, 32, 231, 87, 215, 216, 74, 75, 78, 165, 223, 108, 62, 255, 129, 254, 92, 228, 60, 63, 204, 110, 148, 228, 72, 181, 102, 114, 228, 195, 204, 6, 45, 215, 181, 232, 134, 24, 31, 16, 114, 113, 84, 180, 154, 29, 47, 167, 67, 74, 188, 196, 117, 121, 188, 39, 192, 209, 252, 42, 127, 114, 35, 148, 153, 31, 186, 154, 142, 156, 212, 136, 138, 15, 255, 148, 223, 201, 112, 212, 125, 101, 32, 190, 143, 233 },
                             Role = 0
                         });
                 });
