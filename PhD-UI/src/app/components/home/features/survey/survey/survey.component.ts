@@ -75,8 +75,6 @@ export class SurveyComponent implements OnInit {
   }
 
   answerRadio(questionId: number, answerId: number) {
-    alert(questionId);
-    alert(answerId);
     this.radioAnswer = null;
   }
 

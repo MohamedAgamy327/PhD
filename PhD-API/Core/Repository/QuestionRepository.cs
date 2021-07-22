@@ -17,7 +17,7 @@ namespace Core.Repository
         }
         public async Task<IEnumerable<Question>> GetAsync()
         {
-            return await _context.Questions.Include(d => d.Answers).OrderByDescending(o => o.Id).ToListAsync();
+            return await _context.Questions.Include(d => d.Answers).OrderBy(o => o.Order).ToListAsync();
         }
     }
 }

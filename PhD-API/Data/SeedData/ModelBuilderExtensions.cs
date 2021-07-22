@@ -1,7 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using Utilities.StaticHelpers;
 
 namespace Data.SeedData
@@ -24,72 +26,29 @@ namespace Data.SeedData
                     }
                 );
 
-            modelBuilder.Entity<Question>().HasData(
+            modelBuilder.Entity<Question>().HasData(SeedQuestionData());
+          //  modelBuilder.Entity<Answer>().HasData(SeedAnswerData());
+        }
 
-                  new Question
-                  {
-                      Id = 1,
-                      Content = "3- نوع النشاط البحثى:",
-                      Type=QuestionTypeNum.Radio
-                  },
-                  new Question
-                  {
-                      Id = 2,
-                      Content = "7- مستوى التطبيق البحثى",
-                      Type = QuestionTypeNum.Radio
-                  }
-        );
-
-            modelBuilder.Entity<Answer>().HasData(
-
-           new Answer
-           {
-               Id = 1,
-               QuestionId = 1,
-               Content = "بحث أساسي"
-           },
-            new Answer
+        public static List<Question> SeedQuestionData()
+        {
+            var questions = new List<Question>();
+            using (StreamReader r = new StreamReader(@"Content/questions.json"))
             {
-           Id = 2,
-           QuestionId = 1,
-           Content = "بحث تطبيقي"
-            },
-              new Answer
-              {
-                  Id = 3,
-                  QuestionId = 1,
-                  Content = "تطوير تجريبي "
-              }
-              ,
-                    new Answer
-                    {
-                        Id = 4,
-                        QuestionId = 2,
-                        Content = " مستوى الشركة (أو المؤسسة الانتاجية ))"
-                    },
-            new Answer
+                string json = r.ReadToEnd();
+                questions = JsonConvert.DeserializeObject<List<Question>>(json);
+            }
+            return questions;
+        }
+        public static List<Answer> SeedAnswerData()
+        {
+            var answers = new List<Answer>();
+            using (StreamReader r = new StreamReader(@"Content/answers.json"))
             {
-                Id = 5,
-                QuestionId = 2,
-                Content = "مستوى الصناعة  (أو القطاع الانتاجى )"
-            },
-              new Answer
-              {
-                  Id = 6,
-                  QuestionId = 2,
-                  Content = "مستوى الاقتصاد الوطنى "
-              }
-              ,
-              new Answer
-              {
-                  Id = 7,
-                  QuestionId = 2,
-                  Content = "مستوى اقليمى أو دولى  (المشروعات المشتركة ) "
-              }
- );
-
-
-
+                string json = r.ReadToEnd();
+                answers = JsonConvert.DeserializeObject<List<Answer>>(json);
+            }
+            return answers;
         }
     }
 }

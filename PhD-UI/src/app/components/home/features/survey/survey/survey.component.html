@@ -2,27 +2,65 @@
 
 <form #surveyForm="ngForm">
     <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
-        <mat-card-header>
-            <mat-card-title>{{question.content}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-radio-group *ngIf="question.type === 'Radio'" class="example-radio-group" name="radioAnswer" [(ngModel)]="radioAnswer">
-                <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
-                    {{answer.content}}
-                </mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field class="example-full-width" *ngIf="question.type === 'text'">
-                <textarea matInput placeholder="Leave a comment"></textarea>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions *ngIf="question.type == 'Radio'">
-            <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
-            <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
-        translate}}</button>
-            <ng-template #nextBtn>
-                <button [disabled]="!radioAnswer" mat-button style="float:right;" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
+        {{questions.length}}
+
+        <ng-container *ngIf="question.type == 'Radio'">
+
+            <mat-card-header>
+                <mat-card-title>{{question.content}}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-radio-group class="example-radio-group" name="radioAnswer" [(ngModel)]="radioAnswer">
+                    <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
+                        {{answer.content}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
-            </ng-template>
-        </mat-card-actions>
+                <ng-template #nextBtn>
+                    <button [disabled]="!radioAnswer" mat-button style="float:right;" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
+            translate}}</button>
+                </ng-template>
+            </mat-card-actions>
+
+        </ng-container>
+
+        <ng-container *ngIf="question.type == 'Checkbox'">
+
+            <mat-card-header>
+                <mat-card-title>{{question.content}}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <!-- <mat-radio-group class="example-radio-group" name="radioAnswer" [(ngModel)]="radioAnswer">
+                    <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
+                      {{answer.content}}
+                    </mat-radio-button>
+                  </mat-radio-group> -->
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-raised-button color="primary" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
+          translate}}</button>
+                <ng-template #nextBtn>
+                    <button mat-button style="float:right;" (click)="c.next();">{{'NEXT' |
+            translate}}</button>
+                </ng-template>
+            </mat-card-actions>
+
+        </ng-container>
+
+
+
+
+
+
+
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
     </mat-card>
