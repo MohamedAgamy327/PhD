@@ -27,7 +27,7 @@ namespace Data.SeedData
                 );
 
             modelBuilder.Entity<Question>().HasData(SeedQuestionData());
-          //  modelBuilder.Entity<Answer>().HasData(SeedAnswerData());
+            modelBuilder.Entity<Answer>().HasData(SeedAnswerData());
         }
 
         public static List<Question> SeedQuestionData()

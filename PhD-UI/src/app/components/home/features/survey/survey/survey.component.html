@@ -2,7 +2,6 @@
 
 <form #surveyForm="ngForm">
     <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
-        {{questions.length}}
 
         <ng-container *ngIf="question.type == 'Radio'">
 
@@ -37,11 +36,14 @@
             </mat-card-header>
 
             <mat-card-content>
-                <!-- <mat-radio-group class="example-radio-group" name="radioAnswer" [(ngModel)]="radioAnswer">
-                    <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
-                      {{answer.content}}
-                    </mat-radio-button>
-                  </mat-radio-group> -->
+
+                <ul>
+                    <li *ngFor="let answer of question.answers">
+                        <mat-checkbox name="checked{{i}}" class="example-radio-button" [(ngModel)]="answer.checked">
+                            {{answer.content}}
+                        </mat-checkbox>
+                    </li>
+                </ul>
             </mat-card-content>
 
             <mat-card-actions>
@@ -49,7 +51,7 @@
                 <button mat-raised-button color="primary" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button style="float:right;" (click)="c.next();">{{'NEXT' |
+                    <button mat-button style="float:right;" (click)="c.next();answerCheckbox(i)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
