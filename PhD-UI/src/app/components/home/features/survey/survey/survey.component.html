@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">{{'{ = }'}} Course Survey</mat-toolbar>
+
+<form #surveyForm="ngForm">
+    <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
+        <mat-card-header>
+            <mat-card-title>{{i + 1}}. {{question.question}}</mat-card-title>
+            <mat-card-subtitle>Select one of the following options</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-radio-group *ngIf="question.type === 'radio'" class="example-radio-group" name="favoriteSeason">
+                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                    {{season}}
+                </mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field class="example-full-width" *ngIf="question.type === 'text'">
+                <textarea matInput placeholder="Leave a comment"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">PREVIOUS</button>
+            <button mat-raised-button color="primary" style="float:right;" *ngIf="c.isLast(); else nextBtn">SUBMIT</button>
+            <ng-template #nextBtn>
+                <button mat-button style="float:right;" (click)="c.next()">NEXT</button>
+            </ng-template>
+        </mat-card-actions>
+        <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
+    </mat-card>
+
+
+    <!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

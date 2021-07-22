@@ -25,20 +25,20 @@
 </mat-toolbar>
 
 <mat-menu class="user-menu" x-position="before" y-position="below" #menu="matMenu">
-    <button mat-menu-item>
+    <button *ngIf="credentialService.isLoggedIn()" mat-menu-item>
     <mat-icon>account_circle</mat-icon>
-    <span>{{'Hi'|translate}} {{credentialService.getUser().name | titlecase }}</span>
+    <span>{{'Hi'|translate}} {{credentialService.getUser().name || 'User' | titlecase }}</span>
   </button>
-    <button *ngIf="credentialService.isAdmin()" mat-menu-item (click)="changeUserPassword()">
+    <button *ngIf="credentialService.isLoggedIn() && credentialService.isAdmin()" mat-menu-item (click)="changeUserPassword()">
     <mat-icon>security</mat-icon>
     <span>{{'Change Password' | translate}} </span>
   </button>
-    <button *ngIf="credentialService.isResearcher()" mat-menu-item (click)="changeResearchPassword()">
+    <button *ngIf="credentialService.isLoggedIn() && credentialService.isResearcher()" mat-menu-item (click)="changeResearchPassword()">
     <mat-icon>security</mat-icon>
     <span>{{'Change Password' | translate}} </span>
   </button>
     <mat-divider></mat-divider>
-    <button (click)="logout()" mat-menu-item>
+    <button *ngIf="credentialService.isLoggedIn()" (click)="logout()" mat-menu-item>
     <mat-icon>exit_to_app</mat-icon>
     <span>{{'Logout'|translate}}</span>
   </button>

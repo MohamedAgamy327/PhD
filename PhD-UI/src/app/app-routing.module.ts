@@ -11,10 +11,12 @@ const routes: Routes = [
   { path: 'login', component: ResearchLoginComponent, canActivate: [LoginGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
   {
-    path: 'home', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin, RoleEnum.Researcher] }, loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
+    path: 'home', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
   },
   { path: '**', component: PageNotFoundComponent }
 ];
+
+// canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin, RoleEnum.Researcher] },
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],

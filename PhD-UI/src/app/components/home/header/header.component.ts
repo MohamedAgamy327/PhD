@@ -51,11 +51,10 @@ export class HeaderComponent implements OnInit {
     this.pageTitleService.title.subscribe((val: string) => {
       this.header = val;
     });
-    const user = this.credentialService.getUser();
-    if (user.isRandomPassword === 'True' && user.role === RoleEnum.Admin) {
+    if (this.credentialService.isLoggedIn() && this.credentialService.getUser().isRandomPassword === 'True' && this.credentialService.getUser().role === RoleEnum.Admin) {
       this.changeUserPassword();
     }
-    else if (user.isRandomPassword === 'True' && user.role === RoleEnum.Researcher) {
+    else if (this.credentialService.isLoggedIn() && this.credentialService.getUser().isRandomPassword === 'True' && this.credentialService.getUser().role === RoleEnum.Researcher) {
       this.changeResearchPassword();
     }
 
