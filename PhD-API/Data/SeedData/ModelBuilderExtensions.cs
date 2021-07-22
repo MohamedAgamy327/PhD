@@ -30,13 +30,13 @@ namespace Data.SeedData
                   {
                       Id = 1,
                       Content = "3- نوع النشاط البحثى:",
-                      Type=QuestionTypeNum.RadioButton
+                      Type=QuestionTypeNum.Radio
                   },
                   new Question
                   {
                       Id = 2,
                       Content = "7- مستوى التطبيق البحثى",
-                      Type = QuestionTypeNum.RadioButton
+                      Type = QuestionTypeNum.Radio
                   }
         );
 

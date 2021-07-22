@@ -3,30 +3,26 @@
 <form #surveyForm="ngForm">
     <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
         <mat-card-header>
-            <mat-card-title>{{i + 1}}. {{question.question}}</mat-card-title>
-            <mat-card-subtitle>Select one of the following options</mat-card-subtitle>
+            <mat-card-title>{{question.content}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-radio-group *ngIf="question.type === 'radio'" class="example-radio-group" name="favoriteSeason">
-                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                    {{season}}
+            <mat-radio-group *ngIf="question.type === 'Radio'" class="example-radio-group" name="radioAnswer" [(ngModel)]="radioAnswer">
+                <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
+                    {{answer.content}}
                 </mat-radio-button>
             </mat-radio-group>
             <mat-form-field class="example-full-width" *ngIf="question.type === 'text'">
                 <textarea matInput placeholder="Leave a comment"></textarea>
             </mat-form-field>
         </mat-card-content>
-        <mat-card-actions>
-            <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">PREVIOUS</button>
-            <button mat-raised-button color="primary" style="float:right;" *ngIf="c.isLast(); else nextBtn">SUBMIT</button>
+        <mat-card-actions *ngIf="question.type == 'Radio'">
+            <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+            <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
+        translate}}</button>
             <ng-template #nextBtn>
-                <button mat-button style="float:right;" (click)="c.next()">NEXT</button>
+                <button [disabled]="!radioAnswer" mat-button style="float:right;" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
+          translate}}</button>
             </ng-template>
         </mat-card-actions>
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
     </mat-card>
-
-
-    <!-- Copyright 2018 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->

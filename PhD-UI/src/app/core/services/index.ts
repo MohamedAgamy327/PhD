@@ -6,5 +6,6 @@ export * from './page-title.service';
 export * from './api/user.service';
 export * from './api/account.service';
 export * from './api/research.service';
+export * from './api/question.service';
 
 

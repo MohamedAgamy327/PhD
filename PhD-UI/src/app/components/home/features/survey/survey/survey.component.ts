@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { Question } from 'src/app/core/models';
+import { PageTitleService, QuestionService } from 'src/app/core/services';
 
 
 const surveys = [{
@@ -44,12 +49,38 @@ const surveys = [{
 })
 export class SurveyComponent implements OnInit {
 
-  constructor() { }
+  questions: Question[];
+  radioAnswer: any;
+
+  constructor(
+    private toastrService: ToastrService,
+    private questionService: QuestionService,
+    private pageTitleService: PageTitleService,
+    private titleService: Title,
+    private translate: TranslateService
+  ) { }
+
 
   ngOnInit(): void {
+    this.pageTitleService.setTitle('Survey');
+    this.titleService.setTitle(this.translate.instant('Survey'));
+    this.getQuestions();
   }
 
-  seasons: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  questions = surveys[0].questions;
+  getQuestions() {
+    this.questionService.getAll().subscribe(
+      (res: any) => {
+        this.questions = res;
+      });
+  }
+
+  answerRadio(questionId: number, answerId: number) {
+    alert(questionId);
+    alert(answerId);
+    this.radioAnswer = null;
+  }
+
+  // seasons: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  // questions = surveys[0].questions;
 
 }

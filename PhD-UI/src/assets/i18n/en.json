@@ -1,5 +1,9 @@
 {
     "Add": "Add",
+    "Survey": "Survey",
+    "PREVIOUS": "PREVIOUS",
+    "NEXT": "NEXT",
+    "SUBMIT": "SUBMIT",
     "Entity": "Entity",
     "research": "research",
     "Research Information": "Research Information",
