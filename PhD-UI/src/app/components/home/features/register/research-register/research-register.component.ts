@@ -8,12 +8,12 @@ import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-research-register',
+  templateUrl: './research-register.component.html',
+  styleUrls: ['./research-register.component.scss']
 })
 
-export class RegisterComponent implements OnInit {
+export class ResearchRegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   slideConfig = { slidesToShow: 1, slidesToScroll: 1, autoplay: true, autoplaySpeed: 1000, dots: false, arrows: false };

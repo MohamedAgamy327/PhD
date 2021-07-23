@@ -17,6 +17,13 @@ export const MenuItemList: MenuItem[] = [
     roles: []
   },
   {
+    state: 'home/register/research',
+    name: 'Register',
+    type: 'link',
+    icon: 'app_registration',
+    roles: []
+  },
+  {
     state: 'home/users',
     name: 'Users List',
     type: 'link',
