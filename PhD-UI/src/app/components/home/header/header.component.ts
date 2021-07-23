@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResearchChangePasswordDialogComponent } from '../features/research';
 import { UserChangePasswordDialogComponent } from '../features/user';
 import { RoleEnum } from 'src/app/core/enums';
+import { Router } from '@angular/router';
 
 
 declare var require;
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
   header: string;
 
   constructor(
+    private router: Router,
     private coreService: CoreService,
     private pageTitleService: PageTitleService,
     public credentialService: CredentialService,
@@ -91,6 +93,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.credentialService.logout();
+  }
+
+  login() {
+    this.router.navigate(['/login']);
   }
 
 }

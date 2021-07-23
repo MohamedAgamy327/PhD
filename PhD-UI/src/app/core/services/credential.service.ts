@@ -12,6 +12,7 @@ export class CredentialService {
   constructor(
     private router: Router
   ) {
+
   }
 
   getToken() {
@@ -19,8 +20,13 @@ export class CredentialService {
   }
 
   getUser(): any {
-    const user = jwt_decode(this.getToken());
-    return user;
+    if (this.getToken()) {
+      const user = jwt_decode(this.getToken());
+      return user;
+    }
+    else {
+      return { role: RoleEnum.Anonymous };
+    }
   }
 
   checkTokenExpire() {
@@ -55,6 +61,13 @@ export class CredentialService {
     } else {
       return false;
     }
+  }
+
+  isAnonymous() {
+    if (this.isLoggedIn())
+      return false;
+    else
+      return true;
   }
 
 

@@ -7,21 +7,21 @@ export const MenuItemList: MenuItem[] = [
     name: 'Home',
     type: 'link',
     icon: 'home',
-    roles: []
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
   },
   {
     state: 'home/survey',
     name: 'Survey',
     type: 'link',
     icon: 'notes',
-    roles: []
+    roles: [RoleEnum.Researcher]
   },
   {
     state: 'home/register/research',
     name: 'Register',
     type: 'link',
     icon: 'app_registration',
-    roles: []
+    roles: [RoleEnum.Anonymous]
   },
   {
     state: 'home/users',

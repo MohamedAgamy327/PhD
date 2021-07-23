@@ -22,6 +22,7 @@ export class SideBarComponent {
     private router: Router,
     public coreService: CoreService,
     public credentialService: CredentialService
-  ) { }
+  ) {
+  }
 
 }
