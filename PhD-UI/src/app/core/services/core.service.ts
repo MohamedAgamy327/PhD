@@ -24,9 +24,9 @@ export class CoreService {
   langArray: any[] = LanguageFlagList;
 
   constructor(private translate: TranslateService) {
-    this.currentLanguage = localStorage.getItem(ConstEnum.language) || 'en';
-    this.layout = localStorage.getItem(ConstEnum.layout) || 'ltr';
-    this.selectLangFlag = localStorage.getItem(ConstEnum.selectLangFlag) || './assets/img/en.png';
+    this.currentLanguage = localStorage.getItem(ConstEnum.language) || 'ar';
+    this.layout = localStorage.getItem(ConstEnum.layout) || 'rtl';
+    this.selectLangFlag = localStorage.getItem(ConstEnum.selectLangFlag) || './assets/img/ar.png';
     this.collapseSidebar = (localStorage.getItem(ConstEnum.collapseSidebar) === 'true') || false;
     this.dark = (localStorage.getItem(ConstEnum.dark) === 'true') || false;
     this.sideBarColor = Number(localStorage.getItem(ConstEnum.sidebarColor)) || 0;
@@ -103,6 +103,7 @@ export class CoreService {
 
 
   changeDirection(lang: any) {
+    // tslint:disable-next-line: triple-equals
     if (lang == 'ar')
       this.changeRTL(true);
     else
