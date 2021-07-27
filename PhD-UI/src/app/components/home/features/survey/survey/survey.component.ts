@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Question } from 'src/app/core/models';
-import { PageTitleService, QuestionService } from 'src/app/core/services';
+import { CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -15,6 +15,7 @@ export class SurveyComponent implements OnInit {
   radioAnswer: any;
 
   constructor(
+    public coreService: CoreService,
     private toastrService: ToastrService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
@@ -41,8 +42,11 @@ export class SurveyComponent implements OnInit {
   }
 
   answerCheckbox(i: number) {
-    console.log(this.questions[i].answers);
+    console.log();
   }
 
+  checkCheckbox(i: number) {
+    return this.questions[i].answers.some(f => f.checked === true);
+  }
 
 }

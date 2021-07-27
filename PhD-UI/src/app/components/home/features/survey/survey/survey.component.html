@@ -19,10 +19,10 @@
 
             <mat-card-actions>
                 <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
-                <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
+                <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button [disabled]="!radioAnswer" mat-button style="float:right;" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
+                    <button [disabled]="!radioAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -48,20 +48,15 @@
 
             <mat-card-actions>
                 <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
-                <button mat-raised-button color="primary" style="float:right;" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
+                <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button style="float:right;" (click)="c.next();answerCheckbox(i)">{{'NEXT' |
+                    <button mat-button [disabled]="!checkCheckbox(i)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerCheckbox(i)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
 
         </ng-container>
-
-
-
-
-
 
 
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
