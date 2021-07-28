@@ -1,8 +1,10 @@
-<mat-toolbar color="primary">{{'{ = }'}} Course Survey</mat-toolbar>
+<mat-toolbar color="primary"> {{'Survey' |translate}}</mat-toolbar>
 
 <form #surveyForm="ngForm">
 
     <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
+
+        <!--#region Radio  -->
 
         <ng-container *ngIf="question.type == QuestionType.radio">
 
@@ -29,6 +31,10 @@
             </mat-card-actions>
 
         </ng-container>
+
+        <!--#endregion -->
+
+        <!--#region Checkbox  -->
 
         <ng-container *ngIf="question.type == QuestionType.checkbox">
 
@@ -59,6 +65,10 @@
 
         </ng-container>
 
+        <!--#endregion -->
+
+        <!--#region Number  -->
+
         <ng-container *ngIf="question.type == QuestionType.number">
 
             <mat-card-header>
@@ -85,6 +95,10 @@
             </mat-card-actions>
 
         </ng-container>
+
+        <!--#endregion -->
+
+        <!--#region Multi Amount  -->
 
         <ng-container *ngIf="question.type == QuestionType.multiAmount">
 
@@ -116,6 +130,10 @@
             </mat-card-actions>
 
         </ng-container>
+
+        <!--#endregion -->
+
+        <!--#region Multi Percentage  -->
 
         <ng-container *ngIf="question.type == QuestionType.multiPercentage">
 
@@ -155,6 +173,10 @@
             </mat-card-actions>
 
         </ng-container>
+
+        <!--#endregion -->
+
+        <!--#region Multi Checkbox  -->
 
         <ng-container *ngIf="question.type == QuestionType.multiCheckbox">
 
@@ -202,6 +224,8 @@
             </mat-card-actions>
 
         </ng-container>
+
+        <!--#endregion -->
 
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
     </mat-card>

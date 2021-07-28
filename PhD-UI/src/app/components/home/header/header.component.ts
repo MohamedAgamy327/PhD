@@ -39,17 +39,10 @@ export class HeaderComponent implements OnInit {
   addBreadcrumb() {
     this.breadcrumbService.addFriendlyNameForRoute('/home', this.translate.instant('Home'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/survey', this.translate.instant('Survey'));
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/patients', 'Patients');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/occupations', 'Occupations');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/know-through-by', 'Know Through By');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicines', 'Medicines');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicines-templates', 'Medicines Templates ');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicine-types', 'Medicines Types ');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/frequencies', 'Frequencies');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/instructions', 'Instructions');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/instructions-templates', 'Instructions Templates');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/investigations', 'Investigations');
-    // this.breadcrumbService.addFriendlyNameForRoute('/home/users', 'Users');
+    this.breadcrumbService.addFriendlyNameForRoute('/home/users', this.translate.instant('Users'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/researches', this.translate.instant('Researches'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/register', this.translate.instant('Register'));
+
   }
 
   ngOnInit(): void {

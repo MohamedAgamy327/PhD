@@ -17,7 +17,7 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Researcher]
   },
   {
-    state: 'home/register/research',
+    state: 'home/register',
     name: 'Register',
     type: 'link',
     icon: 'app_registration',

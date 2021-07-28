@@ -6,7 +6,7 @@ import {
 
 const routes: Routes = [
   {
-    path: 'research', component: ResearchRegisterComponent
+    path: '', component: ResearchRegisterComponent
 
   }
 ];
