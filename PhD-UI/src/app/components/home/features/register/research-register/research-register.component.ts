@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { CredentialService, CoreService, ResearchService } from 'src/app/core/services';
-import { Router } from '@angular/router';
+import { CoreService, ResearchService } from 'src/app/core/services';
 import { LoginSliderList } from 'src/app/core/lists';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -14,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class ResearchRegisterComponent implements OnInit {
+
 
   registerForm: FormGroup;
   slideConfig = { slidesToShow: 1, slidesToScroll: 1, autoplay: true, autoplaySpeed: 1000, dots: false, arrows: false };

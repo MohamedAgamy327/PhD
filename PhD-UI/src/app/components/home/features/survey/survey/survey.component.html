@@ -1,9 +1,10 @@
 <mat-toolbar color="primary">{{'{ = }'}} Course Survey</mat-toolbar>
 
 <form #surveyForm="ngForm">
+
     <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
 
-        <ng-container *ngIf="question.type == 'Radio'">
+        <ng-container *ngIf="question.type == QuestionType.radio">
 
             <mat-card-header>
                 <mat-card-title>{{question.content}}</mat-card-title>
@@ -29,7 +30,7 @@
 
         </ng-container>
 
-        <ng-container *ngIf="question.type == 'Checkbox'">
+        <ng-container *ngIf="question.type == QuestionType.checkbox">
 
             <mat-card-header>
                 <mat-card-title>{{question.content}}</mat-card-title>
@@ -52,6 +53,33 @@
           translate}}</button>
                 <ng-template #nextBtn>
                     <button mat-button [disabled]="!checkCheckbox(i)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerCheckbox(i)">{{'NEXT' |
+            translate}}</button>
+                </ng-template>
+            </mat-card-actions>
+
+        </ng-container>
+
+        <ng-container *ngIf="question.type == QuestionType.number">
+
+            <mat-card-header>
+                <mat-card-title>{{question.content}}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-form-field class="full-wid mrgn-b-md" appearance="outline">
+                    <mat-label>{{'Number' | translate}}</mat-label>
+                    <input OnlyNumber="true" min="0" name="numberAnswer" [(ngModel)]="numberAnswer" class="mrgn-t-none" matInput placeholder="{{'Number' | translate}}" type="number">
+
+                </mat-form-field>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button [disabled]="!numberAnswer" mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
+          translate}}</button>
+                <ng-template #nextBtn>
+                    <button [disabled]="!numberAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerNumber(question.id)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>

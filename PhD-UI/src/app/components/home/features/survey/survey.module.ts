@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { QuestionsLoopDirective } from 'src/app/core/directives';
+import { OnlyNumberDirective, QuestionsLoopDirective } from 'src/app/core/directives';
 
 @NgModule({
   declarations: [
+    OnlyNumberDirective,
     QuestionsLoopDirective,
     SurveyComponent,
     SurveyFooterComponent,

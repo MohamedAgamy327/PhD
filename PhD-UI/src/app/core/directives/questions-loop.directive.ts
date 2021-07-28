@@ -19,9 +19,11 @@ export interface QuestionsLoopContext {
   selector: '[appQuestionsLoop]',
 })
 export class QuestionsLoopDirective implements OnChanges {
+  // tslint:disable-next-line: ban-types
   @Input() appQuestionsLoopOf: Object[] = [];
   @Input() appQuestionsLoopForm: FormGroup;
 
+  // tslint:disable-next-line: ban-types
   @Input() appQuestionsLoopSubmit: Function;
   context: QuestionsLoopContext | null = null;
   index = 0;

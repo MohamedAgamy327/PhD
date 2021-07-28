@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-survey-footer',
   templateUrl: './survey-footer.component.html',
   styleUrls: ['./survey-footer.component.css']
 })
-export class SurveyFooterComponent implements OnInit {
+export class SurveyFooterComponent implements OnInit, OnChanges {
 
   @Input() index: any;
   @Input() total: any;
