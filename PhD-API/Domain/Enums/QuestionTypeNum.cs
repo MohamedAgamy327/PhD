@@ -2,6 +2,6 @@
 {
     public enum QuestionTypeNum
     {
-        Radio, Checkbox, Number, MultiAmount
+        Radio, Checkbox, Number, MultiAmount, MultiPercentage, MultiCheckbox
     }
 }

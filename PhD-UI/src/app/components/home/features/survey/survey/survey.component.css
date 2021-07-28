@@ -3,7 +3,7 @@
 .example-radio-group {
     display: inline-flex;
     flex-direction: column;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .example-radio-button {
@@ -11,7 +11,7 @@
 }
 
 .example-selected-value {
-    margin: 15px 0;
+    margin: 5px 0;
 }
 
 .example-form {
@@ -23,4 +23,13 @@
 .example-full-width {
     width: 100%;
     margin-left: 15px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.margin-check {
+    margin-top: 3px;
+    margin-bottom: 3px;
 }

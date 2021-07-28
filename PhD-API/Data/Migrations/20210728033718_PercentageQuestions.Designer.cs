@@ -4,14 +4,16 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210728033718_PercentageQuestions")]
+    partial class PercentageQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,18 +383,6 @@ namespace Data.Migrations
                             Id = 57,
                             Content = "14-5-مصروفات عامة أخرى %",
                             QuestionId = 14
-                        },
-                        new
-                        {
-                            Id = 58,
-                            Content = "15-1-الأرض والمباني",
-                            QuestionId = 15
-                        },
-                        new
-                        {
-                            Id = 59,
-                            Content = "15-2-الآلات والمعدات والمعامل وأجهزة الكمبيوتر",
-                            QuestionId = 15
                         });
                 });
 
@@ -405,6 +395,9 @@ namespace Data.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Header")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Order")
@@ -501,13 +494,6 @@ namespace Data.Migrations
                             Content = "14- هل أثر هذا المشروع على تخفيض تكلفة الانفاق الجاري ؟",
                             Order = 14,
                             Type = 4
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Content = "15-هل أثر هذا المشروع على تخفيض تكلفة الانفاق الرأسمالي (او من المتوقع تخفيضه)؟ ، في أي التكاليف تم الانخفاض من خلال احد الخيارات التالية",
-                            Order = 15,
-                            Type = 5
                         },
                         new
                         {
@@ -634,8 +620,8 @@ namespace Data.Migrations
                             Email = "Admin@gmail.com",
                             IsRandomPassword = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 254, 228, 183, 222, 90, 219, 152, 61, 158, 180, 108, 46, 143, 196, 184, 162, 112, 145, 233, 190, 241, 67, 38, 250, 215, 236, 97, 126, 219, 35, 74, 182, 184, 161, 221, 246, 195, 136, 248, 116, 117, 146, 239, 136, 128, 21, 242, 152, 72, 158, 186, 149, 11, 71, 118, 251, 176, 83, 239, 125, 202, 199, 223, 139 },
-                            PasswordSalt = new byte[] { 227, 11, 26, 155, 221, 104, 2, 240, 138, 131, 183, 142, 56, 241, 148, 82, 28, 173, 105, 174, 185, 183, 233, 177, 120, 110, 242, 125, 76, 121, 165, 216, 250, 201, 182, 97, 80, 65, 227, 156, 250, 128, 242, 9, 142, 213, 105, 177, 109, 174, 201, 45, 178, 120, 48, 80, 46, 241, 242, 215, 78, 223, 67, 145, 170, 32, 153, 235, 167, 76, 112, 234, 68, 3, 137, 11, 52, 142, 251, 35, 42, 47, 103, 61, 148, 90, 174, 242, 181, 187, 84, 134, 124, 222, 224, 112, 106, 57, 114, 231, 100, 164, 85, 209, 88, 218, 244, 122, 225, 71, 45, 3, 132, 71, 4, 41, 15, 156, 76, 163, 244, 166, 152, 94, 66, 161, 3, 188 },
+                            PasswordHash = new byte[] { 83, 216, 16, 219, 234, 128, 76, 65, 168, 204, 230, 32, 145, 23, 69, 71, 224, 214, 208, 152, 105, 194, 129, 111, 114, 225, 243, 102, 172, 133, 253, 175, 221, 255, 18, 59, 198, 251, 108, 215, 53, 24, 184, 215, 243, 49, 243, 239, 181, 127, 89, 145, 120, 252, 218, 0, 212, 214, 243, 147, 5, 165, 136, 145 },
+                            PasswordSalt = new byte[] { 51, 178, 203, 40, 240, 114, 47, 194, 232, 19, 170, 6, 108, 64, 244, 238, 160, 209, 230, 79, 236, 222, 207, 137, 117, 151, 81, 178, 102, 90, 238, 70, 149, 161, 18, 142, 55, 158, 201, 211, 22, 197, 48, 19, 118, 40, 156, 13, 234, 201, 104, 112, 65, 89, 168, 43, 116, 52, 159, 249, 156, 80, 209, 187, 137, 76, 76, 108, 173, 1, 189, 235, 46, 225, 167, 208, 161, 159, 201, 118, 241, 158, 253, 215, 249, 44, 18, 9, 43, 84, 96, 65, 122, 145, 58, 254, 110, 78, 163, 105, 9, 225, 132, 183, 49, 102, 24, 255, 126, 98, 248, 93, 190, 22, 7, 181, 34, 154, 139, 114, 80, 245, 138, 162, 184, 89, 135, 49 },
                             Role = 0
                         });
                 });

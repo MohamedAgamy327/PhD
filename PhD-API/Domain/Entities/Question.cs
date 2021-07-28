@@ -5,7 +5,6 @@ namespace Domain.Entities
 {
     public class Question : BaseEntity
     {
-        public string Header { get; set; }
         public int? Order { get; set; }
         public string Content { get; set; }
         public QuestionTypeNum Type { get; set; }

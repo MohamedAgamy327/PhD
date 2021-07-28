@@ -1,5 +1,7 @@
 {
     "Search": "بحث",
+    "social return": "المردود الاجتماعي",
+    "own return": "العائد الخاص",
     "Sum:": "الإجمالى:",
     "Amount": "المبلغ",
     "Survey": "استطلاع",
@@ -28,7 +30,8 @@
     "Accepted": "قبول",
     "Rejected": "رفض",
     "CANCEL": "إلغاء",
-    "Yes": "موافق",
+    "Yes": "نعم",
+    "No": "لا",
     "Do you want to confirm change status to Pending?": "هل تريد تغير الحالة إلى تعليق؟",
     "Do you want to confirm change status to Accepted?": "هل تريد تغير الحالة إلى موافقة؟",
     "Do you want to confirm change status to Rejected?": "هل تريد تغير الحالة إلى رفض؟",
