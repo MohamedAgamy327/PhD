@@ -14,6 +14,9 @@ import { CoreService, PageTitleService, QuestionService } from 'src/app/core/ser
 export class SurveyComponent implements OnInit {
 
   questions: Question[];
+  percentage = 0;
+
+
   radioAnswer: any;
   numberAnswer: number;
   amountSum: number;
@@ -66,6 +69,19 @@ export class SurveyComponent implements OnInit {
   getSumAmount(index: number) {
     this.amountSum = this.questions[index].answers.filter(q => q.amount)
       .reduce((sum, current) => sum + current.amount, 0);
+  }
+
+  next(i: number) {
+    this.getPercentage(i);
+  }
+
+  prev(i: number) {
+    this.getPercentage(i);
+  }
+
+  getPercentage(i: number) {
+    this.percentage = ((i + 1) / this.questions.length) * 100;
+    console.log(this.percentage)
   }
 
 }

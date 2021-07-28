@@ -2,7 +2,8 @@
 
 <form #surveyForm="ngForm">
 
-    <mat-card class="example-card" *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
+
+    <mat-card *appQuestionsLoop="let question of questions form surveyForm; let i = index; let c = controller">
 
         <!--#region Radio  -->
 
@@ -21,11 +22,11 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button mat-raised-button color="primary" [disabled]="!radioAnswer" (click)="answerRadio(question.id,radioAnswer)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button [disabled]="!radioAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerRadio(question.id,radioAnswer)">{{'NEXT' |
+                    <button [disabled]="!radioAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);answerRadio(question.id,radioAnswer)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -54,11 +55,11 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button [disabled]="!checkCheckbox(i)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerCheckbox(i)">{{'NEXT' |
+                    <button mat-button [disabled]="!checkCheckbox(i)" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);answerCheckbox(i)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -85,11 +86,11 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button [disabled]="!numberAnswer" mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button [disabled]="!numberAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();answerNumber(question.id)">{{'NEXT' |
+                    <button [disabled]="!numberAnswer" mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);answerNumber(question.id)">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -119,12 +120,12 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT'
           |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();">{{'NEXT' |
+                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -162,12 +163,12 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT'
           |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();">{{'NEXT' |
+                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -213,12 +214,12 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
                 <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT'
           |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();">{{'NEXT' |
+                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();next(i);">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>
@@ -227,5 +228,12 @@
 
         <!--#endregion -->
 
+
+        <mat-progress-spinner style="  margin-left: auto;
+  margin-right: auto;" class="example-margin" color="primary" mode="determinate" [value]="percentage">
+        </mat-progress-spinner>
+
+
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
+
     </mat-card>
