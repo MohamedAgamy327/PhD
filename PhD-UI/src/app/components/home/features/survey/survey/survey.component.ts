@@ -16,6 +16,7 @@ export class SurveyComponent implements OnInit {
   questions: Question[];
   radioAnswer: any;
   numberAnswer: number;
+  amountSum: number;
 
   constructor(
     public coreService: CoreService,
@@ -60,6 +61,11 @@ export class SurveyComponent implements OnInit {
     console.log('questionId', questionId);
     console.log('answer', this.numberAnswer);
     this.numberAnswer = null;
+  }
+
+  getSumAmount(index: number) {
+    this.amountSum = this.questions[index].answers.filter(q => q.amount)
+      .reduce((sum, current) => sum + current.amount, 0);
   }
 
 }

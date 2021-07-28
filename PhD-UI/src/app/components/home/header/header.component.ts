@@ -7,6 +7,7 @@ import { ResearchChangePasswordDialogComponent } from '../features/research';
 import { UserChangePasswordDialogComponent } from '../features/user';
 import { RoleEnum } from 'src/app/core/enums';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare var require;
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
   header: string;
 
   constructor(
+    private translate: TranslateService,
     private router: Router,
     private coreService: CoreService,
     private pageTitleService: PageTitleService,
@@ -35,18 +37,19 @@ export class HeaderComponent implements OnInit {
   }
 
   addBreadcrumb() {
-    this.breadcrumbService.addFriendlyNameForRoute('/home', 'Home');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/patients', 'Patients');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/occupations', 'Occupations');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/know-through-by', 'Know Through By');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/medicines', 'Medicines');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/medicines-templates', 'Medicines Templates ');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/medicine-types', 'Medicines Types ');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/frequencies', 'Frequencies');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/instructions', 'Instructions');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/instructions-templates', 'Instructions Templates');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/investigations', 'Investigations');
-    this.breadcrumbService.addFriendlyNameForRoute('/home/users', 'Users');
+    this.breadcrumbService.addFriendlyNameForRoute('/home', this.translate.instant('Home'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/survey', this.translate.instant('Survey'));
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/patients', 'Patients');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/occupations', 'Occupations');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/know-through-by', 'Know Through By');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicines', 'Medicines');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicines-templates', 'Medicines Templates ');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/medicine-types', 'Medicines Types ');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/frequencies', 'Frequencies');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/instructions', 'Instructions');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/instructions-templates', 'Instructions Templates');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/investigations', 'Investigations');
+    // this.breadcrumbService.addFriendlyNameForRoute('/home/users', 'Users');
   }
 
   ngOnInit(): void {

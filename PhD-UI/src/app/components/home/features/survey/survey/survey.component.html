@@ -86,6 +86,37 @@
 
         </ng-container>
 
+        <ng-container *ngIf="question.type == QuestionType.multiAmount">
+
+            <mat-card-header>
+                <mat-card-title>{{question.content}}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <ul>
+                    <li *ngFor="let answer of question.answers">
+                        <mat-form-field class="full-wid mrgn-b-md" appearance="outline">
+                            <mat-label>{{answer.content | translate}}</mat-label>
+                            <input (keyup)="getSumAmount(i)" OnlyNumber="true" min="0" name="amount{{i}}" [(ngModel)]="answer.amount" class="mrgn-t-none" matInput placeholder="{{'Amount' | translate}}" type="number">
+                        </mat-form-field>
+                    </li>
+                </ul>
+                {{'Sum:' | translate}} {{ amountSum }}
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button (click)="c.prev()" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
+                <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT'
+          |
+          translate}}</button>
+                <ng-template #nextBtn>
+                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="c.next();">{{'NEXT' |
+            translate}}</button>
+                </ng-template>
+            </mat-card-actions>
+
+        </ng-container>
+
 
         <app-survey-footer [index]="i" [total]="questions.length"></app-survey-footer>
     </mat-card>

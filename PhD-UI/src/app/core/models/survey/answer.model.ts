@@ -3,4 +3,5 @@ export interface Answer {
   content: string;
   questionId: number;
   checked: boolean;
+  amount?: number;
 }

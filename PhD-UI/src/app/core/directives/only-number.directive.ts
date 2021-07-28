@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appOnlyNumber]'
+  // tslint:disable-next-line: directive-selector
+  selector: '[OnlyNumber]'
 })
 export class OnlyNumberDirective {
 
