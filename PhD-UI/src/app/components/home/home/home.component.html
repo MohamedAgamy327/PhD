@@ -1,11 +1,12 @@
-<app-header-img></app-header-img>
-
 <div id="main-app" class="app sidebar-color-dark header-color-dark" [dir]="coreService.layout" [ngClass]="{'app-dark': coreService.dark, 'collapsed-sidebar': coreService.collapseSidebar,
  'compact-sidebar': compactSidebar, 'customizer-in': customizerIn}" [class.side-panel-opened]="coreService.sidenavOpen" [class.side-panel-closed]="!coreService.sidenavOpen">
+
     <mat-sidenav-container class="gene-container">
+        <app-header-img></app-header-img>
         <mat-sidenav #sidenav [(mode)]="coreService.sidenavMode" [(opened)]="coreService.sidenavOpen" class="sidebar-area">
             <app-side-bar [menuList]="menuItems" [verticalMenuStatus]=true></app-side-bar>
         </mat-sidenav>
+
         <app-header></app-header>
 
         <div class="gene-base-container" #scrollContainer>
@@ -13,6 +14,14 @@
                 <div class="full-wid" fxFlex="100">
 
                     <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
+
+                    <div class="footer-wrap pad-t-none full-wid" fxFLex="100">
+                        <app-footer></app-footer>
+                    </div>
+                    <div class="footer-wrap pad-t-none full-wid" fxFLex="100">
+                        <app-footer></app-footer>
+                    </div>
+
 
                     <ng-container>
                         <tour-step-template>
@@ -39,11 +48,19 @@
                             </ng-template>
                         </tour-step-template>
                     </ng-container>
+
                 </div>
 
+
             </div>
+
         </div>
+
+
+
     </mat-sidenav-container>
+
+
 
     <div class="gene-customizer">
         <button class="customizer-toggle" (click)="customizerFunction()">
@@ -104,9 +121,6 @@
         </div>
     </div>
 
-</div>
 
 
-<div class="footer-wrap pad-t-none full-wid" fxFLex="100">
-    <app-footer></app-footer>
 </div>
