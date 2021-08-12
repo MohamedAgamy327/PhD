@@ -1,7 +1,7 @@
 .fixed-header {
+    background: url(/assets/img/header.jpg) no-repeat center center;
     background-position: center;
     padding: 10px 0;
     top: 0;
-    background: url(/assets/img/header.jpg) no-repeat center center;
-    height: 200px;
+    height: 155px;
 }
