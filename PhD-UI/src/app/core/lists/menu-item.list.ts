@@ -43,5 +43,12 @@ export const MenuItemList: MenuItem[] = [
     type: 'link',
     icon: 'work',
     roles: [RoleEnum.Admin]
+  },
+  {
+    state: 'home/research-team',
+    name: 'Research Team',
+    type: 'link',
+    icon: 'supervised_user_circle',
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
   }
 ];
