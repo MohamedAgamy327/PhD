@@ -7,3 +7,4 @@ export * from './side-bar/side-bar.component';
 export * from './landing/landing.component';
 export * from './delete-dialog/delete-dialog.component';
 export * from './confirm-dialog/confirm-dialog.component';
+export * from './introduction/introduction.component';

@@ -1,5 +1,8 @@
 {
     "Add": "Add",
+    "Introduction": "Introduction",
+    "introduction": "introduction",
+    "Developmental return project for scientific research and innovation in Egypt": "Developmental return project for scientific research and innovation in Egypt",
     "Researches": "Researches",
     "own return": "own return",
     "social return": "social return",
@@ -188,6 +191,5 @@
     "Print": "Print",
     "Number": "Number",
     "Missing Items List": "Missing Items List",
-    "Missing Items": "الاصناف الناقصة",
     "This field must be 9 characters": "This field must be 9 characters"
 }

@@ -18,7 +18,7 @@
                     <div class="footer-wrap pad-t-none full-wid" fxFLex="100">
                         <app-footer></app-footer>
                     </div>
-                    <div class="footer-wrap pad-t-none full-wid" fxFLex="100">
+                    <div *ngIf="router.url != '/home'" class="footer-wrap pad-t-none full-wid" fxFLex="100">
                         <app-footer></app-footer>
                     </div>
 

@@ -1,0 +1,29 @@
+@font-face {
+    font-family: Katibeh-Regular;
+    src: url(/assets/fonts/Katibeh-Regular.ttf);
+}
+
+@font-face {
+    font-family: MOHAMMAD_BOLD_ART;
+    src: url(/assets/fonts/MOHAMMAD_BOLD_ART_1.ttf);
+}
+
+.intro-title {
+    font-family: Katibeh-Regular;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.intro-content {
+    font-family: MOHAMMAD_BOLD_ART;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 2;
+}
+
+.intro-footer {
+    font-family: Katibeh-Regular;
+    float: left;
+    font-size: 22px;
+    font-weight: bolder;
+}

@@ -10,6 +10,13 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
   },
   {
+    state: 'home/introduction',
+    name: 'Introduction',
+    type: 'link',
+    icon: 'lightbulb',
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
+  },
+  {
     state: 'home/survey',
     name: 'Survey',
     type: 'link',

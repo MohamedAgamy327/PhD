@@ -70,7 +70,7 @@ export class ResearchLoginComponent implements OnInit {
         }
 
         localStorage.setItem(ConstEnum.token, res.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/survey']);
       });
   }
 

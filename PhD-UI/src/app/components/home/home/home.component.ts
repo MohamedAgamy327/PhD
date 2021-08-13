@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CredentialService, CoreService } from 'src/app/core/services';
 import { TourService } from 'ngx-tour-md-menu';
@@ -23,6 +23,7 @@ export class HomeComponent implements AfterViewInit {
   isMobile = false;
   menuItems: any = MenuItemList;
   constructor(
+    public router: Router,
     public translate: TranslateService,
     public coreService: CoreService,
     public credentialService: CredentialService,
