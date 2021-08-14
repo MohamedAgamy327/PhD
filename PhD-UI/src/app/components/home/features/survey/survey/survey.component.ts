@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -16,9 +15,7 @@ export class SurveyComponent implements OnInit {
   questions: Question[];
   percentage = 0;
 
-
-  radioAnswer: any;
-  numberAnswer: number;
+  // numberAnswer: number;
   amountSum: number;
 
   constructor(
@@ -49,21 +46,33 @@ export class SurveyComponent implements OnInit {
   }
 
   answerRadio(questionId: number, answerId: number) {
-    this.radioAnswer = null;
+    if (answerId) {
+      console.log('questionId', questionId);
+      console.log('answerId', answerId);
+    }
   }
 
-  answerCheckbox(i: number) {
-    console.log();
+  answerCheckbox(questionId: number, i: number) {
+    if (this.questions[i].answers.some(f => f.checked === true)) {
+      console.log('questionId', questionId);
+      console.log('answerId', this.questions[i].answers.filter(f => f.checked === true));
+    }
   }
 
-  checkCheckbox(i: number) {
-    return this.questions[i].answers.some(f => f.checked === true);
-  }
+  // checkCheckbox(i: number) {
+  //   return this.questions[i].answers.some(f => f.checked === true);
+  // }
 
-  answerNumber(questionId: number) {
+  answerNumber(questionId: number, asnwerNumber: number) {
     console.log('questionId', questionId);
-    console.log('answer', this.numberAnswer);
-    this.numberAnswer = null;
+    console.log('answer', asnwerNumber);
+  }
+
+  answerMultiAmount(questionId: number, i: number) {
+    if (this.questions[i].answers.some(f => f.amount)) {
+      console.log('questionId', questionId);
+      console.log('answerId', this.questions[i].answers.filter(f => f.amount));
+    }
   }
 
   getSumAmount(index: number) {
@@ -76,12 +85,12 @@ export class SurveyComponent implements OnInit {
   }
 
   prev(i: number) {
+    console.log(this.questions);
     this.getPercentage(i);
   }
 
   getPercentage(i: number) {
     this.percentage = ((i + 1) / this.questions.length) * 100;
-    console.log(this.percentage)
   }
 
 }

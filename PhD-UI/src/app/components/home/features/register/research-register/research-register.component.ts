@@ -5,6 +5,7 @@ import { LoginSliderList } from 'src/app/core/lists';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { MustMatch } from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-research-register',
@@ -35,6 +36,7 @@ export class ResearchRegisterComponent implements OnInit {
   createForm() {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      confirmationEmail: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       entity: ['', Validators.required],
@@ -45,7 +47,11 @@ export class ResearchRegisterComponent implements OnInit {
       mastersResearchersNumber: [0, [Validators.required, Validators.min(0)]],
       bachelorsResearchersNumber: [0, [Validators.required, Validators.min(0)]],
       techniciansNumber: [0, [Validators.required, Validators.min(0)]]
-    });
+    },
+      {
+        validator: MustMatch('email', 'confirmationEmail')
+      }
+    );
   }
 
   ngOnInit() {

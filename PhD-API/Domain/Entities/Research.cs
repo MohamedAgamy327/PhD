@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -20,5 +21,6 @@ namespace Domain.Entities
         public bool IsRandomPassword { get; set; }
         public ResearchStatusEnum Status { get; set; }
         public bool? IsDeleted { get; set; }
+        public ICollection<AnswerRadio> AnswerRadios { get; set; }
     }
 }

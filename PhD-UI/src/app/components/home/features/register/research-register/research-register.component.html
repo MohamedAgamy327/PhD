@@ -9,7 +9,7 @@
                         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
 
 
-                            <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                            <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
                                 <mat-label>{{'Name' | translate}}</mat-label>
                                 <input class="mrgn-t-none" matInput placeholder="{{'Name' | translate}}" type="text" formControlName="name">
                                 <span matSuffix><i class="material-icons">vpn_key</i></span>
@@ -18,19 +18,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
-                                <mat-label>{{'Email' | translate}}</mat-label>
-                                <input class="mrgn-t-none" matInput placeholder="{{'Email' | translate}}" formControlName="email" type="text">
-                                <span matSuffix><i class="material-icons">verified_user</i></span>
-                                <mat-error *ngIf="errorHandling('email', 'required')">
-                                    {{'This field is required' | translate}}
-                                </mat-error>
-                                <mat-error *ngIf="errorHandling('email', 'email')">
-                                    Email invalid format
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field fxFlex.gt-sm="31" fxFlex.gt-xs="31" fxFlex="100" fxFlex.gt-md="31" class="full-wid mrgn-b-md" appearance="outline">
+                            <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
                                 <mat-label>{{'Phone' | translate}}</mat-label>
                                 <input class="mrgn-t-none" matInput placeholder="{{'Phone' | translate}}" type="text" formControlName="phone">
                                 <span matSuffix><i class="material-icons">phone</i></span>
@@ -39,6 +27,40 @@
                                 </mat-error>
                                 <mat-error *ngIf="errorHandling('phone', 'pattern')">
                                     {{'This field accept Number Only' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+
+
+                        </div>
+
+                        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+
+                            <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
+                                <mat-label>{{'Email' | translate}}</mat-label>
+                                <input class="mrgn-t-none" matInput placeholder="{{'Email' | translate}}" formControlName="email" type="text">
+                                <span matSuffix><i class="material-icons">verified_user</i></span>
+                                <mat-error *ngIf="errorHandling('email', 'required')">
+                                    {{'This field is required' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="errorHandling('email', 'email')">
+                                    {{'Email invalid format' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex.gt-sm="45" fxFlex.gt-xs="45" fxFlex="100" fxFlex.gt-md="45" class="full-wid mrgn-b-md" appearance="outline">
+                                <mat-label>{{'Confirmation Email' | translate}}</mat-label>
+                                <input class="mrgn-t-none" matInput placeholder="{{'Confirmation Email' | translate}}" formControlName="confirmationEmail" type="text">
+                                <span matSuffix><i class="material-icons">verified_user</i></span>
+                                <mat-error *ngIf="errorHandling('confirmationEmail', 'required')">
+                                    {{'This field is required' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="errorHandling('confirmationEmail', 'email')">
+                                    {{'Email invalid format' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="errorHandling('confirmationEmail', 'mustMatch')">
+                                    {{'Emails must match' | translate}}
                                 </mat-error>
                             </mat-form-field>
 

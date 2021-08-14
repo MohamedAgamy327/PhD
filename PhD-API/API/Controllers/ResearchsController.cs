@@ -14,6 +14,7 @@ using Domain.Enums;
 using API.IHelpers;
 using Microsoft.AspNetCore.Authorization;
 using API.DTO.Account;
+using API.IService;
 
 namespace API.Controllers
 {
@@ -24,14 +25,16 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IResearchRepository _researchRepository;
+        private readonly IResearchService _researchService;
         private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _researchRepository = researchRepository;
             _jwtManager = jwtManager;
+            _researchService = researchService;
         }
 
         [HttpPost("Register")]
@@ -47,19 +50,12 @@ namespace API.Controllers
             research.PasswordSalt = passwordSalt;
             research.PasswordHash = passwordHash;
 
-
             await _researchRepository.AddAsync(research).ConfigureAwait(true);
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            string body = "Hi: " + research.Name + "<br/>";
-            body += "We have received your research, which has been passed to our specialists for review / approval. One of our representatives will be in contact soon. <br/>";
-            body += "Regards, " + "<br/>";
-            body += "PhD managment system";
 
-            string subject = "Register";
-
-            Email.Send("PhD", research.Email, subject, body);
+            Email.Send("PhD", research.Email, "Register", _researchService.CreateRegisterMailTemplate(research.Name));
 
             return Ok();
         }
@@ -102,8 +98,6 @@ namespace API.Controllers
             research.Status = status;
             _researchRepository.Edit(research);
 
-            string body, subject;
-
             switch (status)
             {
                 case ResearchStatusEnum.Accepted:
@@ -114,35 +108,17 @@ namespace API.Controllers
                     research.IsRandomPassword = true;
                     _researchRepository.Edit(research);
 
-                    body = "Hi: " + research.Name + "<br/>";
-                    body += "Your research is accepted <br/>";
-                    body += "Your password is: " + ranadomPassword + "<br/>";
-                    body += $"Get started from <a href={Request.Scheme}://{Request.Host}{Request.PathBase}//login target='_blank'> Here </a>" + "<br/>";
-                    body += "Regards, " + "<br/>";
-                    body += "PhD managment system";
-                    subject = "PhD Accepted";
-
-                    Email.Send("PhD", research.Email, subject, body);
+                    Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research.Name, ranadomPassword, Request));
                     break;
+
                 case ResearchStatusEnum.Pending:
 
-                    body = "Hi: " + research.Name + "<br/>";
-                    body += "We have received your research, which has been passed to our specialists for review / approval. One of our representatives will be in contact soon. <br/>";
-                    body += "Regards, " + "<br/>";
-                    body += "PhD managment system";
-                    subject = "PhD Pending";
-
-                    Email.Send("PhD", research.Email, subject, body);
+                    Email.Send("PhD", research.Email, "PhD Pending", _researchService.CreatePendingMailTemplate(research.Name));
                     break;
+
                 case ResearchStatusEnum.Rejected:
 
-                    body = "Hi: " + research.Name + "<br/>";
-                    body += "Your research is rejected <br/>";
-                    body += "Regards, " + "<br/>";
-                    body += "PhD managment system";
-                    subject = "PhD Rejection";
-
-                    Email.Send("PhD", research.Email, subject, body);
+                    Email.Send("PhD", research.Email, "PhD Rejection", _researchService.CreateRejectedMailTemplate(research.Name));
                     break;
             }
 

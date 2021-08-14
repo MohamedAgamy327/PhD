@@ -28,7 +28,7 @@ export const MenuItemList: MenuItem[] = [
     name: 'Register',
     type: 'link',
     icon: 'app_registration',
-    roles: [RoleEnum.Anonymous]
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
     state: 'home/users',
