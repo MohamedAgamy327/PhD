@@ -31,6 +31,13 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
+    state: 'home/login',
+    name: 'Login',
+    type: 'link',
+    icon: 'app_registration',
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
+  },
+  {
     state: 'home/users',
     name: 'Users List',
     type: 'link',

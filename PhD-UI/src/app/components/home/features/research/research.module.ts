@@ -13,7 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [
     ResearchsComponent,
     ResearchChangePasswordDialogComponent,
-    ResearchShowComponent
+    ResearchShowComponent,
+
   ],
   entryComponents: [
     ResearchChangePasswordDialogComponent

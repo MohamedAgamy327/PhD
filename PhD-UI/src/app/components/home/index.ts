@@ -9,3 +9,4 @@ export * from './delete-dialog/delete-dialog.component';
 export * from './confirm-dialog/confirm-dialog.component';
 export * from './introduction/introduction.component';
 export * from './research-team/research-team.component';
+export * from './research-login/research-login.component';
