@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { Question } from 'src/app/core/models';
-import { CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerRadio, Question } from 'src/app/core/models';
+import { AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -13,14 +13,16 @@ import { CoreService, PageTitleService, QuestionService } from 'src/app/core/ser
 export class SurveyComponent implements OnInit {
 
   questions: Question[];
-  percentage = 0;
+  answerRadios: AnswerRadio[];
 
-  // numberAnswer: number;
+  percentage = 0;
   amountSum: number;
+
 
   constructor(
     public coreService: CoreService,
     private toastrService: ToastrService,
+    private answerRadioService: AnswerRadioService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
@@ -32,6 +34,7 @@ export class SurveyComponent implements OnInit {
     this.pageTitleService.setTitle('Survey');
     this.titleService.setTitle(this.translate.instant('Survey'));
     this.getQuestions();
+    this.getAnswerRadios();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -45,12 +48,29 @@ export class SurveyComponent implements OnInit {
       });
   }
 
-  answerRadio(questionId: number, answerId: number) {
-    if (answerId) {
-      console.log('questionId', questionId);
-      console.log('answerId', answerId);
-    }
+  // Answer Radio
+
+  getAnswerRadios() {
+    this.answerRadioService.get().subscribe(
+      (res: any) => {
+        this.answerRadios = res;
+        console.log(this.answerRadios)
+      });
   }
+
+  getAnswerRadio(questionId: number) {
+    return this.answerRadios.find(s => s.questionId == questionId);
+  }
+
+  answerRadio(questionId: number) {
+    const answerRadio = this.answerRadios.find(s => s.questionId == questionId);
+    this.answerRadioService.edit(answerRadio.id, answerRadio).subscribe(
+      (res: any) => {
+      });
+  }
+
+
+
 
   answerCheckbox(questionId: number, i: number) {
     if (this.questions[i].answers.some(f => f.checked === true)) {

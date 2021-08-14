@@ -10,5 +10,6 @@ namespace Core.IRepository
         AnswerRadio Edit(AnswerRadio answerRadio);
         Task<AnswerRadio> GetAsync(int id);
         Task<IEnumerable<AnswerRadio>> GetByResearchAsync(int researchId);
+        Task<bool> IsExist(int id);
     }
 }

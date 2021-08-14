@@ -73,7 +73,7 @@ export class CredentialService {
 
   logout() {
     if (this.isResearcher())
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home/login']);
     else
       this.router.navigate(['/admin-login']);
     localStorage.removeItem(ConstEnum.token);

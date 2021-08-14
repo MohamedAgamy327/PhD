@@ -7,5 +7,6 @@ export * from './api/user.service';
 export * from './api/account.service';
 export * from './api/research.service';
 export * from './api/question.service';
+export * from './api/answer-radio.service';
 
 

@@ -4,14 +4,16 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210814125955_radioAnswerTable2")]
+    partial class radioAnswerTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -403,10 +405,11 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("AnswerId")
+                    b.Property<int>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int?>("QuestionId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("ResearchId")
@@ -659,8 +662,8 @@ namespace Data.Migrations
                             Email = "Admin@gmail.com",
                             IsRandomPassword = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 32, 204, 87, 218, 225, 29, 188, 103, 48, 15, 228, 1, 154, 196, 120, 105, 74, 40, 153, 196, 70, 32, 121, 34, 133, 126, 194, 72, 101, 95, 206, 241, 101, 126, 193, 166, 182, 42, 143, 83, 51, 113, 192, 95, 82, 176, 122, 206, 45, 120, 110, 106, 94, 28, 59, 178, 209, 174, 219, 169, 148, 192, 132, 167 },
-                            PasswordSalt = new byte[] { 250, 223, 4, 253, 203, 114, 219, 31, 93, 53, 102, 87, 242, 58, 49, 131, 226, 116, 183, 47, 31, 185, 87, 45, 165, 31, 247, 142, 21, 2, 76, 60, 249, 31, 123, 15, 38, 64, 184, 149, 35, 159, 210, 139, 45, 174, 183, 242, 79, 216, 140, 131, 254, 22, 183, 94, 51, 124, 189, 177, 71, 252, 168, 8, 244, 108, 11, 189, 12, 216, 86, 173, 154, 245, 110, 24, 51, 119, 211, 217, 203, 104, 49, 114, 180, 119, 191, 86, 69, 57, 102, 250, 152, 195, 134, 139, 9, 202, 1, 165, 154, 26, 135, 248, 137, 55, 168, 218, 68, 218, 224, 64, 101, 239, 163, 139, 180, 221, 194, 85, 233, 33, 128, 157, 126, 100, 31, 112 },
+                            PasswordHash = new byte[] { 253, 59, 105, 205, 87, 10, 20, 116, 109, 216, 68, 193, 88, 83, 169, 156, 78, 22, 8, 149, 81, 152, 64, 90, 96, 37, 169, 113, 149, 204, 240, 172, 54, 22, 233, 235, 155, 20, 118, 227, 190, 124, 233, 148, 227, 139, 80, 161, 23, 14, 180, 55, 101, 189, 189, 137, 13, 91, 177, 2, 28, 213, 176, 181 },
+                            PasswordSalt = new byte[] { 127, 205, 191, 102, 2, 177, 158, 149, 243, 219, 12, 184, 18, 92, 205, 27, 38, 170, 14, 202, 65, 79, 203, 68, 248, 48, 213, 244, 26, 236, 58, 140, 31, 126, 137, 251, 161, 131, 68, 11, 117, 127, 148, 158, 246, 150, 165, 181, 97, 75, 150, 207, 70, 126, 185, 126, 50, 66, 150, 232, 227, 118, 177, 8, 156, 156, 221, 13, 129, 129, 243, 196, 50, 87, 207, 80, 195, 79, 133, 94, 187, 79, 88, 83, 88, 52, 159, 11, 130, 174, 77, 101, 106, 160, 76, 164, 92, 142, 19, 215, 36, 116, 206, 218, 19, 71, 77, 38, 102, 150, 134, 140, 159, 18, 150, 249, 185, 40, 151, 193, 101, 136, 190, 145, 179, 0, 194, 163 },
                             Role = 0
                         });
                 });
@@ -680,7 +683,9 @@ namespace Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Answer", "Answer")
                         .WithMany("AnswerRadios")
-                        .HasForeignKey("AnswerId");
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.Research", "Research")
                         .WithMany("AnswerRadios")

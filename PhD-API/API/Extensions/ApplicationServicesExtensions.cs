@@ -21,6 +21,7 @@ namespace API.Extensions
 
             services.AddTransient<IJWTManager, JWTManager>();
             services.AddTransient<IResearchService, ResearchService>();
+            services.AddTransient<IAnswerRadioService, AnswerRadioService>();
             return services;
         }
     }
