@@ -9,5 +9,6 @@ namespace Domain.Entities
         public Question Question { get; set; }
         public ICollection<AnswerRadio> AnswerRadios { get; set; }
         public ICollection<AnswerCheckbox> AnswerCheckboxs { get; set; }
+        public ICollection<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
     }
 }

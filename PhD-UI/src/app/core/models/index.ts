@@ -6,4 +6,5 @@ export * from './survey/question.model';
 export * from './survey/answer-radio.model';
 export * from './survey/answer-number.model';
 export * from './survey/answer-checkbox.model';
+export * from './survey/answer-multi-amount.model';
 

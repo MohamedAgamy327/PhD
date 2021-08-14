@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question } from 'src/app/core/models';
-import { AnswerCheckboxService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount } from 'src/app/core/models';
+import { AnswerCheckboxService, AnswerMultiAmountService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -16,9 +16,10 @@ export class SurveyComponent implements OnInit {
   answerRadios: AnswerRadio[];
   answerNumbers: AnswerNumber[];
   answerCheckboxs: AnswerCheckbox[];
+  answerMultiAmounts: AnswerMultiAmount[];
 
   percentage = 0;
-  amountSum: number;
+
 
 
   constructor(
@@ -27,6 +28,7 @@ export class SurveyComponent implements OnInit {
     private answerRadioService: AnswerRadioService,
     private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
+    private answerMultiAmountService: AnswerMultiAmountService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
@@ -41,6 +43,7 @@ export class SurveyComponent implements OnInit {
     this.getAnswerRadios();
     this.getAnswerCheckboxs();
     this.getAnswerNumbers();
+    this.getAnswerMultiAmounts();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -91,7 +94,6 @@ export class SurveyComponent implements OnInit {
     return this.answerCheckboxs?.find(s => s.answerId == answerId);
   }
 
-
   answerCheckbox(questionId: number) {
     // tslint:disable-next-line: triple-equals
     const answercheckboxs = this.answerCheckboxs.filter(s => s.questionId == questionId);
@@ -123,15 +125,31 @@ export class SurveyComponent implements OnInit {
       });
   }
 
-  answerMultiAmount(questionId: number, i: number) {
-    if (this.questions[i].answers.some(f => f.amount)) {
-      console.log('questionId', questionId);
-      console.log('answerId', this.questions[i].answers.filter(f => f.amount));
-    }
+  // Answer MultiAmount
+
+  getAnswerMultiAmounts() {
+    this.answerMultiAmountService.get().subscribe(
+      (res: any) => {
+        this.answerMultiAmounts = res;
+      });
   }
 
-  getSumAmount(index: number) {
-    this.amountSum = this.questions[index].answers.filter(q => q.amount)
+  getAnswerMultiAmount(answerId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiAmounts?.find(s => s.answerId == answerId);
+  }
+
+  answerMultiAmount(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    const answercheckboxs = this.answerMultiAmounts.filter(s => s.questionId == questionId);
+    this.answerMultiAmountService.edit(answercheckboxs).subscribe(
+      (res: any) => {
+      });
+  }
+
+  getSumAmount(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiAmounts.filter(q => q.questionId == questionId && q.amount)
       .reduce((sum, current) => sum + current.amount, 0);
   }
 

@@ -24,5 +24,6 @@ namespace Domain.Entities
         public ICollection<AnswerRadio> AnswerRadios { get; set; }
         public ICollection<AnswerNumber> AnswerNumbers { get; set; }
         public ICollection<AnswerCheckbox> AnswerCheckboxs { get; set; }
+        public ICollection<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
     }
 }

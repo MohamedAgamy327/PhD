@@ -1,5 +1,3 @@
-<mat-toolbar color="primary"> {{'Survey' |translate}}</mat-toolbar>
-
 <form #surveyForm="ngForm">
 
 
@@ -46,7 +44,7 @@
 
                 <ul>
                     <li *ngFor="let answer of question.answers">
-                        <mat-checkbox *ngIf="getAnswerCheckbox(answer.id)" [ngModelOptions]="{standalone: true}" class="example-radio-button" [(ngModel)]="getAnswerCheckbox(answer.id).checked">
+                        <mat-checkbox *ngIf="getAnswerCheckbox(answer.id)" [ngModelOptions]="{standalone: true}" [(ngModel)]="getAnswerCheckbox(answer.id).checked" class="example-radio-button">
                             {{answer.content}}
                         </mat-checkbox>
                     </li>
@@ -107,17 +105,17 @@
                     <li *ngFor="let answer of question.answers">
                         <mat-form-field class="full-wid mrgn-b-xs" appearance="outline">
                             <mat-label>{{answer.content | translate}}</mat-label>
-                            <input (keyup)="getSumAmount(i)" OnlyNumber="true" min="0" name="amount{{i}}" [(ngModel)]="answer.amount" class="mrgn-t-none" matInput placeholder="{{'Amount' | translate}}" type="number">
+                            <input (keyup)="getSumAmount(i)" OnlyNumber="true" min="0" [ngModelOptions]="{standalone: true}" [(ngModel)]="getAnswerMultiAmount(answer.id).amount" class="mrgn-t-none" matInput placeholder="{{'Amount' | translate}}" type="number">
                         </mat-form-field>
                     </li>
                 </ul>
-                {{'Sum:' | translate}} {{ amountSum }}
+                {{'Sum:' | translate}} {{ getSumAmount(question.id) }}
             </mat-card-content>
 
             <mat-card-actions>
                 <button mat-button (click)="c.prev();prev(i);" [disabled]="c.isFirst()">{{'PREVIOUS' | translate}}</button>
 
-                <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)=" answerMultiAmount(question.id,i);c.next();next(i);">{{'NEXT' |
+                <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)=" answerMultiAmount(question.id);c.next();next(i);">{{'NEXT' |
           translate}}</button>
 
             </mat-card-actions>

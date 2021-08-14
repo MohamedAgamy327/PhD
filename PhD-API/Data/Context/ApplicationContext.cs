@@ -25,5 +25,6 @@ namespace Data.Context
         public DbSet<AnswerRadio> AnswerRadios { get; set; }
         public DbSet<AnswerNumber> AnswerNumbers { get; set; }
         public DbSet<AnswerCheckbox> AnswerCheckboxs { get; set; }
+        public DbSet<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
     }
 }

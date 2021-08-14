@@ -21,12 +21,14 @@ namespace API.Extensions
             services.AddScoped<IAnswerRadioRepository, AnswerRadioRepository>();
             services.AddScoped<IAnswerNumberRepository, AnswerNumberRepository>();
             services.AddScoped<IAnswerCheckboxRepository, AnswerCheckboxRepository>();
+            services.AddScoped<IAnswerMultiAmountRepository, AnswerMultiAmountRepository>();
 
             services.AddTransient<IJWTManager, JWTManager>();
             services.AddTransient<IResearchService, ResearchService>();
             services.AddTransient<IAnswerRadioService, AnswerRadioService>();
             services.AddTransient<IAnswerNumberService, AnswerNumberService>();
             services.AddTransient<IAnswerCheckboxService, AnswerCheckboxService>();
+            services.AddTransient<IAnswerMultiAmountService, AnswerMultiAmountService>();
             return services;
         }
     }
