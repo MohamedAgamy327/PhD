@@ -111,10 +111,10 @@ namespace API.Controllers
                 case ResearchStatusEnum.Accepted:
                     string ranadomPassword = SecurePassword.GeneratePassword(8);
                     SecurePassword.CreatePasswordHash(ranadomPassword, out byte[] passwordHash, out byte[] passwordSalt);
-                    //research.PasswordHash = passwordHash;
-                    //research.PasswordSalt = passwordSalt;
-                    //research.IsRandomPassword = true;
-                    //_researchRepository.Edit(research);
+                    research.PasswordHash = passwordHash;
+                    research.PasswordSalt = passwordSalt;
+                    research.IsRandomPassword = true;
+                    _researchRepository.Edit(research);
 
                     await _answerRadioService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
