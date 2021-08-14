@@ -22,6 +22,7 @@ namespace Domain.Entities
         public ResearchStatusEnum Status { get; set; }
         public bool? IsDeleted { get; set; }
         public ICollection<AnswerRadio> AnswerRadios { get; set; }
+        public ICollection<AnswerNumber> AnswerNumbers { get; set; }
         public ICollection<AnswerCheckbox> AnswerCheckboxs { get; set; }
     }
 }

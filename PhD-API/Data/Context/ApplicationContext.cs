@@ -23,6 +23,7 @@ namespace Data.Context
         public DbSet<Research> Researchs { get; set; }   
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerRadio> AnswerRadios { get; set; }
+        public DbSet<AnswerNumber> AnswerNumbers { get; set; }
         public DbSet<AnswerCheckbox> AnswerCheckboxs { get; set; }
     }
 }

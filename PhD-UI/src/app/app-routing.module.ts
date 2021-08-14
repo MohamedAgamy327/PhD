@@ -6,7 +6,7 @@ import { UserLoginComponent } from './components/register';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'admin-login', component: UserLoginComponent, canActivate: [LoginGuard] },
+  { path: 'admin-login', component: UserLoginComponent },
   { path: 'home', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
   { path: '**', component: PageNotFoundComponent }
 ];

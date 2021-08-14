@@ -10,8 +10,6 @@ using System.Security.Claims;
 using System.Linq;
 using System;
 using API.DTO.AnswerCheckbox;
-using API.Errors;
-using Utilities.StaticHelpers;
 using Domain.Entities;
 
 namespace API.Controllers
@@ -48,13 +46,11 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<AnswerCheckboxForGetDTO>> Put(AnswerCheckboxForEditDTO[] list)
         {
-
             foreach (var model in list)
             {
                 AnswerCheckbox answerCheckbox = _mapper.Map<AnswerCheckbox>(model);
                 AnswerCheckbox oldAnswerCheckbox = await _answerCheckboxRepository.GetAsync(model.Id).ConfigureAwait(true);
                 answerCheckbox.ResearchId = oldAnswerCheckbox.ResearchId;
-
                 _answerCheckboxRepository.Edit(answerCheckbox);
             }
 

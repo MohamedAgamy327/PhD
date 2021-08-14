@@ -27,10 +27,11 @@ namespace API.Controllers
         private readonly IResearchRepository _researchRepository;
         private readonly IResearchService _researchService;
         private readonly IAnswerRadioService _answerRadioService;
+        private readonly IAnswerNumberService _answerNumberService;
         private readonly IAnswerCheckboxService _answerCheckboxService;
         private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -39,6 +40,7 @@ namespace API.Controllers
             _researchService = researchService;
             _answerRadioService = answerRadioService;
             _answerCheckboxService = answerCheckboxService;
+            _answerNumberService = answerNumberService;
         }
 
         [HttpPost("Register")]
@@ -110,10 +112,11 @@ namespace API.Controllers
                     research.PasswordHash = passwordHash;
                     research.PasswordSalt = passwordSalt;
                     research.IsRandomPassword = true;
-                    _researchRepository.Edit(research);
+                 //   _researchRepository.Edit(research);
 
                     await _answerRadioService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                    await _answerNumberService.AddInitAnswer(research.Id).ConfigureAwait(true);
                
                     Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research.Name, ranadomPassword, Request));
                     break;

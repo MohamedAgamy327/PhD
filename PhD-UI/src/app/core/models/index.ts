@@ -4,5 +4,6 @@ export * from './menu/menu-item.model';
 export * from './menu/menu-item-children.model';
 export * from './survey/question.model';
 export * from './survey/answer-radio.model';
+export * from './survey/answer-number.model';
 export * from './survey/answer-checkbox.model';
 

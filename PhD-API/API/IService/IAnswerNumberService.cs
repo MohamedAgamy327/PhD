@@ -2,7 +2,7 @@
 
 namespace API.IService
 {
-    public interface IAnswerRadioService
+    public interface IAnswerNumberService
     {
         public Task AddInitAnswer(int researchId);
     }

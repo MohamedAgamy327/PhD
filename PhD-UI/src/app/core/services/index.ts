@@ -8,6 +8,7 @@ export * from './api/account.service';
 export * from './api/research.service';
 export * from './api/question.service';
 export * from './api/answer-radio.service';
+export * from './api/answer-number.service';
 export * from './api/answer-checkbox.service';
 
 

@@ -6,7 +6,4 @@ export interface Question {
   type: string;
   percentageRadio: boolean;
   answers: Answer[];
-
-  // radioAnswer: any;
-  numberAnswer: any;
 }

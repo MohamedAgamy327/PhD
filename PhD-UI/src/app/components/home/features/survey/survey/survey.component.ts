@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerCheckbox, AnswerRadio, Question } from 'src/app/core/models';
-import { AnswerCheckboxService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question } from 'src/app/core/models';
+import { AnswerCheckboxService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -14,6 +14,7 @@ export class SurveyComponent implements OnInit {
 
   questions: Question[];
   answerRadios: AnswerRadio[];
+  answerNumbers: AnswerNumber[];
   answerCheckboxs: AnswerCheckbox[];
 
   percentage = 0;
@@ -24,6 +25,7 @@ export class SurveyComponent implements OnInit {
     public coreService: CoreService,
     private toastrService: ToastrService,
     private answerRadioService: AnswerRadioService,
+    private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
@@ -38,6 +40,7 @@ export class SurveyComponent implements OnInit {
     this.getQuestions();
     this.getAnswerRadios();
     this.getAnswerCheckboxs();
+    this.getAnswerNumbers();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -98,9 +101,26 @@ export class SurveyComponent implements OnInit {
   }
 
 
-  answerNumber(questionId: number, asnwerNumber: number) {
-    console.log('questionId', questionId);
-    console.log('answer', asnwerNumber);
+  // Answer Number
+
+  getAnswerNumbers() {
+    this.answerNumberService.get().subscribe(
+      (res: any) => {
+        this.answerNumbers = res;
+      });
+  }
+
+  getAnswerNumber(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerNumbers.find(s => s.questionId == questionId);
+  }
+
+  answerNumber(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    const answerNumber = this.answerNumbers.find(s => s.questionId == questionId);
+    this.answerNumberService.edit(answerNumber.id, answerNumber).subscribe(
+      (res: any) => {
+      });
   }
 
   answerMultiAmount(questionId: number, i: number) {
