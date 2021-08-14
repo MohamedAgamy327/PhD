@@ -46,7 +46,7 @@
 
                 <ul>
                     <li *ngFor="let answer of question.answers">
-                        <mat-checkbox name="checked{{i}}" class="example-radio-button" [(ngModel)]="answer.checked">
+                        <mat-checkbox [ngModelOptions]="{standalone: true}" class="example-radio-button" [(ngModel)]="getAnswerCheckbox(answer.id).checked">
                             {{answer.content}}
                         </mat-checkbox>
                     </li>
@@ -58,7 +58,7 @@
                 <button mat-raised-button color="primary" [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" *ngIf="c.isLast(); else nextBtn">{{'SUBMIT' |
           translate}}</button>
                 <ng-template #nextBtn>
-                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="answerCheckbox(question.id,i);c.next();next(i);">{{'NEXT' |
+                    <button mat-button [ngStyle]="{'float':coreService.layout === 'ltr' ? 'right' : 'left' }" (click)="answerCheckbox(question.id);c.next();next(i);">{{'NEXT' |
             translate}}</button>
                 </ng-template>
             </mat-card-actions>

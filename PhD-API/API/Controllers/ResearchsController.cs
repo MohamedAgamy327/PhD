@@ -27,9 +27,10 @@ namespace API.Controllers
         private readonly IResearchRepository _researchRepository;
         private readonly IResearchService _researchService;
         private readonly IAnswerRadioService _answerRadioService;
+        private readonly IAnswerCheckboxService _answerCheckboxService;
         private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService )
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -37,6 +38,7 @@ namespace API.Controllers
             _jwtManager = jwtManager;
             _researchService = researchService;
             _answerRadioService = answerRadioService;
+            _answerCheckboxService = answerCheckboxService;
         }
 
         [HttpPost("Register")]
@@ -111,6 +113,7 @@ namespace API.Controllers
                     _researchRepository.Edit(research);
 
                     await _answerRadioService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                    await _answerCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
                
                     Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research.Name, ranadomPassword, Request));
                     break;

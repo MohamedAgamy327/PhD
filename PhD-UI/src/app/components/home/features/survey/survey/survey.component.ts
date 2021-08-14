@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerRadio, Question } from 'src/app/core/models';
-import { AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerCheckbox, AnswerRadio, Question } from 'src/app/core/models';
+import { AnswerCheckboxService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -14,6 +14,7 @@ export class SurveyComponent implements OnInit {
 
   questions: Question[];
   answerRadios: AnswerRadio[];
+  answerCheckboxs: AnswerCheckbox[];
 
   percentage = 0;
   amountSum: number;
@@ -23,6 +24,7 @@ export class SurveyComponent implements OnInit {
     public coreService: CoreService,
     private toastrService: ToastrService,
     private answerRadioService: AnswerRadioService,
+    private answerCheckboxService: AnswerCheckboxService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
@@ -35,6 +37,7 @@ export class SurveyComponent implements OnInit {
     this.titleService.setTitle(this.translate.instant('Survey'));
     this.getQuestions();
     this.getAnswerRadios();
+    this.getAnswerCheckboxs();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -54,15 +57,16 @@ export class SurveyComponent implements OnInit {
     this.answerRadioService.get().subscribe(
       (res: any) => {
         this.answerRadios = res;
-        console.log(this.answerRadios)
       });
   }
 
   getAnswerRadio(questionId: number) {
+    // tslint:disable-next-line: triple-equals
     return this.answerRadios.find(s => s.questionId == questionId);
   }
 
   answerRadio(questionId: number) {
+    // tslint:disable-next-line: triple-equals
     const answerRadio = this.answerRadios.find(s => s.questionId == questionId);
     this.answerRadioService.edit(answerRadio.id, answerRadio).subscribe(
       (res: any) => {
@@ -70,18 +74,29 @@ export class SurveyComponent implements OnInit {
   }
 
 
+  // Answer Checkbox
 
-
-  answerCheckbox(questionId: number, i: number) {
-    if (this.questions[i].answers.some(f => f.checked === true)) {
-      console.log('questionId', questionId);
-      console.log('answerId', this.questions[i].answers.filter(f => f.checked === true));
-    }
+  getAnswerCheckboxs() {
+    this.answerCheckboxService.get().subscribe(
+      (res: any) => {
+        this.answerCheckboxs = res;
+      });
   }
 
-  // checkCheckbox(i: number) {
-  //   return this.questions[i].answers.some(f => f.checked === true);
-  // }
+  getAnswerCheckbox(answerId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerCheckboxs?.find(s => s.answerId == answerId);
+  }
+
+
+  answerCheckbox(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    const answercheckboxs = this.answerCheckboxs.filter(s => s.questionId == questionId);
+    this.answerCheckboxService.edit(answercheckboxs).subscribe(
+      (res: any) => {
+      });
+  }
+
 
   answerNumber(questionId: number, asnwerNumber: number) {
     console.log('questionId', questionId);
