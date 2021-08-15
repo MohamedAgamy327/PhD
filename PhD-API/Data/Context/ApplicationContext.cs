@@ -27,5 +27,6 @@ namespace Data.Context
         public DbSet<AnswerCheckbox> AnswerCheckboxs { get; set; }
         public DbSet<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
         public DbSet<AnswerMultiPercentage> AnswerMultiPercentages { get; set; }
+        public DbSet<AnswerMultiCheckbox> AnswerMultiCheckboxs { get; set; }
     }
 }

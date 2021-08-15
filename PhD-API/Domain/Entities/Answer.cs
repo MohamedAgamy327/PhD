@@ -11,5 +11,6 @@ namespace Domain.Entities
         public ICollection<AnswerCheckbox> AnswerCheckboxs { get; set; }
         public ICollection<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
         public ICollection<AnswerMultiPercentage> AnswerMultiPercentages { get; set; }
+        public ICollection<AnswerMultiCheckbox> AnswerMultiCheckboxs { get; set; }
     }
 }

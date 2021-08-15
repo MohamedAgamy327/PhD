@@ -31,9 +31,10 @@ namespace API.Controllers
         private readonly IAnswerCheckboxService _answerCheckboxService;
         private readonly IAnswerMultiAmountService _answerMultiAmountService;
         private readonly IAnswerMultiPercentageService _answerMultiPercentageService;
+        private readonly IAnswerMultiCheckboxService _answerMultiCheckboxService;
         private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService, IAnswerMultiAmountService answerMultiAmountService, IAnswerMultiPercentageService answerMultiPercentageService)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService, IAnswerMultiAmountService answerMultiAmountService, IAnswerMultiPercentageService answerMultiPercentageService, IAnswerMultiCheckboxService answerMultiCheckboxService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -45,6 +46,7 @@ namespace API.Controllers
             _answerNumberService = answerNumberService;
             _answerMultiAmountService = answerMultiAmountService;
             _answerMultiPercentageService = answerMultiPercentageService;
+            _answerMultiCheckboxService = answerMultiCheckboxService;
         }
 
         [HttpPost("Register")]
@@ -113,16 +115,17 @@ namespace API.Controllers
                 case ResearchStatusEnum.Accepted:
                     string ranadomPassword = SecurePassword.GeneratePassword(8);
                     SecurePassword.CreatePasswordHash(ranadomPassword, out byte[] passwordHash, out byte[] passwordSalt);
-                    //research.PasswordHash = passwordHash;
-                    //research.PasswordSalt = passwordSalt;
-                    //research.IsRandomPassword = true;
-                    //_researchRepository.Edit(research);
+                    research.PasswordHash = passwordHash;
+                    research.PasswordSalt = passwordSalt;
+                    research.IsRandomPassword = true;
+                    _researchRepository.Edit(research);
 
                     await _answerRadioService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerNumberService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerMultiAmountService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerMultiPercentageService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                    await _answerMultiCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
 
                     Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research.Name, ranadomPassword, Request));
                     break;

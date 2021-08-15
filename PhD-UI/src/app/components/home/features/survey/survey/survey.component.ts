@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount, AnswerMultiPercentage } from 'src/app/core/models';
-import { AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiPercentageService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount, AnswerMultiPercentage, AnswerMultiCheckbox } from 'src/app/core/models';
+import { AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiCheckboxService, AnswerMultiPercentageService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -18,6 +18,7 @@ export class SurveyComponent implements OnInit {
   answerCheckboxs: AnswerCheckbox[];
   answerMultiAmounts: AnswerMultiAmount[];
   answerMultiPercentages: AnswerMultiPercentage[];
+  answerMultiCheckboxs: AnswerMultiCheckbox[];
 
   percentage = 0;
 
@@ -29,6 +30,7 @@ export class SurveyComponent implements OnInit {
     private answerCheckboxService: AnswerCheckboxService,
     private answerMultiAmountService: AnswerMultiAmountService,
     private answerMultiPercentageService: AnswerMultiPercentageService,
+    private answerMultiCheckboxService: AnswerMultiCheckboxService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
@@ -45,6 +47,7 @@ export class SurveyComponent implements OnInit {
     this.getAnswerNumbers();
     this.getAnswerMultiAmounts();
     this.getAnswerMultiPercentages();
+    this.getAnswerMultiCheckboxs();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -175,14 +178,38 @@ export class SurveyComponent implements OnInit {
 
   answerMultiPercentage(questionId: number) {
     // tslint:disable-next-line: triple-equals
-
     const answercheckboxs = this.answerMultiPercentages.filter(s => s.questionId == questionId);
-
     this.answerMultiPercentageService.edit(answercheckboxs).subscribe(
       (res: any) => {
       });
   }
 
+  // Answer MultiCheckbox
+
+  getAnswerMultiCheckboxs() {
+    this.answerMultiCheckboxService.get().subscribe(
+      (res: any) => {
+        this.answerMultiCheckboxs = res;
+      });
+  }
+
+  getAnswerMultiCheckboxRadio(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiCheckboxs?.find(s => s.questionId == questionId);
+  }
+
+  getAnswerMultiCheckbox(answerId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiCheckboxs?.find(s => s.answerId == answerId);
+  }
+
+  answerMultiCheckbox(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    const answercheckboxs = this.answerMultiCheckboxs.filter(s => s.questionId == questionId);
+    this.answerMultiCheckboxService.edit(answercheckboxs).subscribe(
+      (res: any) => {
+      });
+  }
 
   next(i: number) {
     this.getPercentage(i);

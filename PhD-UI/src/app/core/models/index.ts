@@ -8,4 +8,5 @@ export * from './survey/answer-number.model';
 export * from './survey/answer-checkbox.model';
 export * from './survey/answer-multi-amount.model';
 export * from './survey/answer-multi-percentage.model';
+export * from './survey/answer-multi-checkbox.model';
 
