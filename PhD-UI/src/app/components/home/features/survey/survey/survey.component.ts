@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount } from 'src/app/core/models';
-import { AnswerCheckboxService, AnswerMultiAmountService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount, AnswerMultiPercentage } from 'src/app/core/models';
+import { AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiPercentageService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -17,10 +17,9 @@ export class SurveyComponent implements OnInit {
   answerNumbers: AnswerNumber[];
   answerCheckboxs: AnswerCheckbox[];
   answerMultiAmounts: AnswerMultiAmount[];
+  answerMultiPercentages: AnswerMultiPercentage[];
 
   percentage = 0;
-
-
 
   constructor(
     public coreService: CoreService,
@@ -29,6 +28,7 @@ export class SurveyComponent implements OnInit {
     private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
     private answerMultiAmountService: AnswerMultiAmountService,
+    private answerMultiPercentageService: AnswerMultiPercentageService,
     private questionService: QuestionService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
@@ -44,6 +44,7 @@ export class SurveyComponent implements OnInit {
     this.getAnswerCheckboxs();
     this.getAnswerNumbers();
     this.getAnswerMultiAmounts();
+    this.getAnswerMultiPercentages();
   }
 
   public get QuestionType(): typeof QuestionEnum {
@@ -153,12 +154,41 @@ export class SurveyComponent implements OnInit {
       .reduce((sum, current) => sum + current.amount, 0);
   }
 
+  // Answer MultiPercentage
+
+  getAnswerMultiPercentages() {
+    this.answerMultiPercentageService.get().subscribe(
+      (res: any) => {
+        this.answerMultiPercentages = res;
+      });
+  }
+
+  getAnswerMultiPercentageRadio(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiPercentages?.find(s => s.questionId == questionId);
+  }
+
+  getAnswerMultiPercentage(answerId: number) {
+    // tslint:disable-next-line: triple-equals
+    return this.answerMultiPercentages?.find(s => s.answerId == answerId);
+  }
+
+  answerMultiPercentage(questionId: number) {
+    // tslint:disable-next-line: triple-equals
+
+    const answercheckboxs = this.answerMultiPercentages.filter(s => s.questionId == questionId);
+
+    this.answerMultiPercentageService.edit(answercheckboxs).subscribe(
+      (res: any) => {
+      });
+  }
+
+
   next(i: number) {
     this.getPercentage(i);
   }
 
   prev(i: number) {
-    console.log(this.questions);
     this.getPercentage(i);
   }
 

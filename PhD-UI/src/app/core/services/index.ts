@@ -11,5 +11,6 @@ export * from './api/answer-radio.service';
 export * from './api/answer-number.service';
 export * from './api/answer-checkbox.service';
 export * from './api/answer-multi-amount.service';
+export * from './api/answer-multi-percentage.service';
 
 
