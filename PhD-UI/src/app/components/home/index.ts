@@ -10,3 +10,4 @@ export * from './confirm-dialog/confirm-dialog.component';
 export * from './introduction/introduction.component';
 export * from './research-team/research-team.component';
 export * from './research-login/research-login.component';
+export * from './user-login/user-login.component';

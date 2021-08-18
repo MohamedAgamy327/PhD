@@ -10,7 +10,8 @@ import {
   HeaderImgComponent,
   IntroductionComponent,
   ResearchTeamComponent,
-  ResearchLoginComponent
+  ResearchLoginComponent,
+  UserLoginComponent
 } from '.';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,7 +37,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HeaderImgComponent,
     IntroductionComponent,
     ResearchTeamComponent,
-    ResearchLoginComponent
+    ResearchLoginComponent,
+    UserLoginComponent
   ],
   entryComponents: [
     DeleteDialogComponent,

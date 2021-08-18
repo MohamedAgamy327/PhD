@@ -21,7 +21,6 @@ export class UserLoginComponent implements OnInit {
   sliderList: any[] = LoginSliderList;
 
   constructor(
-    private credentialService: CredentialService,
     public coreService: CoreService,
     private accountService: AccountService,
     private router: Router,

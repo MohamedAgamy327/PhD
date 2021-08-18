@@ -14,7 +14,6 @@ import { SharedModule } from './shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { BreadcrumbService } from 'ng5-breadcrumb';
-import { UserLoginComponent } from './components/register';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -25,8 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
-    UserLoginComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

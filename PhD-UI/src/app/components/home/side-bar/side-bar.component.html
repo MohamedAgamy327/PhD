@@ -6,7 +6,7 @@
                 <mat-nav-list fxLayout="column" menuToggleDirective class="navigation">
                     <mat-list-item menuToggleLink *ngFor="let menuitem of menuList">
                         <ng-container *ngIf="menuitem.roles.indexOf(credentialService.getUser().role)  !== -1">
-                            <a menuToggle *ngIf="menuitem.type === 'link'" class="gene-relative" mat-ripple [routerLink]="['/'+ menuitem.state]" routerLinkActive="active-link">
+                            <a menuToggle *ngIf="menuitem.type === 'link'" class="gene-relative" mat-ripple [routerLink]="['/'+ menuitem.state]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
                                 <mat-icon>{{ menuitem.icon }}</mat-icon>
                                 <span>{{ menuitem.name | translate }}</span>
                             </a>
@@ -22,7 +22,7 @@
                             </a>
                             <mat-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub'">
                                 <mat-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
-                                    <a *ngIf="childitem.roles.indexOf(credentialService.getUser().role)  !== -1" [routerLink]="['/'+childitem.state ]" routerLinkActive="active-link" class="gene-relative" mat-ripple>
+                                    <a *ngIf="childitem.roles.indexOf(credentialService.getUser().role)  !== -1" [routerLink]="['/'+childitem.state ]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="gene-relative" mat-ripple>
                     {{ childitem.name | translate }}
                     <ng-container *ngIf="childitem.label">
                       <span class="sidebar-label">{{childitem.label}}</span>

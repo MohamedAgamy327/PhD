@@ -25,7 +25,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
           if (error.status === 401) {
             this.toastrService.error(error.error.message, 'Error');
-            // this.router.navigate(['/login']);
+            if (this.router.url !== '/home/login' && this.router.url !== '/home/admin-login')
+              this.router.navigate(['/home/login']);
           }
           if (error.status === 404) {
             this.router.navigateByUrl('/not-found');
