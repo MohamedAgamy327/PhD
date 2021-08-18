@@ -4,6 +4,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { CredentialService } from '../services';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private credentialService: CredentialService,
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -26,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (error.status === 401) {
             this.toastrService.error(error.error.message, 'Error');
             if (this.router.url !== '/home/login' && this.router.url !== '/home/admin-login')
-              this.router.navigate(['/home/login']);
+              this.credentialService.logout();
           }
           if (error.status === 404) {
             this.router.navigateByUrl('/not-found');

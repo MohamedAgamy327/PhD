@@ -72,11 +72,14 @@ export class CredentialService {
 
 
   logout() {
-    if (this.isResearcher())
+    if (this.isResearcher()) {
+      localStorage.removeItem(ConstEnum.token);
       this.router.navigate(['/home/login']);
-    else
+    }
+    else {
+      localStorage.removeItem(ConstEnum.token);
       this.router.navigate(['/home/admin-login']);
-    localStorage.removeItem(ConstEnum.token);
+    }
   }
 
 }

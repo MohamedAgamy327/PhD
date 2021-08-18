@@ -19,15 +19,19 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.credentialService.isLoggedIn() && this.credentialService.checkTokenExpire()) {
-      if (next.data.roles && next.data.roles.indexOf(this.credentialService.getUser().role) === -1) {
-        this.route.navigate(['/home']);
-        return false;
-      }
-      return true;
+    if (this.credentialService.isLoggedIn() && !this.credentialService.checkTokenExpire()) {
+      this.credentialService.logout();
+      return false;
     }
-    this.route.navigate(['/home/login'], { queryParams: { returnUrl: state.url } });
-    return false;
+    else if (next.data.roles && next.data.roles.indexOf(this.credentialService.getUser().role) === -1) {
+      this.route.navigate(['/home']);
+      return false;
+    }
+    else
+      return true;
+
+    // this.route.navigate(['/home/login'], { queryParams: { returnUrl: state.url } });
+    // return false;
   }
 
 }
