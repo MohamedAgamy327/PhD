@@ -20,7 +20,6 @@ namespace Domain.Entities
         public byte[] PasswordSalt { get; set; }
         public bool IsRandomPassword { get; set; }
         public ResearchStatusEnum Status { get; set; }
-        public bool? IsDeleted { get; set; }
         public ICollection<AnswerRadio> AnswerRadios { get; set; }
         public ICollection<AnswerNumber> AnswerNumbers { get; set; }
         public ICollection<AnswerCheckbox> AnswerCheckboxs { get; set; }

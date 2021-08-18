@@ -10,7 +10,7 @@ namespace API.Service
             string body = "Hi: " + name + "<br/>";
             body += "Your research is accepted <br/>";
             body += "Your password is: " + password + "<br/>";
-            body += $"Get started from <a href={request.Scheme}://{request.Host}{request.PathBase}//login target='_blank'> Here </a>" + "<br/>";
+            body += $"Get started from <a href={request.Scheme}://{request.Host}{request.PathBase}//home/login target='_blank'> Here </a>" + "<br/>";
             body += "Regards, " + "<br/>";
             body += "PhD managment system";
             return body;

@@ -189,8 +189,8 @@ namespace API.Controllers
 
             Research research = await _researchRepository.GetAsync(id).ConfigureAwait(true);
 
-            research.IsDeleted = true;
-            _researchRepository.Edit(research);
+            //research.IsDeleted = true;
+            _researchRepository.Remove(research);
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
