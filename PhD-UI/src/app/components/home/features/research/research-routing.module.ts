@@ -8,7 +8,6 @@ const routes: Routes = [
   {
     path: '', children: [
       { path: '', component: ResearchsComponent },
-
       { path: ':id', component: ResearchShowComponent }
     ]
 

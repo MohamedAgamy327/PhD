@@ -127,7 +127,7 @@ namespace API.Controllers
                     await _answerMultiPercentageService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerMultiCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
 
-                    Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research.Name, ranadomPassword, Request));
+                    Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research, _jwtManager.GenerateToken(research), ranadomPassword, Request));
                     break;
 
                 case ResearchStatusEnum.Pending:

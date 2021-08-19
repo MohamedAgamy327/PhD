@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { RoleEnum, ConstEnum } from '../enums';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +34,17 @@ export class CredentialService {
     } else {
       return true;
     }
+  }
+
+  checkToken(token: string) {
+    try {
+      if (jwt_decode(token) !== undefined)
+        return true;
+      return false;
+    } catch (error) {
+      return false;
+    }
+
   }
 
   isLoggedIn() {

@@ -1,16 +1,20 @@
 ﻿using API.IService;
+using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace API.Service
 {
     public class ResearchService : IResearchService
     {
-        public string CreateAcceptMailTemplate(string name, string password, HttpRequest request)
+        public string CreateAcceptMailTemplate(Research research, string token, string password, HttpRequest request)
         {
-            string body = "Hi: " + name + "<br/>";
+            string body = "Hi: " + research.Name + "<br/>";
             body += "Your research is accepted <br/>";
+            body += "You can login by your credential info <br/>";
+            body += "Your Email is: " + research.Email + "<br/>";
             body += "Your password is: " + password + "<br/>";
-            body += $"Get started from <a href={request.Scheme}://{request.Host}{request.PathBase}//home/login target='_blank'> Here </a>" + "<br/>";
+            body += " or by clicking  this link <br/>";
+            body += $"<a href={request.Scheme}://{request.Host}{request.PathBase}/home?token={token} target='_blank'>Start From Here </a>" + "<br/>";
             body += "Regards, " + "<br/>";
             body += "PhD managment system";
             return body;
