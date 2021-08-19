@@ -24,9 +24,10 @@ namespace Data.Context
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerRadio> AnswerRadios { get; set; }
         public DbSet<AnswerNumber> AnswerNumbers { get; set; }
-        public DbSet<AnswerCheckbox> AnswerCheckboxs { get; set; }
+        public DbSet<AnswerCheckbox> AnswerCheckboxs { get; set; }     
+        public DbSet<ResearchQuestion> ResearchsQuestions { get; set; }
         public DbSet<AnswerMultiAmount> AnswerMultiAmounts { get; set; }
-        public DbSet<AnswerMultiPercentage> AnswerMultiPercentages { get; set; }
         public DbSet<AnswerMultiCheckbox> AnswerMultiCheckboxs { get; set; }
+        public DbSet<AnswerMultiPercentage> AnswerMultiPercentages { get; set; }
     }
 }

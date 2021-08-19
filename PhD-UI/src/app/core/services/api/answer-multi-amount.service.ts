@@ -14,7 +14,7 @@ export class AnswerMultiAmountService {
     private http: HttpClient
   ) { }
 
-  edit(model: any): Observable<any> {
+  edit(model: any) {
     return this.http.put(`${environment.serverUrl}answerMultiAmounts`, model);
   }
 

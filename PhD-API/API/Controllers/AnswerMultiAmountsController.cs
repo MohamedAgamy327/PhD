@@ -21,12 +21,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerMultiAmountRepository _answerMultiAmountRepository;
+        private readonly IResearchQuestionRepository _researchQuestionRepository;
 
-        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository)
+        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository, IResearchQuestionRepository researchQuestionRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiAmountRepository = answerMultiAmountRepository;
+            _researchQuestionRepository = researchQuestionRepository;
         }
 
         [HttpGet]

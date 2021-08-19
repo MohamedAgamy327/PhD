@@ -24,12 +24,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerRadioRepository _answerRadioRepository;
+        private readonly IResearchQuestionRepository _researchQuestionRepository;
 
-        public AnswerRadiosController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerRadioRepository answerRadioRepository)
+        public AnswerRadiosController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerRadioRepository answerRadioRepository, IResearchQuestionRepository researchQuestionRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerRadioRepository = answerRadioRepository;
+            _researchQuestionRepository = researchQuestionRepository;
         }
 
         [HttpGet]
@@ -55,16 +57,28 @@ namespace API.Controllers
             if (!await _answerRadioRepository.IsExist(id).ConfigureAwait(true))
                 return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Answer", id)));
 
-
             AnswerRadio answerRadio = _mapper.Map<AnswerRadio>(model);
             AnswerRadio oldAnswerRadio = await _answerRadioRepository.GetAsync(model.Id).ConfigureAwait(true);
             answerRadio.ResearchId = oldAnswerRadio.ResearchId;
 
             _answerRadioRepository.Edit(answerRadio);
-            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            AnswerRadioForGetDTO answerRadioDto = _mapper.Map<AnswerRadioForGetDTO>(answerRadio);
-            return Ok(answerRadioDto);
+            var researchQuestion = await _researchQuestionRepository.GetAsync(oldAnswerRadio.ResearchId, oldAnswerRadio.QuestionId);
+
+            if (model.AnswerId == null && researchQuestion != null)
+            {
+                _researchQuestionRepository.Remove(researchQuestion);
+            }
+            else if (model.AnswerId != null && researchQuestion == null)
+            {
+              await  _researchQuestionRepository.AddAsync(new ResearchQuestion
+                {
+                    QuestionId = oldAnswerRadio.QuestionId,
+                    ResearchId = oldAnswerRadio.ResearchId
+                });
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok(await _researchQuestionRepository.GetCountAsync(oldAnswerRadio.ResearchId));
         }
 
     }

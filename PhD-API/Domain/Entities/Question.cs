@@ -9,5 +9,6 @@ namespace Domain.Entities
         public string Content { get; set; }
         public QuestionTypeNum Type { get; set; }
         public ICollection<Answer> Answers { get; set; }
+        public ICollection<ResearchQuestion> ResearchsQuestions { get; set; }
     }
 }

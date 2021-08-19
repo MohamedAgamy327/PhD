@@ -14,7 +14,7 @@ export class AnswerRadioService {
     private http: HttpClient
   ) { }
 
-  edit(id: number, model: any): Observable<any> {
+  edit(id: number, model: any) {
     return this.http.put(`${environment.serverUrl}answerRadios/${id}`, model);
   }
 

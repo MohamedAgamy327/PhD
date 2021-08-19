@@ -21,12 +21,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerMultiCheckboxRepository _answerMultiCheckboxRepository;
+        private readonly IResearchQuestionRepository _researchQuestionRepository;
 
-        public AnswerMultiCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiCheckboxRepository answerMultiCheckboxRepository)
+        public AnswerMultiCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiCheckboxRepository answerMultiCheckboxRepository, IResearchQuestionRepository researchQuestionRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiCheckboxRepository = answerMultiCheckboxRepository;
+            _researchQuestionRepository = researchQuestionRepository;
         }
 
         [HttpGet]
@@ -39,7 +41,6 @@ namespace API.Controllers
             List<AnswerMultiCheckboxForGetDTO> answers = _mapper.Map<List<AnswerMultiCheckboxForGetDTO>>(await _answerMultiCheckboxRepository.GetByResearchAsync(Convert.ToInt32(userId)).ConfigureAwait(true));
             return Ok(answers);
         }
-
 
         [HttpPut]
         [Authorize(Roles = "Researcher")]

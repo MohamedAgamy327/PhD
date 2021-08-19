@@ -11,10 +11,6 @@ namespace API.Validator.AnswerNumber
                    .NotNull()
                    .NotEmpty();
 
-            RuleFor(x => x.Number)
-                  .NotNull()
-                  .NotEmpty();
-
             RuleFor(x => x.Id)
                 .NotNull()
                 .NotEmpty();

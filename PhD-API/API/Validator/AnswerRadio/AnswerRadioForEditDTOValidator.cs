@@ -11,9 +11,6 @@ namespace API.Validator.AnswerRadio
                    .NotNull()
                    .NotEmpty();
 
-            RuleFor(x => x.AnswerId)
-                  .NotNull()
-                  .NotEmpty();
 
             RuleFor(x => x.Id)
                 .NotNull()

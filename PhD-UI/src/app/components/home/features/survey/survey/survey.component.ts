@@ -1,15 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
 import { QuestionEnum } from 'src/app/core/enums';
-import { AnswerCheckbox, AnswerRadio, AnswerNumber, Question, AnswerMultiAmount, AnswerMultiPercentage, AnswerMultiCheckbox } from 'src/app/core/models';
-import { AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiCheckboxService, AnswerMultiPercentageService, AnswerNumberService, AnswerRadioService, CoreService, PageTitleService, QuestionService } from 'src/app/core/services';
+import {
+  AnswerCheckbox, AnswerRadio, AnswerNumber,
+  Question, AnswerMultiAmount, AnswerMultiPercentage, AnswerMultiCheckbox
+} from 'src/app/core/models';
+import {
+  AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiCheckboxService,
+  AnswerMultiPercentageService, AnswerNumberService, AnswerRadioService, CoreService,
+  PageTitleService, QuestionService
+} from 'src/app/core/services';
+
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css']
 })
+
 export class SurveyComponent implements OnInit {
 
   questions: Question[];
@@ -21,10 +29,10 @@ export class SurveyComponent implements OnInit {
   answerMultiCheckboxs: AnswerMultiCheckbox[];
 
   percentage = 0;
+  percent = 0;
 
   constructor(
     public coreService: CoreService,
-    private toastrService: ToastrService,
     private answerRadioService: AnswerRadioService,
     private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
@@ -57,7 +65,8 @@ export class SurveyComponent implements OnInit {
   getQuestions() {
     this.questionService.getAll().subscribe(
       (res: any) => {
-        this.questions = res;
+        this.questions = res.questions;
+        this.percent = this.getPercentage(res.count);
       });
   }
 
@@ -80,6 +89,7 @@ export class SurveyComponent implements OnInit {
     const answerRadio = this.answerRadios.find(s => s.questionId == questionId);
     this.answerRadioService.edit(answerRadio.id, answerRadio).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 
@@ -103,6 +113,7 @@ export class SurveyComponent implements OnInit {
     const answercheckboxs = this.answerCheckboxs.filter(s => s.questionId == questionId);
     this.answerCheckboxService.edit(answercheckboxs).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 
@@ -126,6 +137,7 @@ export class SurveyComponent implements OnInit {
     const answerNumber = this.answerNumbers.find(s => s.questionId == questionId);
     this.answerNumberService.edit(answerNumber.id, answerNumber).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 
@@ -212,15 +224,15 @@ export class SurveyComponent implements OnInit {
   }
 
   next(i: number) {
-    this.getPercentage(i);
+    this.percentage = this.getPercentage(i + 1);
   }
 
   prev(i: number) {
-    this.getPercentage(i);
+    this.percentage = this.getPercentage(i + 1);
   }
 
   getPercentage(i: number) {
-    this.percentage = ((i + 1) / this.questions.length) * 100;
+    return (i / this.questions.length) * 100;
   }
 
 }

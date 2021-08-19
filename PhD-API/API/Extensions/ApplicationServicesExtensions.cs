@@ -24,6 +24,7 @@ namespace API.Extensions
             services.AddScoped<IAnswerMultiAmountRepository, AnswerMultiAmountRepository>();
             services.AddScoped<IAnswerMultiPercentageRepository, AnswerMultiPercentageRepository>();
             services.AddScoped<IAnswerMultiCheckboxRepository, AnswerMultiCheckboxRepository>();
+            services.AddScoped<IResearchQuestionRepository, ResearchQuestionRepository>();
 
             services.AddTransient<IJWTManager, JWTManager>();
             services.AddTransient<IResearchService, ResearchService>();
@@ -32,6 +33,7 @@ namespace API.Extensions
             services.AddTransient<IAnswerCheckboxService, AnswerCheckboxService>();
             services.AddTransient<IAnswerMultiAmountService, AnswerMultiAmountService>();
             services.AddTransient<IAnswerMultiPercentageService, AnswerMultiPercentageService>();
+            services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();
             services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();
 
             return services;

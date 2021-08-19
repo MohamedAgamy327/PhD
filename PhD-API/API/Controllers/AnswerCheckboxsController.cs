@@ -21,12 +21,13 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerCheckboxRepository _answerCheckboxRepository;
-
-        public AnswerCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerCheckboxRepository answerCheckboxRepository)
+        private readonly IResearchQuestionRepository _researchQuestionRepository;
+        public AnswerCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerCheckboxRepository answerCheckboxRepository, IResearchQuestionRepository researchQuestionRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerCheckboxRepository = answerCheckboxRepository;
+            _researchQuestionRepository = researchQuestionRepository;
         }
 
         [HttpGet]
@@ -54,9 +55,28 @@ namespace API.Controllers
                 _answerCheckboxRepository.Edit(answerCheckbox);
             }
 
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+
+            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
+
+            if (list.All(d => d.Checked == false) && researchQuestion != null)
+            {
+                _researchQuestionRepository.Remove(researchQuestion);
+            }
+            else if (list.Any(d => d.Checked == true) && researchQuestion == null)
+            {
+                await _researchQuestionRepository.AddAsync(new ResearchQuestion
+                {
+                    QuestionId = list[0].QuestionId,
+                    ResearchId = Convert.ToInt32(userId)
+                });
+            }
+
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            return Ok();
+
+            return Ok(await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)));
         }
 
     }

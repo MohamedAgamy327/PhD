@@ -24,12 +24,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerNumberRepository _answerNumberRepository;
+        private readonly IResearchQuestionRepository _researchQuestionRepository;
 
-        public AnswerNumbersController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerNumberRepository answerNumberRepository)
+        public AnswerNumbersController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerNumberRepository answerNumberRepository, IResearchQuestionRepository researchQuestionRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerNumberRepository = answerNumberRepository;
+            _researchQuestionRepository = researchQuestionRepository;
         }
 
         [HttpGet]
@@ -55,16 +57,30 @@ namespace API.Controllers
             if (!await _answerNumberRepository.IsExist(id).ConfigureAwait(true))
                 return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Answer", id)));
 
-
             AnswerNumber answerNumber = _mapper.Map<AnswerNumber>(model);
             AnswerNumber oldAnswerNumber = await _answerNumberRepository.GetAsync(model.Id).ConfigureAwait(true);
             answerNumber.ResearchId = oldAnswerNumber.ResearchId;
 
             _answerNumberRepository.Edit(answerNumber);
-            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+        
 
-            AnswerNumberForGetDTO answerNumberDto = _mapper.Map<AnswerNumberForGetDTO>(answerNumber);
-            return Ok(answerNumberDto);
+
+            var researchQuestion = await _researchQuestionRepository.GetAsync(oldAnswerNumber.ResearchId, oldAnswerNumber.QuestionId);
+
+            if (model.Number == null && researchQuestion != null)
+            {
+                _researchQuestionRepository.Remove(researchQuestion);
+            }
+            else if (model.Number != null && researchQuestion == null)
+            {
+                await _researchQuestionRepository.AddAsync(new ResearchQuestion
+                {
+                    QuestionId = oldAnswerNumber.QuestionId,
+                    ResearchId = oldAnswerNumber.ResearchId
+                });
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok(await _researchQuestionRepository.GetCountAsync(oldAnswerNumber.ResearchId));
         }
 
     }
