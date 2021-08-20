@@ -160,6 +160,7 @@ export class SurveyComponent implements OnInit {
     const answercheckboxs = this.answerMultiAmounts.filter(s => s.questionId == questionId);
     this.answerMultiAmountService.edit(answercheckboxs).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 
@@ -193,6 +194,7 @@ export class SurveyComponent implements OnInit {
     const answercheckboxs = this.answerMultiPercentages.filter(s => s.questionId == questionId);
     this.answerMultiPercentageService.edit(answercheckboxs).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 
@@ -220,6 +222,7 @@ export class SurveyComponent implements OnInit {
     const answercheckboxs = this.answerMultiCheckboxs.filter(s => s.questionId == questionId);
     this.answerMultiCheckboxService.edit(answercheckboxs).subscribe(
       (res: any) => {
+        this.percent = this.getPercentage(res);
       });
   }
 

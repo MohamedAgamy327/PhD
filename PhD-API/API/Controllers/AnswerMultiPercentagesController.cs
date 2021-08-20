@@ -57,9 +57,36 @@ namespace API.Controllers
                 _answerMultiPercentageRepository.Edit(answerMultiPercentage);
             }
 
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+
+            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
+
+            if (Convert.ToBoolean(list[0].Radio) == false && researchQuestion == null)
+            {
+                await _researchQuestionRepository.AddAsync(new ResearchQuestion
+                {
+                    QuestionId = list[0].QuestionId,
+                    ResearchId = Convert.ToInt32(userId)
+                });
+            }
+            else if (Convert.ToBoolean(list[0].Radio) == true && researchQuestion == null && (list.Any(d => d.Number1 != null) || list.Any(d => d.Number2 != null)))
+            {
+                await _researchQuestionRepository.AddAsync(new ResearchQuestion
+                {
+                    QuestionId = list[0].QuestionId,
+                    ResearchId = Convert.ToInt32(userId)
+                });
+            }
+            else if (Convert.ToBoolean(list[0].Radio) == true && researchQuestion != null && list.All(d => d.Number1 == null) && list.All(d => d.Number2 == null))
+            {
+                _researchQuestionRepository.Remove(researchQuestion);
+            }
+
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            return Ok();
+            return Ok(await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)));
         }
 
     }
