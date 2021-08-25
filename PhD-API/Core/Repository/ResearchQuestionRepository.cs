@@ -30,7 +30,7 @@ namespace Core.Repository
         }
         public async Task<int> GetCountAsync(int researchId)
         {
-            return await _context.ResearchsQuestions.Where(w => w.ResearchId == researchId).CountAsync().ConfigureAwait(true);
+            return await _context.ResearchsQuestions.Where(w => w.ResearchId == researchId && w.Answered == true).CountAsync().ConfigureAwait(true);
         }
         public async Task<IEnumerable<ResearchQuestion>> AddRangeAsync(ICollection<ResearchQuestion> researchQuestions)
         {

@@ -22,13 +22,15 @@ namespace API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerMultiAmountRepository _answerMultiAmountRepository;
         private readonly IResearchQuestionRepository _researchQuestionRepository;
+        private readonly IResearchRepository _researchRepository;
 
-        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository, IResearchQuestionRepository researchQuestionRepository)
+        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiAmountRepository = answerMultiAmountRepository;
             _researchQuestionRepository = researchQuestionRepository;
+            _researchRepository = researchRepository;
         }
 
         [HttpGet]
@@ -56,30 +58,35 @@ namespace API.Controllers
                 _answerMultiAmountRepository.Edit(answerMultiAmount);
             }
 
-            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
             string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
 
             var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
+            var research = await _researchRepository.GetAsync(Convert.ToInt32(userId));
 
-            if (list.All(d => d.Amount == null) && researchQuestion != null)
+            if (list.All(d => d.Amount == null) && researchQuestion.Answered == true)
             {
-                _researchQuestionRepository.Remove(researchQuestion);
+                researchQuestion.Answered = false;
+                _researchQuestionRepository.Edit(researchQuestion);
+
+                research.AnswersCount--;
+                _researchRepository.Edit(research);
             }
-            else if (list.Any(d => d.Amount != null) && researchQuestion == null)
+            else if (list.Any(d => d.Amount != null) && researchQuestion.Answered == false)
             {
-                await _researchQuestionRepository.AddAsync(new ResearchQuestion
-                {
-                    QuestionId = list[0].QuestionId,
-                    ResearchId = Convert.ToInt32(userId)
-                });
+                researchQuestion.Answered = true;
+                _researchQuestionRepository.Edit(researchQuestion);
+
+                research.AnswersCount++;
+                _researchRepository.Edit(research);
             }
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
 
-            return Ok(await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)));
+            return Ok(research.AnswersCount);
         }
 
     }

@@ -66,7 +66,7 @@ export class SurveyComponent implements OnInit {
     this.questionService.getAll().subscribe(
       (res: any) => {
         this.questions = res.questions;
-        this.percent = this.getPercentage(res.count);
+        this.percent = this.getPercentage(res.count + 1);
       });
   }
 
@@ -235,7 +235,7 @@ export class SurveyComponent implements OnInit {
   }
 
   getPercentage(i: number) {
-    return (i / this.questions.length) * 100;
+    return (i / 16) * 100;
   }
 
 }

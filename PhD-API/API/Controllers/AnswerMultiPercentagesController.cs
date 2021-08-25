@@ -22,13 +22,15 @@ namespace API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAnswerMultiPercentageRepository _answerMultiPercentageRepository;
         private readonly IResearchQuestionRepository _researchQuestionRepository;
+        private readonly IResearchRepository _researchRepository;
 
-        public AnswerMultiPercentagesController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiPercentageRepository answerMultiPercentageRepository, IResearchQuestionRepository researchQuestionRepository)
+        public AnswerMultiPercentagesController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiPercentageRepository answerMultiPercentageRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiPercentageRepository = answerMultiPercentageRepository;
             _researchQuestionRepository = researchQuestionRepository;
+            _researchRepository = researchRepository;
         }
 
         [HttpGet]
@@ -62,31 +64,36 @@ namespace API.Controllers
             string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
 
             var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
+            var research = await _researchRepository.GetAsync(Convert.ToInt32(userId));
 
-            if (Convert.ToBoolean(list[0].Radio) == false && researchQuestion == null)
+            if (Convert.ToBoolean(list[0].Radio) == false && researchQuestion.Answered == false)
             {
-                await _researchQuestionRepository.AddAsync(new ResearchQuestion
-                {
-                    QuestionId = list[0].QuestionId,
-                    ResearchId = Convert.ToInt32(userId)
-                });
+                researchQuestion.Answered = true;
+                _researchQuestionRepository.Edit(researchQuestion);
+
+                research.AnswersCount++;
+                _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true && researchQuestion == null && (list.Any(d => d.Number1 != null) || list.Any(d => d.Number2 != null)))
+            else if (Convert.ToBoolean(list[0].Radio) == true &&  (list.Any(d => d.Number1 != null) || list.Any(d => d.Number2 != null)) && researchQuestion.Answered == false)
             {
-                await _researchQuestionRepository.AddAsync(new ResearchQuestion
-                {
-                    QuestionId = list[0].QuestionId,
-                    ResearchId = Convert.ToInt32(userId)
-                });
+                researchQuestion.Answered = true;
+                _researchQuestionRepository.Edit(researchQuestion);
+
+                research.AnswersCount++;
+                _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true && researchQuestion != null && list.All(d => d.Number1 == null) && list.All(d => d.Number2 == null))
+            else if (Convert.ToBoolean(list[0].Radio) == true &&  list.All(d => d.Number1 == null) && list.All(d => d.Number2 == null) && researchQuestion.Answered == true)
             {
-                _researchQuestionRepository.Remove(researchQuestion);
+                researchQuestion.Answered = false;
+                _researchQuestionRepository.Edit(researchQuestion);
+
+                research.AnswersCount--;
+                _researchRepository.Edit(research);
             }
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            return Ok(await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)));
+            return Ok(research.AnswersCount);
         }
 
     }

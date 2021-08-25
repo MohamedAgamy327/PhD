@@ -64,35 +64,27 @@ namespace API.Controllers
 
             var research = await _researchRepository.GetAsync(Convert.ToInt32(userId));
 
-            if (list.All(d => d.Checked == false) && researchQuestion != null)
+            if (list.All(d => d.Checked == false) && researchQuestion.Answered == true)
             {
-                //_researchQuestionRepository.Remove(researchQuestion);
-                //_researchQuestionRepository.Remove(researchQuestion);
                 researchQuestion.Answered = false;
                 _researchQuestionRepository.Edit(researchQuestion);
 
-                research.AnswersCount++;
+                research.AnswersCount--;
                 _researchRepository.Edit(research);
 
             }
-            else if (list.Any(d => d.Checked == true) && researchQuestion == null)
+            else if (list.Any(d => d.Checked == true) && researchQuestion.Answered == false)
             {
-                //await _researchQuestionRepository.AddAsync(new ResearchQuestion
-                //{
-                //    QuestionId = list[0].QuestionId,
-                //    ResearchId = Convert.ToInt32(userId)
-                //});
-
                 researchQuestion.Answered = true;
                 _researchQuestionRepository.Edit(researchQuestion);
 
-                research.AnswersCount--;
+                research.AnswersCount++;
                 _researchRepository.Edit(research);
             }
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
-            return Ok(await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)));
+            return Ok(research.AnswersCount);
         }
 
     }
