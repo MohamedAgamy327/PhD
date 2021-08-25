@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.IRepository;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Core.Repository
 {
@@ -30,6 +31,21 @@ namespace Core.Repository
         public async Task<int> GetCountAsync(int researchId)
         {
             return await _context.ResearchsQuestions.Where(w => w.ResearchId == researchId).CountAsync().ConfigureAwait(true);
+        }
+        public async Task<IEnumerable<ResearchQuestion>> AddRangeAsync(ICollection<ResearchQuestion> researchQuestions)
+        {
+            await _context.ResearchsQuestions.AddRangeAsync(researchQuestions);
+            return researchQuestions;
+        }
+        public ResearchQuestion Edit(ResearchQuestion researchQuestion)
+        {
+            _context.Entry(researchQuestion).State = EntityState.Modified;
+            return researchQuestion;
+        }
+
+        public async Task<IEnumerable<ResearchQuestion>> GetByResearchAsync(int researchId)
+        {
+            return await _context.ResearchsQuestions.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();
         }
     }
 }

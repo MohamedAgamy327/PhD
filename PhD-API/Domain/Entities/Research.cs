@@ -19,6 +19,8 @@ namespace Domain.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool IsRandomPassword { get; set; }
+        public bool CanEdit { get; set; }
+        public int? AnswersCount { get; set; }
         public ResearchStatusEnum Status { get; set; }
         public ICollection<AnswerRadio> AnswerRadios { get; set; }
         public ICollection<AnswerNumber> AnswerNumbers { get; set; }

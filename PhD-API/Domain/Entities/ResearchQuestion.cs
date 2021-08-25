@@ -6,5 +6,6 @@
         public Question Question { get; set; }
         public int ResearchId { get; set; }
         public Research Research { get; set; }
+        public bool Answered { get; set; }
     }
 }

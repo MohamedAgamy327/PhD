@@ -31,11 +31,11 @@ namespace API.Extensions
             services.AddTransient<IAnswerRadioService, AnswerRadioService>();
             services.AddTransient<IAnswerNumberService, AnswerNumberService>();
             services.AddTransient<IAnswerCheckboxService, AnswerCheckboxService>();
-            services.AddTransient<IAnswerMultiAmountService, AnswerMultiAmountService>();
+            services.AddTransient<IResearchQuestionService, ResearchQuestionService>();
+            services.AddTransient<IAnswerMultiAmountService, AnswerMultiAmountService>();           
+            services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();
+            services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();        
             services.AddTransient<IAnswerMultiPercentageService, AnswerMultiPercentageService>();
-            services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();
-            services.AddTransient<IAnswerMultiCheckboxService, AnswerMultiCheckboxService>();
-
             return services;
         }
     }

@@ -12,4 +12,6 @@ export interface Research {
   mastersResearchersNumber: number;
   bachelorsResearchersNumber: number;
   techniciansNumber: number;
+  canEdit: boolean;
+  answersCount: number;
 }

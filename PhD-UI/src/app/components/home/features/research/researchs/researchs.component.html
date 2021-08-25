@@ -46,6 +46,20 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="percent">
+                    <th mat-header-cell *matHeaderCellDef>{{'Percent' | translate}}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse clickable">{{ getPercentage( element.answersCount)}}%</div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="canEdit">
+                    <th mat-header-cell *matHeaderCellDef>{{'Can Edit' | translate}}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse clickable">{{ convertToString(element.canEdit) | translate}} </div>
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef>{{'Status' | translate}}</th>
                     <td mat-cell *matCellDef="let element">

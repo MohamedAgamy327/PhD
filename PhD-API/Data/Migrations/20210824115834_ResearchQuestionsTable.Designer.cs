@@ -4,14 +4,16 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210824115834_ResearchQuestionsTable")]
+    partial class ResearchQuestionsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -718,17 +720,13 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("AnswersCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("BachelorsResearchersNumber")
                         .HasColumnType("int");
 
                     b.Property<bool>("CanEdit")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -786,11 +784,6 @@ namespace Data.Migrations
                     b.Property<int>("ResearchId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Answered")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.HasKey("QuestionId", "ResearchId");
 
                     b.HasIndex("ResearchId");
@@ -841,8 +834,8 @@ namespace Data.Migrations
                             Email = "Admin@gmail.com",
                             IsRandomPassword = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 79, 249, 99, 132, 117, 11, 24, 78, 90, 207, 83, 101, 248, 193, 104, 126, 216, 105, 190, 109, 94, 82, 133, 84, 10, 11, 17, 162, 106, 248, 81, 233, 132, 195, 89, 127, 208, 250, 203, 122, 81, 66, 6, 191, 111, 139, 85, 214, 42, 80, 136, 1, 185, 28, 223, 232, 126, 222, 67, 152, 57, 46, 87, 242 },
-                            PasswordSalt = new byte[] { 187, 156, 236, 173, 211, 57, 19, 237, 49, 208, 100, 187, 3, 5, 243, 49, 154, 30, 221, 52, 96, 37, 32, 61, 209, 40, 64, 45, 254, 232, 134, 35, 232, 79, 127, 1, 113, 166, 82, 2, 162, 182, 155, 217, 142, 171, 193, 106, 121, 3, 173, 131, 136, 199, 210, 77, 207, 206, 206, 103, 105, 157, 112, 241, 248, 205, 169, 72, 36, 94, 152, 208, 34, 182, 59, 53, 1, 49, 100, 142, 1, 172, 12, 196, 109, 42, 88, 195, 170, 71, 90, 44, 78, 104, 169, 185, 152, 181, 72, 175, 67, 163, 108, 212, 130, 32, 84, 202, 32, 84, 207, 233, 192, 2, 243, 162, 77, 46, 223, 7, 234, 247, 88, 139, 97, 186, 145, 197 },
+                            PasswordHash = new byte[] { 188, 34, 234, 239, 78, 235, 191, 103, 103, 165, 248, 34, 62, 205, 155, 41, 205, 182, 187, 101, 42, 33, 147, 209, 167, 71, 66, 174, 218, 148, 192, 237, 36, 222, 67, 35, 174, 156, 237, 23, 227, 11, 201, 130, 237, 202, 0, 193, 200, 3, 201, 116, 42, 5, 102, 226, 80, 25, 99, 69, 84, 234, 220, 30 },
+                            PasswordSalt = new byte[] { 184, 77, 193, 102, 205, 209, 8, 109, 3, 46, 135, 244, 217, 74, 160, 184, 153, 83, 58, 18, 252, 208, 232, 195, 205, 77, 205, 58, 99, 204, 241, 134, 237, 20, 12, 64, 68, 65, 95, 87, 49, 13, 249, 177, 26, 57, 103, 183, 229, 79, 30, 96, 109, 113, 206, 251, 146, 149, 119, 255, 111, 169, 150, 229, 4, 147, 21, 142, 20, 34, 182, 235, 89, 153, 214, 35, 134, 127, 17, 211, 253, 179, 109, 138, 111, 179, 155, 59, 104, 201, 247, 60, 211, 95, 24, 151, 197, 250, 56, 4, 118, 118, 124, 147, 99, 174, 161, 113, 205, 229, 134, 156, 245, 200, 2, 181, 198, 42, 238, 158, 60, 138, 31, 243, 165, 141, 237, 116 },
                             Role = 0
                         });
                 });

@@ -32,9 +32,10 @@ namespace API.Controllers
         private readonly IAnswerMultiAmountService _answerMultiAmountService;
         private readonly IAnswerMultiPercentageService _answerMultiPercentageService;
         private readonly IAnswerMultiCheckboxService _answerMultiCheckboxService;
+        private readonly IResearchQuestionService _researchQuestionService;
         private readonly IJWTManager _jwtManager;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService, IAnswerMultiAmountService answerMultiAmountService, IAnswerMultiPercentageService answerMultiPercentageService, IAnswerMultiCheckboxService answerMultiCheckboxService)
+        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService, IAnswerMultiAmountService answerMultiAmountService, IAnswerMultiPercentageService answerMultiPercentageService, IAnswerMultiCheckboxService answerMultiCheckboxService, IResearchQuestionService researchQuestionService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -47,6 +48,7 @@ namespace API.Controllers
             _answerMultiAmountService = answerMultiAmountService;
             _answerMultiPercentageService = answerMultiPercentageService;
             _answerMultiCheckboxService = answerMultiCheckboxService;
+            _researchQuestionService = researchQuestionService;
         }
 
         [HttpPost("Register")]
@@ -126,6 +128,7 @@ namespace API.Controllers
                     await _answerMultiAmountService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerMultiPercentageService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _answerMultiCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                    await _researchQuestionService.AddInitResearchQuestions(research.Id).ConfigureAwait(true);
 
                     Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research, _jwtManager.GenerateToken(research), ranadomPassword, Request));
                     break;

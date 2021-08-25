@@ -15,5 +15,7 @@
         public int MastersResearchersNumber { get; set; }
         public int BachelorsResearchersNumber { get; set; }
         public int TechniciansNumber { get; set; }
+        public bool CanEdit { get; set; }
+        public int? AnswersCount { get; set; }
     }
 }

@@ -22,7 +22,7 @@ export class ResearchsComponent implements OnInit {
   filter: string;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'email', 'entity', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'entity', 'percent', 'canEdit', 'status', 'actions'];
   researchs: Research[];
   dataSource = new MatTableDataSource<Research>();
 
@@ -107,6 +107,15 @@ export class ResearchsComponent implements OnInit {
         this.researchs.splice(index, 1);
         this.refreshData();
       });
+  }
+
+
+  getPercentage(i: number) {
+    return (i / 16) * 100;
+  }
+
+  convertToString(word: any) {
+    return String(word);
   }
 
 }

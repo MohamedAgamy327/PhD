@@ -1,5 +1,9 @@
 {
     "Add": "Add",
+    "true": "true",
+    "false": "false",
+    "Percent": "Percent",
+    "Can Edit": "Can Edit",
     "Back": "Back",
     "Email invalid format": "Email invalid format",
     "Emails must match": "Emails must match",
