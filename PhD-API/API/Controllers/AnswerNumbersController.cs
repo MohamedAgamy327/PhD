@@ -13,7 +13,7 @@ using API.DTO.AnswerNumber;
 using API.Errors;
 using Utilities.StaticHelpers;
 using Domain.Entities;
-
+using Domain.Enums;
 
 namespace API.Controllers
 {
@@ -36,15 +36,25 @@ namespace API.Controllers
             _researchRepository = researchRepository;
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Researcher")]
+        [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyList<AnswerNumberForGetDTO>>> Get()
+        public async Task<ActionResult<IReadOnlyList<AnswerNumberForGetDTO>>> Get(int? id)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
-            List<AnswerNumberForGetDTO> answers = _mapper.Map<List<AnswerNumberForGetDTO>>(await _answerNumberRepository.GetByResearchAsync(Convert.ToInt32(userId)).ConfigureAwait(true));
-            return Ok(answers);
+            string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
+
+            if (role == RoleEnum.Admin.ToString())
+            {
+                List<AnswerNumberForGetDTO> answers = _mapper.Map<List<AnswerNumberForGetDTO>>(await _answerNumberRepository.GetByResearchAsync(Convert.ToInt32(id)).ConfigureAwait(true));
+                return Ok(answers);
+            }
+            else
+            {
+                string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+                List<AnswerNumberForGetDTO> answers = _mapper.Map<List<AnswerNumberForGetDTO>>(await _answerNumberRepository.GetByResearchAsync(Convert.ToInt32(researchId)).ConfigureAwait(true));
+                return Ok(answers);
+            }
         }
 
 

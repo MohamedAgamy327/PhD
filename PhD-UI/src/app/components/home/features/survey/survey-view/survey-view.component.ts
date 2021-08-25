@@ -9,7 +9,7 @@ import {
 import {
   CoreService, AnswerRadioService, AnswerNumberService,
   AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiPercentageService,
-  AnswerMultiCheckboxService, QuestionService, PageTitleService
+  AnswerMultiCheckboxService, QuestionService, PageTitleService, ResearchService
 } from 'src/app/core/services';
 
 @Component({
@@ -19,7 +19,9 @@ import {
 })
 export class SurveyViewComponent implements OnInit {
 
-  @Input() public research: Research;
+  research: Research;
+  @Input() public researchId?: number;
+
   questions: Question[];
   answerRadios: AnswerRadio[];
   answerNumbers: AnswerNumber[];
@@ -33,6 +35,7 @@ export class SurveyViewComponent implements OnInit {
 
   constructor(
     public coreService: CoreService,
+    private researchService: ResearchService,
     private answerRadioService: AnswerRadioService,
     private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
@@ -47,8 +50,9 @@ export class SurveyViewComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.pageTitleService.setTitle('Survey');
-    this.titleService.setTitle(this.translate.instant('Survey'));
+    this.pageTitleService.setTitle('Research Information');
+    this.titleService.setTitle(this.translate.instant('Research Information'));
+    this.getResearch();
     this.getQuestions();
     this.getAnswerRadios();
     this.getAnswerCheckboxs();
@@ -62,19 +66,26 @@ export class SurveyViewComponent implements OnInit {
     return QuestionEnum;
   }
 
+  getResearch() {
+    this.researchService.get(this.researchId).subscribe(
+      (res: any) => {
+        this.research = res;
+        this.percent = this.getPercentage(res.answersCount);
+      });
+  }
+
   getQuestions() {
     this.questionService.getAll().subscribe(
       (res: any) => {
-        this.questions = res.questions;
+        this.questions = res;
         this.questions.unshift({});
-        this.percent = this.getPercentage(res.count + 1);
       });
   }
 
   // Answer Radio
 
   getAnswerRadios() {
-    this.answerRadioService.get().subscribe(
+    this.answerRadioService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerRadios = res;
       });
@@ -89,7 +100,7 @@ export class SurveyViewComponent implements OnInit {
   // Answer Checkbox
 
   getAnswerCheckboxs() {
-    this.answerCheckboxService.get().subscribe(
+    this.answerCheckboxService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerCheckboxs = res;
       });
@@ -103,7 +114,7 @@ export class SurveyViewComponent implements OnInit {
   // Answer Number
 
   getAnswerNumbers() {
-    this.answerNumberService.get().subscribe(
+    this.answerNumberService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerNumbers = res;
       });
@@ -117,7 +128,7 @@ export class SurveyViewComponent implements OnInit {
   // Answer MultiAmount
 
   getAnswerMultiAmounts() {
-    this.answerMultiAmountService.get().subscribe(
+    this.answerMultiAmountService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerMultiAmounts = res;
       });
@@ -137,7 +148,7 @@ export class SurveyViewComponent implements OnInit {
   // Answer MultiPercentage
 
   getAnswerMultiPercentages() {
-    this.answerMultiPercentageService.get().subscribe(
+    this.answerMultiPercentageService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerMultiPercentages = res;
       });
@@ -156,7 +167,7 @@ export class SurveyViewComponent implements OnInit {
   // Answer MultiCheckbox
 
   getAnswerMultiCheckboxs() {
-    this.answerMultiCheckboxService.get().subscribe(
+    this.answerMultiCheckboxService.get(this.researchId).subscribe(
       (res: any) => {
         this.answerMultiCheckboxs = res;
       });

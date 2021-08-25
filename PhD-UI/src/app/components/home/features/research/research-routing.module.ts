@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
-  ResearchsComponent, ResearchShowComponent
+  ResearchsComponent
 } from '.';
 
 const routes: Routes = [
   {
     path: '', children: [
-      { path: '', component: ResearchsComponent },
-      { path: ':id', component: ResearchShowComponent }
+      { path: '', component: ResearchsComponent }
     ]
 
   }

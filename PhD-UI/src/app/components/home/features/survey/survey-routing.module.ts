@@ -7,6 +7,9 @@ import {
 const routes: Routes = [
   {
     path: '', component: SurveyComponent
+  },
+  {
+    path: ':id', component: SurveyComponent
   }
 ];
 

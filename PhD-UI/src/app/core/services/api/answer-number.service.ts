@@ -18,8 +18,8 @@ export class AnswerNumberService {
     return this.http.put(`${environment.serverUrl}answerNumbers/${id}`, model);
   }
 
-  get(): Observable<AnswerNumber> {
-    return this.http.get<AnswerNumber>(`${environment.serverUrl}answerNumbers`);
+  get(id?: number): Observable<AnswerNumber> {
+    return this.http.get<AnswerNumber>(`${environment.serverUrl}answerNumbers/${id || 0}`);
   }
 
 }

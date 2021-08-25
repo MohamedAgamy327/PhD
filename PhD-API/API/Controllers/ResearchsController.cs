@@ -101,7 +101,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("status")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResearchForGetDTO>> PatchStatus(ResearchForStatusDTO model)
         {
@@ -152,7 +152,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get()
         {
@@ -161,7 +161,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{status}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get(string status)
         {
@@ -170,33 +170,31 @@ namespace API.Controllers
             return Ok(researchs);
         }
 
-
-        [HttpGet("own")]
+        [HttpGet("one/{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResearchForGetDTO>> GetOwn()
+        public async Task<ActionResult<ResearchForGetDTO>> Get(int? id)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+            string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
 
-            Research research = await _researchRepository.GetAsync(Convert.ToInt32(userId)).ConfigureAwait(true);
+            if (role == RoleEnum.Admin.ToString())
+            {
+                if (!await _researchRepository.IsExist((int)id).ConfigureAwait(true))
+                    return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", (int)id)));
 
-            ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
-            return Ok(researchDto);
-        }
+                Research research = await _researchRepository.GetAsync((int)id).ConfigureAwait(true);
+                ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
+                return Ok(researchDto);
+            }
+            else
+            {
+                string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
 
-        [HttpGet("{id:int}")]
-        [Authorize(Roles = "Admin")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResearchForGetDTO>> Get(int id)
-        {
-            if (!await _researchRepository.IsExist(id).ConfigureAwait(true))
-                return NotFound(new ApiResponse(404, StringConcatenates.NotExist("Research", id)));
-
-            Research research = await _researchRepository.GetAsync(id).ConfigureAwait(true);
-
-            ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
-            return Ok(researchDto);
+                Research research = await _researchRepository.GetAsync(Convert.ToInt32(researchId)).ConfigureAwait(true);
+                ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
+                return Ok(researchDto);
+            }
         }
 
         [HttpDelete("{id:int}")]

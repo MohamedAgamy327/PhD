@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Linq;
 using System;
+using Domain.Enums;
 
 namespace API.Controllers
 {
@@ -27,16 +28,36 @@ namespace API.Controllers
             _researchQuestionRepository = researchQuestionRepository;
         }
 
-
         [HttpGet]
-        [Authorize(Roles = "Admin,Researcher")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<QuestionForGetDTO>>> Get()
-        {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+        {     
             List<QuestionForGetDTO> questions = _mapper.Map<List<QuestionForGetDTO>>(await _questionRepository.GetAsync().ConfigureAwait(true));
-            return Ok( new {Questions= questions, count= await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(userId)) });
+            return Ok(questions);
         }
+
+        //[HttpGet("count/{id:int}")]
+        //[Authorize]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<ActionResult<IReadOnlyList<QuestionForGetDTO>>> Get(int? id)
+        //{
+        //    var claimsIdentity = User.Identity as ClaimsIdentity;
+        //    string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
+
+        //    if (role == RoleEnum.Admin.ToString())
+        //    {
+        //    }
+        //    else
+        //    {
+        //        string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+        //        return Ok()
+        //    }
+
+          
+        //    //return Ok( new {Questions= questions, count= await _researchQuestionRepository.GetCountAsync(Convert.ToInt32(researchId)) });
+
+        //    return Ok(questions);
+        //}
     }
 }

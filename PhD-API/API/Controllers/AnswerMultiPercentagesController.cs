@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using API.DTO.AnswerMultiPercentage;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace API.Controllers
 {
@@ -33,15 +34,27 @@ namespace API.Controllers
             _researchRepository = researchRepository;
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Researcher")]
+        [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyList<AnswerMultiPercentageForGetDTO>>> Get()
+        public async Task<ActionResult<IReadOnlyList<AnswerMultiPercentageForGetDTO>>> Get(int? id)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
-            List<AnswerMultiPercentageForGetDTO> answers = _mapper.Map<List<AnswerMultiPercentageForGetDTO>>(await _answerMultiPercentageRepository.GetByResearchAsync(Convert.ToInt32(userId)).ConfigureAwait(true));
-            return Ok(answers);
+            string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
+
+            if (role == RoleEnum.Admin.ToString())
+            {
+                List<AnswerMultiPercentageForGetDTO> answers = _mapper.Map<List<AnswerMultiPercentageForGetDTO>>(await _answerMultiPercentageRepository.GetByResearchAsync(Convert.ToInt32(id)).ConfigureAwait(true));
+                return Ok(answers);
+            }
+            else
+            {
+                string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+                List<AnswerMultiPercentageForGetDTO> answers = _mapper.Map<List<AnswerMultiPercentageForGetDTO>>(await _answerMultiPercentageRepository.GetByResearchAsync(Convert.ToInt32(researchId)).ConfigureAwait(true));
+                return Ok(answers);
+            }
+
+
         }
 
 
@@ -61,10 +74,10 @@ namespace API.Controllers
 
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+            string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
 
-            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
-            var research = await _researchRepository.GetAsync(Convert.ToInt32(userId));
+            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(researchId), list[0].QuestionId);
+            var research = await _researchRepository.GetAsync(Convert.ToInt32(researchId));
 
             if (Convert.ToBoolean(list[0].Radio) == false && researchQuestion.Answered == false)
             {
@@ -74,7 +87,7 @@ namespace API.Controllers
                 research.AnswersCount++;
                 _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true &&  (list.Any(d => d.Number1 != null) || list.Any(d => d.Number2 != null)) && researchQuestion.Answered == false)
+            else if (Convert.ToBoolean(list[0].Radio) == true && (list.Any(d => d.Number1 != null) || list.Any(d => d.Number2 != null)) && researchQuestion.Answered == false)
             {
                 researchQuestion.Answered = true;
                 _researchQuestionRepository.Edit(researchQuestion);
@@ -82,7 +95,7 @@ namespace API.Controllers
                 research.AnswersCount++;
                 _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true &&  list.All(d => d.Number1 == null) && list.All(d => d.Number2 == null) && researchQuestion.Answered == true)
+            else if (Convert.ToBoolean(list[0].Radio) == true && list.All(d => d.Number1 == null) && list.All(d => d.Number2 == null) && researchQuestion.Answered == true)
             {
                 researchQuestion.Answered = false;
                 _researchQuestionRepository.Edit(researchQuestion);

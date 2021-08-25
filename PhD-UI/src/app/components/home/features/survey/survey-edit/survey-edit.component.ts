@@ -10,7 +10,7 @@ import {
 import {
   CoreService, AnswerRadioService, AnswerNumberService,
   AnswerCheckboxService, AnswerMultiAmountService, AnswerMultiPercentageService,
-  AnswerMultiCheckboxService, QuestionService, PageTitleService
+  AnswerMultiCheckboxService, QuestionService, PageTitleService, ResearchService
 } from 'src/app/core/services';
 
 @Component({
@@ -33,6 +33,7 @@ export class SurveyEditComponent implements OnInit {
 
   constructor(
     public coreService: CoreService,
+    private researchService: ResearchService,
     private answerRadioService: AnswerRadioService,
     private answerNumberService: AnswerNumberService,
     private answerCheckboxService: AnswerCheckboxService,
@@ -49,6 +50,7 @@ export class SurveyEditComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitleService.setTitle('Survey');
     this.titleService.setTitle(this.translate.instant('Survey'));
+    this.getResearch();
     this.getQuestions();
     this.getAnswerRadios();
     this.getAnswerCheckboxs();
@@ -62,11 +64,18 @@ export class SurveyEditComponent implements OnInit {
     return QuestionEnum;
   }
 
+  getResearch() {
+    this.researchService.get().subscribe(
+      (res: any) => {
+        this.percent = this.getPercentage(res.answersCount);
+      });
+  }
+
   getQuestions() {
     this.questionService.getAll().subscribe(
       (res: any) => {
-        this.questions = res.questions;
-        this.percent = this.getPercentage(res.count + 1);
+        this.questions = res;
+        // this.percent = this.getPercentage(res.count + 1);
       });
   }
 

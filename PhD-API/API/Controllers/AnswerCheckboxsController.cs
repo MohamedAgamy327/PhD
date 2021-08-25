@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using API.DTO.AnswerCheckbox;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace API.Controllers
 {
@@ -32,17 +33,26 @@ namespace API.Controllers
             _researchRepository = researchRepository;
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Researcher")]
+        [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyList<AnswerCheckboxForGetDTO>>> Get()
+        public async Task<ActionResult<IReadOnlyList<AnswerCheckboxForGetDTO>>> Get(int? id)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
-            List<AnswerCheckboxForGetDTO> answers = _mapper.Map<List<AnswerCheckboxForGetDTO>>(await _answerCheckboxRepository.GetByResearchAsync(Convert.ToInt32(userId)).ConfigureAwait(true));
-            return Ok(answers);
-        }
+            string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
 
+            if (role == RoleEnum.Admin.ToString())
+            {
+                List<AnswerCheckboxForGetDTO> answers = _mapper.Map<List<AnswerCheckboxForGetDTO>>(await _answerCheckboxRepository.GetByResearchAsync(Convert.ToInt32(id)).ConfigureAwait(true));
+                return Ok(answers);
+            }
+            else
+            {
+                string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+                List<AnswerCheckboxForGetDTO> answers = _mapper.Map<List<AnswerCheckboxForGetDTO>>(await _answerCheckboxRepository.GetByResearchAsync(Convert.ToInt32(researchId)).ConfigureAwait(true));
+                return Ok(answers);
+            }      
+        }
 
         [HttpPut]
         [Authorize(Roles = "Researcher")]
@@ -58,11 +68,11 @@ namespace API.Controllers
             }
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+            string researchId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
 
-            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(userId), list[0].QuestionId);
+            var researchQuestion = await _researchQuestionRepository.GetAsync(Convert.ToInt32(researchId), list[0].QuestionId);
 
-            var research = await _researchRepository.GetAsync(Convert.ToInt32(userId));
+            var research = await _researchRepository.GetAsync(Convert.ToInt32(researchId));
 
             if (list.All(d => d.Checked == false) && researchQuestion.Answered == true)
             {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Research } from 'src/app/core/models';
-import { ResearchService } from 'src/app/core/services';
+import { ResearchService, CredentialService } from 'src/app/core/services';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -12,15 +13,17 @@ export class SurveyComponent implements OnInit {
   research: Research;
 
   constructor(
-    private researchService: ResearchService
+    private researchService: ResearchService,
+    public route: ActivatedRoute,
+    public credentialService: CredentialService
   ) { }
 
   ngOnInit(): void {
-    this.getResearch();
+    this.getResearch(this.route.snapshot.params.id);
   }
 
-  getResearch() {
-    this.researchService.getOwn().subscribe(
+  getResearch(id?: number) {
+    this.researchService.get(id).subscribe(
       (res: any) => {
         this.research = res;
       });

@@ -18,8 +18,8 @@ export class AnswerCheckboxService {
     return this.http.put(`${environment.serverUrl}answerCheckboxs`, model);
   }
 
-  get(): Observable<AnswerCheckbox> {
-    return this.http.get<AnswerCheckbox>(`${environment.serverUrl}answerCheckboxs`);
+  get(id?: number): Observable<AnswerCheckbox> {
+    return this.http.get<AnswerCheckbox>(`${environment.serverUrl}answerCheckboxs/${id || 0}`);
   }
 
 }

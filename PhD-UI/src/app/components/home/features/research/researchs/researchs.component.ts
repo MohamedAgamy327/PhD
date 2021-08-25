@@ -71,7 +71,7 @@ export class ResearchsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const model = { id: id, status: status };
+        const model = { id, status };
         this.changeStatus(model);
       }
     });

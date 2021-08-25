@@ -18,8 +18,8 @@ export class AnswerRadioService {
     return this.http.put(`${environment.serverUrl}answerRadios/${id}`, model);
   }
 
-  get(): Observable<AnswerRadio> {
-    return this.http.get<AnswerRadio>(`${environment.serverUrl}answerRadios`);
+  get(id?: number): Observable<AnswerRadio> {
+    return this.http.get<AnswerRadio>(`${environment.serverUrl}answerRadios/${id || 0}`);
   }
 
 }

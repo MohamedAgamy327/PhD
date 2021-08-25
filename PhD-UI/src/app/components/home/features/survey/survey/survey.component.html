@@ -1,2 +1,9 @@
-<app-survey-edit *ngIf="research?.canEdit"></app-survey-edit>
-<app-survey-view [research]="research" *ngIf="!research?.canEdit"></app-survey-view>
+<app-survey-edit *ngIf="(research?.canEdit && credentialService.isResearcher());else other "></app-survey-edit>
+
+<ng-template #other>
+
+    <app-survey-view *ngIf="!research?.canEdit || this.route.snapshot.params.id" [researchId]="this.route.snapshot.params.id">
+    </app-survey-view>
+
+
+</ng-template>

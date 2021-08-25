@@ -18,8 +18,8 @@ export class AnswerMultiPercentageService {
     return this.http.put(`${environment.serverUrl}answerMultiPercentages`, model);
   }
 
-  get(): Observable<AnswerMultiPercentage> {
-    return this.http.get<AnswerMultiPercentage>(`${environment.serverUrl}answerMultiPercentages`);
+  get(id?: number): Observable<AnswerMultiPercentage> {
+    return this.http.get<AnswerMultiPercentage>(`${environment.serverUrl}answerMultiPercentages/${id || 0}`);
   }
 
 }
