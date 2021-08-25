@@ -1,5 +1,5 @@
 import {
-  SurveyComponent, SurveyFooterComponent
+  SurveyComponent, SurveyEditComponent, SurveyFooterComponent, SurveyViewComponent
 } from '.';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,8 +14,8 @@ import { OnlyNumberDirective, QuestionsLoopDirective } from 'src/app/core/direct
     QuestionsLoopDirective,
     SurveyComponent,
     SurveyFooterComponent,
-  ],
-  entryComponents: [
+    SurveyViewComponent,
+    SurveyEditComponent,
   ],
   imports: [
     CommonModule,

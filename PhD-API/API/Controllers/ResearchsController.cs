@@ -15,6 +15,8 @@ using API.IHelpers;
 using Microsoft.AspNetCore.Authorization;
 using API.DTO.Account;
 using API.IService;
+using System.Security.Claims;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -166,6 +168,21 @@ namespace API.Controllers
             Enum.TryParse(status, out ResearchStatusEnum myStatus);
             List<ResearchForGetDTO> researchs = _mapper.Map<List<ResearchForGetDTO>>(await _researchRepository.GetAsync(myStatus).ConfigureAwait(true));
             return Ok(researchs);
+        }
+
+
+        [HttpGet("own")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearchForGetDTO>> GetOwn()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string userId = claimsIdentity.Claims.Where(c => c.Type == "id").FirstOrDefault()?.Value;
+
+            Research research = await _researchRepository.GetAsync(Convert.ToInt32(userId)).ConfigureAwait(true);
+
+            ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
+            return Ok(researchDto);
         }
 
         [HttpGet("{id:int}")]

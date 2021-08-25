@@ -38,4 +38,8 @@ export class ResearchService {
     return this.http.get<Research>(`${environment.serverUrl}researchs/${id}`);
   }
 
+  getOwn(): Observable<Research> {
+    return this.http.get<Research>(`${environment.serverUrl}researchs/own`);
+  }
+
 }
