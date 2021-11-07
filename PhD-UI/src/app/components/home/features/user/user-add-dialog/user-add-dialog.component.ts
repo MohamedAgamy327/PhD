@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CoreService, UserService } from 'src/app/core/services';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-add-dialog',
@@ -15,6 +16,7 @@ export class UserAddDialogComponent {
   addForm: FormGroup;
 
   constructor(
+    private translate: TranslateService,
     public coreService: CoreService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UserAddDialogComponent>,
@@ -39,7 +41,10 @@ export class UserAddDialogComponent {
   save() {
     this.userService.create(this.addForm.value).subscribe(
       (res: any) => {
-        this.toastrService.success('Added Successfully', 'Add');
+        this.toastrService.success(this.translate.instant('Added Successfully'), this.translate.instant('Add'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         this.dialogRef.close(res);
       });
   }

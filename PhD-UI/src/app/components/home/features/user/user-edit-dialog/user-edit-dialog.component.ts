@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService, UserService } from 'src/app/core/services';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-edit-dialog',
@@ -15,6 +16,7 @@ export class UserEditDialogComponent {
   editForm: FormGroup;
 
   constructor(
+    private translate: TranslateService,
     public coreService: CoreService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UserEditDialogComponent>,
@@ -40,7 +42,10 @@ export class UserEditDialogComponent {
   update() {
     this.userService.edit(this.data.id, this.editForm.value).subscribe(
       (res: any) => {
-        this.toastrService.success('Edited Successfully', 'Edit');
+        this.toastrService.success(this.translate.instant('Edited Successfully'), this.translate.instant('Edit'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         this.dialogRef.close(res);
       });
   }

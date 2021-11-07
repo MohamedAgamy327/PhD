@@ -65,7 +65,12 @@ export class ResearchRegisterComponent implements OnInit {
   register() {
     this.researchService.register(this.registerForm.value).subscribe(
       (res: any) => {
-        this.toastrService.success(this.translate.instant('Attention'), this.translate.instant('Register'));
+        this.toastrService.success(this.translate.instant('Attention'), this.translate.instant('Register'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
+
+
         this.resetForm(this.registerForm);
       });
   }

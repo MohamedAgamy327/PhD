@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { CoreService, CredentialService } from 'src/app/core/services';
 import { PageTitleService } from 'src/app/core/services/page-title.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ResearchChangePasswordDialogComponent } from '../features/research';
-import { UserChangePasswordDialogComponent } from '../features/user';
 import { RoleEnum } from 'src/app/core/enums';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { UserChangePasswordDialogComponent } from '../features/user/user-change-password-dialog/user-change-password-dialog.component';
+import { ResearchChangePasswordDialogComponent } from '../features/research/research-change-password-dialog/research-change-password-dialog.component';
 
 
 declare var require;
@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit {
     this.breadcrumbService.addFriendlyNameForRoute('/home/survey', this.translate.instant('Survey'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/users', this.translate.instant('Users'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/researches', this.translate.instant('Researches'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/researches/results', this.translate.instant('Results'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/register', this.translate.instant('Register'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/login', this.translate.instant('Login'));
 

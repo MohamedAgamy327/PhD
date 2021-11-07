@@ -1,4 +1,4 @@
-import { PageTitleService, UserService } from 'src/app/core/services';
+import { CoreService, PageTitleService, UserService } from 'src/app/core/services';
 import { User } from 'src/app/core/models';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
@@ -29,6 +29,7 @@ export class UsersComponent implements OnInit {
   dataSource = new MatTableDataSource<User>();
 
   constructor(
+    private coreService: CoreService,
     private toastrService: ToastrService,
     private pageTitleService: PageTitleService,
     private userService: UserService,
@@ -107,7 +108,10 @@ export class UsersComponent implements OnInit {
   delete(id: number) {
     this.userService.delete(id).subscribe(
       (res: any) => {
-        this.toastrService.success('Deleted Successfully', 'Delete');
+        this.toastrService.success(this.translate.instant('Deleted Successfully'), this.translate.instant('Delete'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         const index = this.users.findIndex(f => f.id === res.id);
         this.users.splice(index, 1);
         this.refreshData();

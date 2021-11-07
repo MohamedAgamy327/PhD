@@ -55,7 +55,7 @@ export const MenuItemList: MenuItem[] = [
     state: 'home/researches/results',
     name: 'Researchs Results List',
     type: 'link',
-    icon: 'numbers',
+    icon: 'format_list_numbered',
     roles: [RoleEnum.Admin]
   },
   {

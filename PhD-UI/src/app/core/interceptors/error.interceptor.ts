@@ -4,7 +4,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { CredentialService } from '../services';
+import { CoreService, CredentialService } from '../services';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ import { CredentialService } from '../services';
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
+    private translate: TranslateService,
+    public coreService: CoreService,
     private router: Router,
     private toastrService: ToastrService,
     private credentialService: CredentialService,
@@ -23,10 +26,16 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(error => {
         if (error) {
           if (error.status === 400) {
-            this.toastrService.error(error.error.message, 'Error');
+            this.toastrService.error(this.translate.instant(error.error.message), this.translate.instant('Error'), {
+              messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+              titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+            });
           }
           if (error.status === 401) {
-            this.toastrService.error(error.error.message, 'Error');
+            this.toastrService.error(this.translate.instant(error.error.message), this.translate.instant('Error'), {
+              messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+              titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+            });
             if (this.router.url !== '/home/login' && this.router.url !== '/home/admin-login')
               this.credentialService.logout();
           }
@@ -34,10 +43,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.router.navigateByUrl('/not-found');
           }
           if (error.status === 409) {
-            this.toastrService.error(error.error.message, 'Error');
+            this.toastrService.error(this.translate.instant(error.error.message), this.translate.instant('Error'), {
+              messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+              titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+            });
           }
           if (error.status === 500) {
-            this.toastrService.error(error.error.message, 'Error');
+            this.toastrService.error(this.translate.instant(error.error.message), this.translate.instant('Error'), {
+              messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+              titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+            });
           }
         }
         return throwError(error);

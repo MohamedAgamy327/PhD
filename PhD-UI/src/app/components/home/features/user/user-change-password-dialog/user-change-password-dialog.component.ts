@@ -5,6 +5,7 @@ import { MustMatch } from 'src/app/core/helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConstEnum } from 'src/app/core/enums';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-user-change-password-dialog',
   templateUrl: './user-change-password-dialog.component.html',
@@ -16,6 +17,7 @@ export class UserChangePasswordDialogComponent {
   changePasswordForm: FormGroup;
 
   constructor(
+    private translate: TranslateService,
     public coreService: CoreService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UserChangePasswordDialogComponent>,
@@ -49,8 +51,10 @@ export class UserChangePasswordDialogComponent {
         if (this.data === this.credentialService.getUser().id) {
           localStorage.setItem(ConstEnum.token, res.token);
         }
-
-        this.toastrService.success('Changed Successfully', 'Change Password');
+        this.toastrService.success(this.translate.instant('Changed Successfully'), this.translate.instant('Change Password'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         this.dialogRef.close(res);
       });
   }

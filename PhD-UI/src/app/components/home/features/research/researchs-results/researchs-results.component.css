@@ -1,0 +1,23 @@
+.mat-column-name {
+    width: 60%;
+}
+
+.mat-column-first {
+    width: 10%;
+}
+
+.mat-column-second {
+    width: 10%;
+}
+
+.mat-column-third {
+    width: 10%;
+}
+
+.mat-column-final {
+    width: 10%;
+}
+
+.none {
+    display: none;
+}

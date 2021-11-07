@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ResearchResult } from 'src/app/core/models';
+import { Research, ResearchResult } from 'src/app/core/models';
 import { PageTitleService, ResearchService } from 'src/app/core/services';
 
 @Component({
@@ -11,9 +14,13 @@ import { PageTitleService, ResearchService } from 'src/app/core/services';
 })
 export class ResearchsResultsComponent implements OnInit {
 
-  researchs: ResearchResult[];
-  filterResearchs: ResearchResult[];
   filter: string;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  displayedColumns: string[] = ['name', 'first', 'second', 'third', 'final'];
+  researchs: ResearchResult[];
+  dataSource = new MatTableDataSource<Research>();
+  showType: string = 'list';
 
   constructor(
     private pageTitleService: PageTitleService,
@@ -21,6 +28,7 @@ export class ResearchsResultsComponent implements OnInit {
     private titleService: Title,
     private translate: TranslateService
   ) { }
+
 
   ngOnInit() {
     this.pageTitleService.setTitle('Researchs');
@@ -32,12 +40,31 @@ export class ResearchsResultsComponent implements OnInit {
     this.researchService.getAllResults().subscribe(
       (res: any) => {
         this.researchs = res;
-        this.filterResearchs = this.researchs;
+        this.refreshData();
       });
   }
 
+  refreshData() {
+    this.dataSource = new MatTableDataSource(this.researchs);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(filterValue: string) {
-    this.filterResearchs = this.researchs.filter(d => d.name.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase()));
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
+  projectShowType(type: any) {
+    this.showType = type;
+    if (type == 'list') {
+      document.getElementById('list').classList.add("active");
+      document.getElementById('grid').classList.remove('active');
+    }
+    else {
+      document.getElementById('grid').classList.add("active");
+      document.getElementById('list').classList.remove('active');
+    }
   }
 
 }

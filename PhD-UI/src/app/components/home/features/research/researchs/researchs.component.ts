@@ -1,4 +1,4 @@
-import { PageTitleService, ResearchService } from 'src/app/core/services';
+import { CoreService, PageTitleService, ResearchService } from 'src/app/core/services';
 import { Research } from 'src/app/core/models';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
@@ -6,9 +6,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialogComponent, DeleteDialogComponent } from 'src/app/components/home';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-researchs',
@@ -27,6 +28,7 @@ export class ResearchsComponent implements OnInit {
   dataSource = new MatTableDataSource<Research>();
 
   constructor(
+    public coreService: CoreService,
     private toastrService: ToastrService,
     private pageTitleService: PageTitleService,
     private researchService: ResearchService,
@@ -80,7 +82,10 @@ export class ResearchsComponent implements OnInit {
   changeStatus(model: any) {
     this.researchService.changeStatus(model).subscribe(
       (res: any) => {
-        this.toastrService.success('Changed Successfully', 'Status');
+        this.toastrService.success(this.translate.instant('Changed Successfully'), this.translate.instant('Status'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         const index = this.researchs.findIndex(f => f.id === res.id);
         this.researchs[index] = res;
         this.refreshData();
@@ -102,7 +107,10 @@ export class ResearchsComponent implements OnInit {
   delete(id: number) {
     this.researchService.delete(id).subscribe(
       (res: any) => {
-        this.toastrService.success('Deleted Successfully', 'Delete');
+        this.toastrService.success(this.translate.instant('Deleted Successfully'), this.translate.instant('Delete'), {
+          messageClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr',
+          titleClass: this.coreService.currentLanguage === 'ar' ? 'rtl' : 'ltr'
+        });
         const index = this.researchs.findIndex(f => f.id === res.id);
         this.researchs.splice(index, 1);
         this.refreshData();

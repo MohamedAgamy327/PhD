@@ -17,46 +17,106 @@
     </div>
 </mat-card>
 
-
-
-<div fxLayout="row wrap" fxLayoutAlign="start stretch">
-    <div fxFlex.gt-md="100" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100" *ngFor="let research of filterResearchs">
-        <mat-card>
-            <div class="gene-card-title">
-                <div fxLayout="row" fxLayoutAlign="start center">
-                    <div fxLayout="column">
-                        <h4 class="mrgn-b-none"><a href="javascript:void(0)">{{research.name |
-                translate}}</a></h4>
-                    </div> <span fxFlex></span>
-                </div>
-                <mat-divider></mat-divider>
-            </div>
-            <div class="gene-card-content">
-                <div class="desc-wrap">
-                    <h5>{{'Private Return' | translate}} : </h5>
-                    <p>{{research.first | number : '1.2-2'}}
-                        <p>
-                </div>
-
-                <div class="desc-wrap">
-                    <h5>{{'Social Return' | translate}} : </h5>
-                    <p>{{research.second | number : '1.2-2'}}
-                        <p>
-                </div>
-
-                <div class="desc-wrap">
-                    <h5>{{'Economy' | translate}} : </h5>
-                    <p>{{research.third | number : '1.2-2'}}
-                        <p>
-                </div>
-
-                <div class="desc-wrap">
-                    <h5>{{'Final Result' | translate}} : </h5>
-                    <p>{{research.final | number : '1.2-2'}}
-                        <p>
-                </div>
-
-            </div>
-        </mat-card>
+<div class="mrgn-all-md" fxLayoutAlign="space-between center">
+    <div class="title">
+        <h2 class="mrgn-b-none">{{'Researchs' | translate }} </h2>
+    </div>
+    <div class="project-icon">
+        <button id="grid" class="active" mat-icon-button (click)="projectShowType('grid')">
+      <mat-icon>apps</mat-icon>
+    </button>
+        <button id="list" mat-icon-button (click)="projectShowType('list')">
+      <mat-icon>list</mat-icon>
+    </button>
     </div>
 </div>
+
+
+<ng-container *ngIf="showType == 'list';else grid">
+    <div class="table-responsive">
+        <table class="table table-hover table-middle th-fw-light mb-0" mat-table matSort [dataSource]="dataSource">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Name' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.name}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="first">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Private Return' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.first | number : '1.2-2'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="second">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Social Return' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.second | number : '1.2-2'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="third">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Economy' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.third | number : '1.2-2'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="final">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Final Result' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.final | number : '1.2-2'}}
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+    <div class="pagination">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+
+
+</ng-container>
+
+<ng-template #grid>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex.gt-md="50" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="50" *ngFor="let research of  dataSource.filteredData">
+            <mat-card>
+                <div class="gene-card-title">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div fxLayout="column">
+                            <h4 class="mrgn-b-none"><a href="javascript:void(0)">{{research.name |
+                  translate}}</a></h4>
+                        </div> <span fxFlex></span>
+                    </div>
+                    <mat-divider></mat-divider>
+                </div>
+                <div class="gene-card-content">
+                    <div class="desc-wrap">
+                        <h5>{{'Private Return' | translate}}:{{research.first | number : '1.2-2'}} </h5>
+                    </div>
+
+                    <div class="desc-wrap">
+                        <h5>{{'Social Return' | translate}}: {{research.second | number : '1.2-2'}} </h5>
+                    </div>
+
+                    <div class="desc-wrap">
+                        <h5>{{'Economy' | translate}}:{{research.third | number : '1.2-2'}} </h5>
+                    </div>
+
+                    <div class="desc-wrap">
+                        <h5>{{'Final Result' | translate}}:{{research.final | number : '1.2-2'}} </h5>
+                    </div>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+</ng-template>
