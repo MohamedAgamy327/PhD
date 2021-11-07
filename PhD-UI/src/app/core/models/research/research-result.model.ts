@@ -1,0 +1,30 @@
+export interface ResearchResult {
+  id: number;
+  name: string;
+  email: string;
+  status: string;
+  phone: string;
+  entity: string;
+  address: string;
+  fullTimeEmployeesNumber: number;
+  partTimeEmployeesNumber: number;
+  phDResearchersNumber: number;
+  mastersResearchersNumber: number;
+  bachelorsResearchersNumber: number;
+  techniciansNumber: number;
+  canEdit: boolean;
+  answersCount: number;
+  q8: number;
+  q9: number;
+  q10: number;
+  q12: number;
+  q13: number;
+  q14: number;
+  q15: number;
+  q16: number;
+  q17: number;
+  first: number;
+  second: number;
+  third: number;
+  final: number;
+}

@@ -19,7 +19,6 @@ using System.Security.Claims;
 using System.Linq;
 using API.DTO;
 using System.IO;
-using System.ComponentModel;
 using OfficeOpenXml;
 
 namespace API.Controllers
@@ -40,8 +39,26 @@ namespace API.Controllers
         private readonly IAnswerMultiCheckboxService _answerMultiCheckboxService;
         private readonly IResearchQuestionService _researchQuestionService;
         private readonly IJWTManager _jwtManager;
+        private readonly IAnswerCheckboxRepository _answerCheckboxRepository;
+        private readonly IAnswerMultiPercentageRepository _answerMultiPercentageRepository;
+        private readonly IAnswerMultiCheckboxRepository _answerMultiCheckboxRepository;
 
-        public ResearchsController(IMapper mapper, IUnitOfWork unitOfWork, IResearchRepository researchRepository, IJWTManager jwtManager, IResearchService researchService, IAnswerRadioService answerRadioService, IAnswerCheckboxService answerCheckboxService, IAnswerNumberService answerNumberService, IAnswerMultiAmountService answerMultiAmountService, IAnswerMultiPercentageService answerMultiPercentageService, IAnswerMultiCheckboxService answerMultiCheckboxService, IResearchQuestionService researchQuestionService)
+        public ResearchsController(
+            IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IResearchRepository researchRepository,
+            IJWTManager jwtManager,
+            IResearchService researchService,
+            IAnswerRadioService answerRadioService,
+            IAnswerCheckboxService answerCheckboxService,
+            IAnswerNumberService answerNumberService,
+            IAnswerMultiAmountService answerMultiAmountService,
+            IAnswerMultiPercentageService answerMultiPercentageService,
+            IAnswerMultiCheckboxService answerMultiCheckboxService,
+            IResearchQuestionService researchQuestionService,
+            IAnswerCheckboxRepository answerCheckboxRepository,
+            IAnswerMultiPercentageRepository answerMultiPercentageRepository,
+            IAnswerMultiCheckboxRepository answerMultiCheckboxRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -55,6 +72,9 @@ namespace API.Controllers
             _answerMultiPercentageService = answerMultiPercentageService;
             _answerMultiCheckboxService = answerMultiCheckboxService;
             _researchQuestionService = researchQuestionService;
+            _answerCheckboxRepository = answerCheckboxRepository;
+            _answerMultiPercentageRepository = answerMultiPercentageRepository;
+            _answerMultiCheckboxRepository = answerMultiCheckboxRepository;
         }
 
         [HttpPost("Register")]
@@ -164,6 +184,15 @@ namespace API.Controllers
             return Ok(researchs);
         }
 
+        [HttpGet("results")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IReadOnlyList<ResearchForResultsGetDTO>>> GetResults()
+        {
+            List<ResearchForResultsGetDTO> researchs = _mapper.Map<List<ResearchForResultsGetDTO>>(await _researchRepository.GetAsync().ConfigureAwait(true));
+            return Ok(researchs);
+        }
+
         [HttpGet("{status}")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -264,16 +293,7 @@ namespace API.Controllers
                     throw new Exception($"row {i}");
                 }
             }
-            //List<string> s = new List<string>();
-            //int colCount = workSheet.Dimension.End.Column;  //get Column Count
-            //int rowCount = workSheet.Dimension.End.Row;     //get row count
-            //for (int row = 1; row <= rowCount; row++)
-            //{
-            //    for (int col = 1; col <= colCount; col++)
-            //    {
-            //       s.Add(" Row:" + row + " column:" + col + " Value:" + workSheet.Cells[row, col].Value?.ToString().Trim());
-            //    }
-            //}
+
 
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
             return Ok();
@@ -304,5 +324,78 @@ namespace API.Controllers
         }
 
 
+        [HttpPatch("updateCheckboxes")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UpdateCheckboxes()
+        {
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+            var checkboxes = await _answerCheckboxRepository.GetAsync().ConfigureAwait(true);
+
+            foreach (var research in researchs)
+            {
+                var answersQ8 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 8).ToList();
+                research.Q8 = answersQ8.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ8.Count();
+
+                var answersQ9 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 9).ToList();
+                research.Q9 = answersQ9.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ9.Count();
+
+                var answersQ10 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 10).ToList();
+                research.Q10 = answersQ10.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ10.Count();
+
+                var answersQ12 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 12).ToList();
+                research.Q12 = answersQ12.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ12.Count();
+
+                var answersQ13 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 13).ToList();
+                research.Q13 = answersQ13.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ13.Count();
+
+                var answersQ16 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 16).ToList();
+                research.Q16 = answersQ16.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ16.Count();
+
+                var answersQ17 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 17).ToList();
+                research.Q17 = answersQ17.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ17.Count();
+
+                _researchRepository.Edit(research);
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+            return Ok();
+        }
+
+        [HttpPatch("updateMultiPercentages")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UpdateMultiPercentages()
+        {
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+            var percentages = await _answerMultiPercentageRepository.GetAsync().ConfigureAwait(true);
+
+            foreach (var research in researchs)
+            {
+                var answersQ14 = percentages.Where(w => w.ResearchId == research.Id && w.QuestionId == 14).ToList();
+                research.Q14 = (answersQ14.Sum(s => s.Number1) + answersQ14.Sum(s => s.Number2)) / (answersQ14.Count() * 2);
+                _researchRepository.Edit(research);
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+            return Ok();
+        }
+
+
+        [HttpPatch("updateMultiCheckboxes")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UpdateMultiCheckboxes()
+        {
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+            var checkboxes = await _answerMultiCheckboxRepository.GetAsync().ConfigureAwait(true);
+
+            foreach (var research in researchs)
+            {
+                var answersQ15 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 15).ToList();
+                research.Q15 = (answersQ15.Sum(s => Convert.ToDecimal(s.Checked1)) + answersQ15.Sum(s => Convert.ToDecimal(s.Checked2))) / (answersQ15.Count() * 2);
+                _researchRepository.Edit(research);
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+            return Ok();
+        }
     }
 }

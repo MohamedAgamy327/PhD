@@ -26,6 +26,11 @@ export class ResearchService {
     return this.http.get<Research>(`${environment.serverUrl}researchs`);
   }
 
+  getAllResults(): Observable<Research> {
+    return this.http.get<Research>(`${environment.serverUrl}researchs/results`);
+  }
+
+
   changePassword(id: number, model: any): Observable<any> {
     return this.http.patch(`${environment.serverUrl}researchs/${id}/changepassword`, model);
   }

@@ -32,5 +32,14 @@ namespace Domain.Entities
         public ICollection<AnswerMultiPercentage> AnswerMultiPercentages { get; set; }
         public ICollection<AnswerMultiCheckbox> AnswerMultiCheckboxs { get; set; }
         public ICollection<ResearchQuestion> ResearchsQuestions { get; set; }
+        public decimal? Q8 { get; set; }
+        public decimal? Q9 { get; set; }
+        public decimal? Q10 { get; set; }
+        public decimal? Q12 { get; set; }
+        public decimal? Q13 { get; set; }
+        public decimal? Q14 { get; set; }
+        public decimal? Q15 { get; set; }
+        public decimal? Q16 { get; set; }
+        public decimal? Q17 { get; set; }
     }
 }

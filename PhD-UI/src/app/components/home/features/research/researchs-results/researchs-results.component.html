@@ -1,0 +1,62 @@
+<mat-card class="pad-y-lg mrgn-b-lg">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <div class="pad-r-md">
+                <h2>{{'Search' | translate}}</h2>
+            </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+            <div fxLayout="row wrap">
+                <div class="form-group pad-r-md" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="calc(100% - 200px)" fxFlex.lg="calc(100% - 200px)" fxFlex.xl="calc(100% - 200px)">
+                    <mat-form-field class="full-wid" floatLabel="never">
+                        <input matInput [(ngModel)]="filter" autocomplete="off" (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>
+
+
+
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex.gt-md="100" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100" *ngFor="let research of filterResearchs">
+        <mat-card>
+            <div class="gene-card-title">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div fxLayout="column">
+                        <h4 class="mrgn-b-none"><a href="javascript:void(0)">{{research.name |
+                translate}}</a></h4>
+                    </div> <span fxFlex></span>
+                </div>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="gene-card-content">
+                <div class="desc-wrap">
+                    <h5>{{'Private Return' | translate}} : </h5>
+                    <p>{{research.first | number : '1.2-2'}}
+                        <p>
+                </div>
+
+                <div class="desc-wrap">
+                    <h5>{{'Social Return' | translate}} : </h5>
+                    <p>{{research.second | number : '1.2-2'}}
+                        <p>
+                </div>
+
+                <div class="desc-wrap">
+                    <h5>{{'Economy' | translate}} : </h5>
+                    <p>{{research.third | number : '1.2-2'}}
+                        <p>
+                </div>
+
+                <div class="desc-wrap">
+                    <h5>{{'Final Result' | translate}} : </h5>
+                    <p>{{research.final | number : '1.2-2'}}
+                        <p>
+                </div>
+
+            </div>
+        </mat-card>
+    </div>
+</div>
