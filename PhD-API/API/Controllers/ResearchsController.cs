@@ -323,7 +323,6 @@ namespace API.Controllers
             return Ok();
         }
 
-
         [HttpPatch("updateCheckboxes")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
