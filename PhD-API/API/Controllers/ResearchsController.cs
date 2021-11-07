@@ -17,6 +17,10 @@ using API.DTO.Account;
 using API.IService;
 using System.Security.Claims;
 using System.Linq;
+using API.DTO;
+using System.IO;
+using System.ComponentModel;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -214,5 +218,91 @@ namespace API.Controllers
             ResearchForGetDTO researchDto = _mapper.Map<ResearchForGetDTO>(research);
             return Ok(researchDto);
         }
+
+
+        [HttpPost("upload")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Upload([FromForm] FileDTO model)
+        {
+            FileOperations.WriteFile($"uploadFiles", model.File);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
+            FileInfo file = new FileInfo(path);
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            int totalRows = workSheet.Dimension.Rows;
+
+            SecurePassword.CreatePasswordHash("12341234", out byte[] passwordHash, out byte[] passwordSalt);
+
+            for (int i = 5; i <= totalRows; i++)
+            {
+                try
+                {
+                    Research research = new Research
+                    {
+                        Code = Convert.ToInt32(workSheet.Cells[i, 1].Value),
+                        Name = workSheet.Cells[i, 2].Value.ToString().Trim(),
+                        Program = workSheet.Cells[i, 3].Value.ToString().Trim(),
+                        Field = workSheet.Cells[i, 4].Value.ToString().Trim(),
+                        Entity = workSheet.Cells[i, 6].Value.ToString().Trim(),
+                        Address = workSheet.Cells[i, 7].Value.ToString().Trim(),
+                        Email = workSheet.Cells[i, 8].Value.ToString().Trim(),
+                        FullTimeEmployeesNumber = Convert.ToInt32(workSheet.Cells[i, 9].Value),
+                        PartTimeEmployeesNumber = Convert.ToInt32(workSheet.Cells[i, 10].Value),
+                        PhDResearchersNumber = Convert.ToInt32(workSheet.Cells[i, 11].Value),
+                        MastersResearchersNumber = Convert.ToInt32(workSheet.Cells[i, 12].Value),
+                        BachelorsResearchersNumber = Convert.ToInt32(workSheet.Cells[i, 13].Value),
+                        TechniciansNumber = Convert.ToInt32(workSheet.Cells[i, 14].Value),
+                        PasswordSalt = passwordSalt,
+                        PasswordHash = passwordHash
+                    };
+                    await _researchRepository.AddAsync(research).ConfigureAwait(true);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"row {i}");
+                }
+            }
+            //List<string> s = new List<string>();
+            //int colCount = workSheet.Dimension.End.Column;  //get Column Count
+            //int rowCount = workSheet.Dimension.End.Row;     //get row count
+            //for (int row = 1; row <= rowCount; row++)
+            //{
+            //    for (int col = 1; col <= colCount; col++)
+            //    {
+            //       s.Add(" Row:" + row + " column:" + col + " Value:" + workSheet.Cells[row, col].Value?.ToString().Trim());
+            //    }
+            //}
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
+        }
+
+        [HttpPatch("all/status")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResearchForGetDTO>> InitQuestions()
+        {
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+
+            foreach (var research in researchs)
+            {
+                research.Status = ResearchStatusEnum.Accepted;
+                _researchRepository.Edit(research);
+                await _answerRadioService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _answerCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _answerNumberService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _answerMultiAmountService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _answerMultiPercentageService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _answerMultiCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
+                await _researchQuestionService.AddInitResearchQuestions(research.Id).ConfigureAwait(true);
+            }
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
+        }
+
+
     }
 }

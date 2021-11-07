@@ -11,5 +11,6 @@ namespace Core.IRepository
         Task<AnswerMultiCheckbox> GetAsync(int id);
         Task<IEnumerable<AnswerMultiCheckbox>> GetByResearchAsync(int researchId);
         Task<bool> IsExist(int id);
+        Task<IEnumerable<AnswerMultiCheckbox>> GetAsync();
     }
 }

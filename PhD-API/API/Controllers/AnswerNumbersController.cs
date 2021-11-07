@@ -14,6 +14,9 @@ using API.Errors;
 using Utilities.StaticHelpers;
 using Domain.Entities;
 using Domain.Enums;
+using API.DTO;
+using System.IO;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -74,7 +77,7 @@ namespace API.Controllers
             answerNumber.ResearchId = oldAnswerNumber.ResearchId;
 
             _answerNumberRepository.Edit(answerNumber);
-        
+
             var researchQuestion = await _researchQuestionRepository.GetAsync(oldAnswerNumber.ResearchId, oldAnswerNumber.QuestionId);
 
             var research = await _researchRepository.GetAsync(oldAnswerNumber.ResearchId);
@@ -99,5 +102,42 @@ namespace API.Controllers
             return Ok(research.AnswersCount);
         }
 
+
+        [HttpPut("init")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<AnswerNumberForGetDTO>> Init([FromForm] FileDTO model)
+        {
+
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+
+            FileOperations.WriteFile($"uploadFiles", model.File);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
+            FileInfo file = new FileInfo(path);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            int totalRows = workSheet.Dimension.Rows;
+
+            for (int i = 5; i <= totalRows; i++)
+            {
+                try
+                {
+                    Research research = researchs.FirstOrDefault(f => f.Code == Convert.ToInt32(workSheet.Cells[i, 1].Value));
+                    var researchQuestion = await _researchQuestionRepository.GetAsync(research.Id, 5);
+                    researchQuestion.Answered = true;
+                    AnswerNumber answerNumber = await _answerNumberRepository.GetAsync(research.Id,5).ConfigureAwait(true);
+                    answerNumber.Number= Convert.ToInt32(workSheet.Cells[i, 27].Value);
+                    _answerNumberRepository.Edit(answerNumber);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"row {i}");
+                }
+            }
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
+        }
     }
 }

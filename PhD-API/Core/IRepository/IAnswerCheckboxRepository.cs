@@ -10,6 +10,7 @@ namespace Core.IRepository
         AnswerCheckbox Edit(AnswerCheckbox answerCheckbox);
         Task<AnswerCheckbox> GetAsync(int id);
         Task<IEnumerable<AnswerCheckbox>> GetByResearchAsync(int researchId);
+        Task<IEnumerable<AnswerCheckbox>> GetAsync();
         Task<bool> IsExist(int id);
     }
 }

@@ -33,6 +33,11 @@ namespace Core.Repository
             return await _context.AnswerCheckboxs.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<IEnumerable<AnswerCheckbox>> GetAsync()
+        {
+            return await _context.AnswerCheckboxs.AsNoTracking().ToListAsync();
+        }
+
         public async Task<IEnumerable<AnswerCheckbox>> GetByResearchAsync(int researchId)
         {
             return await _context.AnswerCheckboxs.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();

@@ -11,5 +11,6 @@ namespace Core.IRepository
         Task<AnswerMultiPercentage> GetAsync(int id);
         Task<IEnumerable<AnswerMultiPercentage>> GetByResearchAsync(int researchId);
         Task<bool> IsExist(int id);
+        Task<IEnumerable<AnswerMultiPercentage>> GetAsync();
     }
 }

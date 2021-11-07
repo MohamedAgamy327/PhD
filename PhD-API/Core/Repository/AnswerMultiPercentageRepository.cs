@@ -8,39 +8,44 @@ using System.Threading.Tasks;
 
 namespace Core.Repository
 {
-    public class AnswerMultiCheckboxRepository : IAnswerMultiCheckboxRepository
+    public class AnswerMultiPercentageRepository : IAnswerMultiPercentageRepository
     {
         private readonly ApplicationContext _context;
-        public AnswerMultiCheckboxRepository(ApplicationContext context)
+        public AnswerMultiPercentageRepository(ApplicationContext context)
         {
             _context = context;
         }
 
-        public async Task<AnswerMultiCheckbox> AddAsync(AnswerMultiCheckbox answerMultiCheckbox)
+        public async Task<AnswerMultiPercentage> AddAsync(AnswerMultiPercentage answerMultiPercentage)
         {
-            await _context.AnswerMultiCheckboxs.AddAsync(answerMultiCheckbox);
-            return answerMultiCheckbox;
+            await _context.AnswerMultiPercentages.AddAsync(answerMultiPercentage);
+            return answerMultiPercentage;
         }
 
-        public AnswerMultiCheckbox Edit(AnswerMultiCheckbox answerMultiCheckbox)
+        public AnswerMultiPercentage Edit(AnswerMultiPercentage answerMultiPercentage)
         {
-            _context.Entry(answerMultiCheckbox).State = EntityState.Modified;
-            return answerMultiCheckbox;
+            _context.Entry(answerMultiPercentage).State = EntityState.Modified;
+            return answerMultiPercentage;
         }
 
-        public async Task<AnswerMultiCheckbox> GetAsync(int id)
+        public async Task<AnswerMultiPercentage> GetAsync(int id)
         {
-            return await _context.AnswerMultiCheckboxs.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
+            return await _context.AnswerMultiPercentages.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<IEnumerable<AnswerMultiCheckbox>> GetByResearchAsync(int researchId)
+        public async Task<IEnumerable<AnswerMultiPercentage>> GetAsync()
         {
-            return await _context.AnswerMultiCheckboxs.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();
+            return await _context.AnswerMultiPercentages.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<AnswerMultiPercentage>> GetByResearchAsync(int researchId)
+        {
+            return await _context.AnswerMultiPercentages.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();
         }
 
         public async Task<bool> IsExist(int id)
         {
-            return await _context.AnswerMultiCheckboxs.AnyAsync(s => s.Id == id).ConfigureAwait(true);
+            return await _context.AnswerMultiPercentages.AnyAsync(s => s.Id == id).ConfigureAwait(true);
         }
     }
 }

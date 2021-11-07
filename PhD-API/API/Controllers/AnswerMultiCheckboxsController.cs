@@ -12,6 +12,10 @@ using System;
 using API.DTO.AnswerMultiCheckbox;
 using Domain.Entities;
 using Domain.Enums;
+using API.DTO;
+using Utilities.StaticHelpers;
+using System.IO;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -21,17 +25,19 @@ namespace API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAnswerRepository _answerRepository;
         private readonly IAnswerMultiCheckboxRepository _answerMultiCheckboxRepository;
         private readonly IResearchQuestionRepository _researchQuestionRepository;
         private readonly IResearchRepository _researchRepository;
 
-        public AnswerMultiCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiCheckboxRepository answerMultiCheckboxRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository)
+        public AnswerMultiCheckboxsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiCheckboxRepository answerMultiCheckboxRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository, IAnswerRepository answerRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiCheckboxRepository = answerMultiCheckboxRepository;
             _researchQuestionRepository = researchQuestionRepository;
             _researchRepository = researchRepository;
+            _answerRepository = answerRepository;
         }
 
         [HttpGet("{id}")]
@@ -43,7 +49,7 @@ namespace API.Controllers
             string role = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault()?.Value;
 
             if (role == RoleEnum.Admin.ToString())
-            { 
+            {
                 List<AnswerMultiCheckboxForGetDTO> answers = _mapper.Map<List<AnswerMultiCheckboxForGetDTO>>(await _answerMultiCheckboxRepository.GetByResearchAsync(Convert.ToInt32(id)).ConfigureAwait(true));
                 return Ok(answers);
             }
@@ -54,7 +60,7 @@ namespace API.Controllers
                 return Ok(answers);
             }
 
-     
+
         }
 
         [HttpPut]
@@ -86,7 +92,7 @@ namespace API.Controllers
                 research.AnswersCount++;
                 _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true  && (list.Any(d => d.Checked1) || list.Any(d => d.Checked2)) && researchQuestion.Answered == false)
+            else if (Convert.ToBoolean(list[0].Radio) == true && (list.Any(d => d.Checked1) || list.Any(d => d.Checked2)) && researchQuestion.Answered == false)
             {
                 researchQuestion.Answered = true;
                 _researchQuestionRepository.Edit(researchQuestion);
@@ -94,7 +100,7 @@ namespace API.Controllers
                 research.AnswersCount++;
                 _researchRepository.Edit(research);
             }
-            else if (Convert.ToBoolean(list[0].Radio) == true &&  list.All(d => d.Checked1 == false) && list.All(d => d.Checked2 == false) && researchQuestion.Answered == true)
+            else if (Convert.ToBoolean(list[0].Radio) == true && list.All(d => d.Checked1 == false) && list.All(d => d.Checked2 == false) && researchQuestion.Answered == true)
             {
                 researchQuestion.Answered = false;
                 _researchQuestionRepository.Edit(researchQuestion);
@@ -109,5 +115,65 @@ namespace API.Controllers
             return Ok(research.AnswersCount);
         }
 
+
+
+        [HttpPut("init")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<AnswerMultiCheckboxForGetDTO>> Init([FromForm] FileDTO model)
+        {
+
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+
+            FileOperations.WriteFile($"uploadFiles", model.File);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
+            FileInfo file = new FileInfo(path);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            int totalRows = workSheet.Dimension.Rows;
+            int colCount = workSheet.Dimension.End.Column;  //get Column Count
+
+            var answers = await _answerRepository.GetAsync(QuestionTypeNum.MultiAmount).ConfigureAwait(true);
+            var multiCheckboxs = await _answerMultiCheckboxRepository.GetAsync().ConfigureAwait(true);
+
+            for (int i = 5; i <= totalRows; i++)
+            {
+                try
+                {
+                    Research research = researchs.FirstOrDefault(f => f.Code == Convert.ToInt32(workSheet.Cells[i, 1].Value));
+                    for (int col = 1; col <= colCount; col++)
+                    {
+                        var cell = workSheet.Cells[4, col].Value;
+                        if (cell != null)
+                        {
+                            string[] textSplit = cell.ToString().Trim().Split("-");
+                            if (textSplit.Length > 1)
+                            {
+                                var answerMultiCheckbox = multiCheckboxs.FirstOrDefault(d => d.ResearchId == research.Id && d.AnswerId == Convert.ToInt32(textSplit[1]));
+                                if (answerMultiCheckbox != null)
+                                {
+                                    answerMultiCheckbox.Checked1 = Convert.ToBoolean(workSheet.Cells[i, col].Value);
+                                    answerMultiCheckbox.Checked2 = Convert.ToBoolean(workSheet.Cells[i, col + 1].Value);
+
+                                    if (answerMultiCheckbox.Checked1 || answerMultiCheckbox.Checked2)
+                                        answerMultiCheckbox.Radio = true;
+
+                                    _answerMultiCheckboxRepository.Edit(answerMultiCheckbox);
+                                }
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"row {i}");
+                }
+            }
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
+        }
     }
 }

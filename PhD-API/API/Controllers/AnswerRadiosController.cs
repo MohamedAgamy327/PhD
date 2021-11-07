@@ -14,6 +14,9 @@ using API.Errors;
 using Utilities.StaticHelpers;
 using Domain.Entities;
 using Domain.Enums;
+using API.DTO;
+using System.IO;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -26,14 +29,16 @@ namespace API.Controllers
         private readonly IAnswerRadioRepository _answerRadioRepository;
         private readonly IResearchQuestionRepository _researchQuestionRepository;
         private readonly IResearchRepository _researchRepository;
+        private readonly IAnswerRepository _answerRepository;
 
-        public AnswerRadiosController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerRadioRepository answerRadioRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository)
+        public AnswerRadiosController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerRadioRepository answerRadioRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository, IAnswerRepository answerRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerRadioRepository = answerRadioRepository;
             _researchQuestionRepository = researchQuestionRepository;
             _researchRepository = researchRepository;
+            _answerRepository = answerRepository;
         }
 
         [HttpGet("{id}")]
@@ -98,6 +103,62 @@ namespace API.Controllers
             }
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
             return Ok(research.AnswersCount);
+        }
+
+        [HttpPut("init")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Init([FromForm] FileDTO model)
+        {
+            FileOperations.WriteFile($"uploadFiles", model.File);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
+            FileInfo file = new FileInfo(path);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            int totalRows = workSheet.Dimension.Rows;
+
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+            var answers = await _answerRepository.GetAsync(QuestionTypeNum.Radio).ConfigureAwait(true);
+            var radios = await _answerRadioRepository.GetAsync().ConfigureAwait(true);
+            int colCount = workSheet.Dimension.End.Column;  //get Column Count
+
+            for (int i = 5; i <= totalRows; i++)
+            {
+                try
+                {
+                    Research research = researchs.FirstOrDefault(f => f.Code == Convert.ToInt32(workSheet.Cells[i, 1].Value));
+
+                    for (int col = 1; col <= colCount; col++)
+                    {
+                        var cell = workSheet.Cells[4, col].Value;
+                        if (cell != null)
+                        {
+                            string[] textSplit = cell.ToString().Trim().Split("-");
+                            if (textSplit.Length > 1)
+                            {
+                                var radioChecked = radios.FirstOrDefault(d => d.ResearchId == research.Id && d.QuestionId == Convert.ToInt32(textSplit[0]));
+                                if (radioChecked != null && Convert.ToBoolean(workSheet.Cells[i, col].Value))
+                                {
+
+                                    radioChecked.AnswerId = Convert.ToInt32(textSplit[1]);
+
+                                    _answerRadioRepository.Edit(radioChecked);
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"row {i}");
+                }
+            }
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
         }
 
     }

@@ -33,6 +33,10 @@ namespace Core.Repository
             return await _context.AnswerNumbers.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<AnswerNumber> GetAsync(int researchId, int questionId)
+        {
+            return await _context.AnswerNumbers.AsNoTracking().SingleOrDefaultAsync(s => s.ResearchId == researchId && s.QuestionId==questionId);
+        }
         public async Task<IEnumerable<AnswerNumber>> GetByResearchAsync(int researchId)
         {
             return await _context.AnswerNumbers.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();

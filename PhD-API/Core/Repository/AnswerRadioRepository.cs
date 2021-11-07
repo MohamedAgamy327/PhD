@@ -38,6 +38,11 @@ namespace Core.Repository
             return await _context.AnswerRadios.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();
         }
 
+        public async Task<IEnumerable<AnswerRadio>> GetAsync()
+        {
+            return await _context.AnswerRadios.AsNoTracking().ToListAsync();
+        }
+
         public async Task<bool> IsExist(int id)
         {
             return await _context.AnswerRadios.AnyAsync(s => s.Id == id).ConfigureAwait(true);

@@ -9,6 +9,7 @@ namespace Core.IRepository
         Task<AnswerNumber> AddAsync(AnswerNumber answerNumber);
         AnswerNumber Edit(AnswerNumber answerNumber);
         Task<AnswerNumber> GetAsync(int id);
+        Task<AnswerNumber> GetAsync(int researchId, int questionId);
         Task<IEnumerable<AnswerNumber>> GetByResearchAsync(int researchId);
         Task<bool> IsExist(int id);
     }

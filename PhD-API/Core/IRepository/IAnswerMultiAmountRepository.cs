@@ -10,6 +10,7 @@ namespace Core.IRepository
         AnswerMultiAmount Edit(AnswerMultiAmount answerMultiAmount);
         Task<AnswerMultiAmount> GetAsync(int id);
         Task<IEnumerable<AnswerMultiAmount>> GetByResearchAsync(int researchId);
+        Task<IEnumerable<AnswerMultiAmount>> GetAsync();
         Task<bool> IsExist(int id);
     }
 }

@@ -12,6 +12,10 @@ using System;
 using API.DTO.AnswerMultiAmount;
 using Domain.Entities;
 using Domain.Enums;
+using API.DTO;
+using Utilities.StaticHelpers;
+using System.IO;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -21,17 +25,19 @@ namespace API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAnswerRepository _answerRepository;
         private readonly IAnswerMultiAmountRepository _answerMultiAmountRepository;
         private readonly IResearchQuestionRepository _researchQuestionRepository;
         private readonly IResearchRepository _researchRepository;
 
-        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository)
+        public AnswerMultiAmountsController(IMapper mapper, IUnitOfWork unitOfWork, IAnswerMultiAmountRepository answerMultiAmountRepository, IResearchQuestionRepository researchQuestionRepository, IResearchRepository researchRepository, IAnswerRepository answerRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _answerMultiAmountRepository = answerMultiAmountRepository;
             _researchQuestionRepository = researchQuestionRepository;
             _researchRepository = researchRepository;
+            _answerRepository = answerRepository;
         }
 
         [HttpGet("{id}")]
@@ -98,6 +104,61 @@ namespace API.Controllers
 
 
             return Ok(research.AnswersCount);
+        }
+
+
+        [HttpPut("init")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<AnswerMultiAmountForGetDTO>> Init([FromForm] FileDTO model)
+        {
+
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+
+            FileOperations.WriteFile($"uploadFiles", model.File);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
+            FileInfo file = new FileInfo(path);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            int totalRows = workSheet.Dimension.Rows;
+            int colCount = workSheet.Dimension.End.Column;  //get Column Count
+
+            var multiAmounts = await _answerMultiAmountRepository.GetAsync().ConfigureAwait(true);
+
+            for (int i = 5; i <= totalRows; i++)
+            {
+                try
+                {
+                    Research research = researchs.FirstOrDefault(f => f.Code == Convert.ToInt32(workSheet.Cells[i, 1].Value));
+                    for (int col = 1; col <= colCount; col++)
+                    {
+                        var cell = workSheet.Cells[4, col].Value;
+                        if (cell != null)
+                        {
+                            string[] textSplit = cell.ToString().Trim().Split("-");
+                            if (textSplit.Length > 1)
+                            {
+                                var answerMultiAmount = multiAmounts.FirstOrDefault(d => d.ResearchId == research.Id && d.AnswerId == Convert.ToInt32(textSplit[1]));
+                                if (answerMultiAmount != null)
+                                {
+                                    answerMultiAmount.Amount = Convert.ToDecimal(workSheet.Cells[i, col].Value);
+
+                                    _answerMultiAmountRepository.Edit(answerMultiAmount);
+                                }
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"row {i}");
+                }
+            }
+
+            await _unitOfWork.CompleteAsync().ConfigureAwait(true);
+            return Ok();
         }
 
     }

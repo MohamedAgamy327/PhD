@@ -5,17 +5,20 @@ namespace Domain.Entities
 {
     public class Research : BaseEntity
     {
+        public int? Code { get; set; }
         public string Name { get; set; }
+        public string Program { get; set; }
+        public string Field { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Entity { get; set; }
         public string Address { get; set; }
-        public int FullTimeEmployeesNumber { get; set; }
-        public int PartTimeEmployeesNumber { get; set; }
-        public int PhDResearchersNumber { get; set; }
-        public int MastersResearchersNumber { get; set; }
-        public int BachelorsResearchersNumber { get; set; }
-        public int TechniciansNumber { get; set; }
+        public int? FullTimeEmployeesNumber { get; set; }
+        public int? PartTimeEmployeesNumber { get; set; }
+        public int? PhDResearchersNumber { get; set; }
+        public int? MastersResearchersNumber { get; set; }
+        public int? BachelorsResearchersNumber { get; set; }
+        public int? TechniciansNumber { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool IsRandomPassword { get; set; }

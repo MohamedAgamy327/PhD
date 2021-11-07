@@ -38,6 +38,10 @@ namespace Core.Repository
             return await _context.AnswerMultiAmounts.Where(s => s.ResearchId == researchId).AsNoTracking().ToListAsync();
         }
 
+        public async Task<IEnumerable<AnswerMultiAmount>> GetAsync()
+        {
+            return await _context.AnswerMultiAmounts.AsNoTracking().ToListAsync();
+        }
         public async Task<bool> IsExist(int id)
         {
             return await _context.AnswerMultiAmounts.AnyAsync(s => s.Id == id).ConfigureAwait(true);
