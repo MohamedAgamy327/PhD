@@ -1,6 +1,7 @@
 import {
   ResearchChangePasswordDialogComponent,
   ResearchsComponent,
+  ResearchsDescriptiveStatisticsComponent,
   ResearchsResultsComponent
 } from '.';
 import { NgModule } from '@angular/core';
@@ -13,7 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [
     ResearchsComponent,
     ResearchChangePasswordDialogComponent,
-    ResearchsResultsComponent
+    ResearchsResultsComponent,
+    ResearchsDescriptiveStatisticsComponent
   ],
   entryComponents: [
     ResearchChangePasswordDialogComponent

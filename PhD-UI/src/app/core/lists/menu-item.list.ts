@@ -59,6 +59,13 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin]
   },
   {
+    state: 'home/researches/descriptive-statistics',
+    name: 'Descriptive',
+    type: 'link',
+    icon: 'format_list_numbered',
+    roles: [RoleEnum.Admin]
+  },
+  {
     state: 'home/research-team',
     name: 'Research Team',
     type: 'link',
