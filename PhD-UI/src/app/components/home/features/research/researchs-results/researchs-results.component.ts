@@ -19,7 +19,7 @@ export class ResearchsResultsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'first', 'second', 'third', 'final'];
   researchs: ResearchResult[];
-  dataSource = new MatTableDataSource<Research>();
+  dataSource = new MatTableDataSource<ResearchResult>();
   showType: string = 'list';
 
   constructor(
