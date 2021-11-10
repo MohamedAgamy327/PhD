@@ -248,7 +248,6 @@ namespace API.Controllers
             return Ok(researchDto);
         }
 
-
         [HttpPost("upload")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -378,7 +377,6 @@ namespace API.Controllers
             return Ok();
         }
 
-
         [HttpPatch("updateMultiCheckboxes")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -391,6 +389,25 @@ namespace API.Controllers
             {
                 var answersQ15 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 15).ToList();
                 research.Q15 = (answersQ15.Sum(s => Convert.ToDecimal(s.Checked1)) + answersQ15.Sum(s => Convert.ToDecimal(s.Checked2))) / (answersQ15.Count() * 2);
+                _researchRepository.Edit(research);
+            }
+            await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+            return Ok();
+        }
+
+        [HttpPatch("updateResults")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UpdateResults()
+        {
+            var researchs = await _researchRepository.GetAsync().ConfigureAwait(true);
+
+            foreach (var research in researchs)
+            {
+                research.First = (research.Q8 + research.Q9 + research.Q10 + research.Q14 + research.Q15) / 5;
+                research.Second = (research.Q12 + research.Q13) / 2;
+                research.Third = (research.Q17 + research.Q16) / 2;
+                research.Final = (research.Q8 + research.Q9 + research.Q10 + research.Q12 + research.Q13 + research.Q14 + research.Q15 + research.Q16 + research.Q17) / 9;
                 _researchRepository.Edit(research);
             }
             await _unitOfWork.CompleteAsync().ConfigureAwait(false);
