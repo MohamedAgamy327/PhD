@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
     this.breadcrumbService.addFriendlyNameForRoute('/home/users', this.translate.instant('Users'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/researches', this.translate.instant('Researches'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/researches/results', this.translate.instant('Results'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/researches/descriptive-statistics', this.translate.instant('Descriptive'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/register', this.translate.instant('Register'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/login', this.translate.instant('Login'));
 

@@ -42,10 +42,10 @@ export class UserLoginComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.translate.instant('Login'));
-    if (localStorage.getItem(ConstEnum.username)) {
+    if (localStorage.getItem(ConstEnum.email)) {
       this.loginForm.patchValue({});
-      this.loginForm.setValue({
-        name: localStorage.getItem(ConstEnum.username),
+      this.loginForm.patchValue({
+        email: localStorage.getItem(ConstEnum.email),
         password: localStorage.getItem(ConstEnum.password),
         rememberMe: true
       });
@@ -61,10 +61,10 @@ export class UserLoginComponent implements OnInit {
       (res: any) => {
 
         if (this.loginForm.value.rememberMe) {
-          localStorage.setItem(ConstEnum.username, this.loginForm.value.name);
+          localStorage.setItem(ConstEnum.email, this.loginForm.value.email);
           localStorage.setItem(ConstEnum.password, this.loginForm.value.password);
         } else {
-          localStorage.removeItem(ConstEnum.username);
+          localStorage.removeItem(ConstEnum.email);
           localStorage.removeItem(ConstEnum.password);
         }
 
