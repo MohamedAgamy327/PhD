@@ -62,7 +62,14 @@ export const MenuItemList: MenuItem[] = [
     state: 'home/researches/descriptive-statistics',
     name: 'Descriptive',
     type: 'link',
-    icon: 'format_list_numbered',
+    icon: 'stacked_bar_chart',
+    roles: [RoleEnum.Admin]
+  },
+  {
+    state: 'home/researches/charts',
+    name: 'Charts',
+    type: 'link',
+    icon: 'bar_chart',
     roles: [RoleEnum.Admin]
   },
   {

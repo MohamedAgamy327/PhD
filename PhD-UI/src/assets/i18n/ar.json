@@ -175,7 +175,12 @@
     "?": "؟",
 
     "Name": "الاسم",
+    "Charts": "الرسومات البيانية",
     "Descriptive": "الاحصاءات الوصفية ",
+
+    "ResearchCenter": "مركز بحثى",
+    "PrivateUniversity": "جامعة حكومية",
+    "GovernmentalUniversity": "جامعة خاصة",
 
     "Quantity": "الكمية",
     "Price": "السعر",

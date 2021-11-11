@@ -1,0 +1,9 @@
+<div style="display: block;width: 70%; margin: 0 auto; margin-bottom: 50px;">
+    <canvas *ngIf="typeBarChartData" baseChart [datasets]="typeBarChartData" [labels]="typeBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+  </canvas>
+</div>
+
+<div style="display: block;width: 70%; margin: 0 auto;">
+    <canvas *ngIf="fieldBarChartData" baseChart [datasets]="fieldBarChartData" [labels]="fieldBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+  </canvas>
+</div>

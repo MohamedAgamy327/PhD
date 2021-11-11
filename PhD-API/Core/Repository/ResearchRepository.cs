@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Enums;
 using Utilities.StaticHelpers;
+using Domain.ReportsEntities;
 
 namespace Core.Repository
 {
@@ -62,6 +63,36 @@ namespace Core.Repository
         public async Task<bool> IsExist(string email)
         {
             return await _context.Researchs.AnyAsync(s => s.Email == email).ConfigureAwait(true);
+        }
+        public async Task<IEnumerable<GroupByUniversityTypeReport>> GetGroupByUniversityTypeAsync()
+        {
+            return await _context
+              .Researchs
+              .GroupBy(x => new
+              {
+                  x.UniversityType
+              })
+              .Select(x => new GroupByUniversityTypeReport
+              {
+                  UniversityType = x.Key.UniversityType.ToString(),
+                  Count = x.Count()
+              })
+              .ToListAsync();
+        }
+        public async Task<IEnumerable<GroupByFieldReport>> GetGroupByFieldAsync()
+        {
+            return await _context
+            .Researchs
+            .GroupBy(x => new
+            {
+                x.Field
+            })
+            .Select(x => new GroupByFieldReport
+            {
+                Field = x.Key.Field,
+                Count = x.Count()
+            })
+            .ToListAsync();
         }
     }
 }

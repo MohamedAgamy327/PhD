@@ -2,6 +2,6 @@
 {
     public enum UniversityTypeEnum
     {
-        ResearchCenter,PrivateUniversity, GovernmentalUniversity
+        ResearchCenter, PrivateUniversity, GovernmentalUniversity
     }
 }

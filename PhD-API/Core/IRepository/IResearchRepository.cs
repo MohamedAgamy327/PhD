@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
+using Domain.ReportsEntities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,5 +17,8 @@ namespace Core.IRepository
         Task<IEnumerable<Research>> GetAsync();
         Task<bool> IsExist(int id);
         Task<bool> IsExist(string email);
+
+        Task<IEnumerable<GroupByUniversityTypeReport>> GetGroupByUniversityTypeAsync();
+        Task<IEnumerable<GroupByFieldReport>> GetGroupByFieldAsync();
     }
 }

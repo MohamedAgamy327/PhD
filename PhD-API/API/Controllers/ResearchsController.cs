@@ -20,6 +20,7 @@ using System.Linq;
 using API.DTO;
 using System.IO;
 using OfficeOpenXml;
+using Domain.ReportsEntities;
 
 namespace API.Controllers
 {
@@ -256,7 +257,7 @@ namespace API.Controllers
             FileOperations.WriteFile($"uploadFiles", model.File);
             string path = Path.Combine(Directory.GetCurrentDirectory(), $"Content/uploadFiles", model.File.FileName);
             FileInfo file = new FileInfo(path);
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using ExcelPackage package = new ExcelPackage(file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
             int totalRows = workSheet.Dimension.Rows;
@@ -287,7 +288,7 @@ namespace API.Controllers
                     };
                     await _researchRepository.AddAsync(research).ConfigureAwait(true);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception($"row {i}");
                 }
@@ -413,5 +414,23 @@ namespace API.Controllers
             await _unitOfWork.CompleteAsync().ConfigureAwait(false);
             return Ok();
         }
+
+
+        [HttpGet("GroupByField")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<GroupByFieldReport>> GetGroupByField()
+        {
+            return Ok(await _researchRepository.GetGroupByFieldAsync().ConfigureAwait(true));
+        }
+
+        [HttpGet("GroupByUniversityType")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<GroupByUniversityTypeReport>> GetGroupByUniversityType()
+        {
+            return Ok(await _researchRepository.GetGroupByUniversityTypeAsync().ConfigureAwait(true));
+        }
+
     }
 }

@@ -149,7 +149,7 @@ namespace API.Controllers
 
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception($"row {i}");
                 }

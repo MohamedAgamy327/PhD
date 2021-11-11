@@ -1,5 +1,6 @@
 import {
   ResearchChangePasswordDialogComponent,
+  ResearchsChartsComponent,
   ResearchsComponent,
   ResearchsDescriptiveStatisticsComponent,
   ResearchsResultsComponent
@@ -9,13 +10,15 @@ import { CommonModule } from '@angular/common';
 import { ResearchRoutingModule } from './research-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     ResearchsComponent,
     ResearchChangePasswordDialogComponent,
     ResearchsResultsComponent,
-    ResearchsDescriptiveStatisticsComponent
+    ResearchsDescriptiveStatisticsComponent,
+    ResearchsChartsComponent
   ],
   entryComponents: [
     ResearchChangePasswordDialogComponent
@@ -24,7 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     ResearchRoutingModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    ChartsModule
   ],
   providers: [
   ]

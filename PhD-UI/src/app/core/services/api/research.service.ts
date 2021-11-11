@@ -43,4 +43,12 @@ export class ResearchService {
     return this.http.get<Research>(`${environment.serverUrl}researchs/one/${id || 0}`);
   }
 
+  getGroupByField(): Observable<any> {
+    return this.http.get<any>(`${environment.serverUrl}researchs/GroupByField`);
+  }
+
+  getGroupByUniversityType(): Observable<any> {
+    return this.http.get<any>(`${environment.serverUrl}researchs/GroupByUniversityType`);
+  }
+
 }

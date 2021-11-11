@@ -130,7 +130,7 @@ namespace API.Controllers
                     answerNumber.Number= Convert.ToInt32(workSheet.Cells[i, 27].Value);
                     _answerNumberRepository.Edit(answerNumber);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception($"row {i}");
                 }
