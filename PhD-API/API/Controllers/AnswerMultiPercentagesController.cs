@@ -152,8 +152,8 @@ namespace API.Controllers
                                 var answerMultiPercentage = multiPercentages.FirstOrDefault(d => d.ResearchId == research.Id && d.AnswerId == Convert.ToInt32(textSplit[1]));
                                 if (answerMultiPercentage != null)
                                 {
-                                    answerMultiPercentage.Number1 = Convert.ToDecimal(workSheet.Cells[i, col].Value);
-                                    answerMultiPercentage.Number2 = Convert.ToDecimal(workSheet.Cells[i, col+1].Value);
+                                    answerMultiPercentage.Number1 = Convert.ToDouble(workSheet.Cells[i, col].Value);
+                                    answerMultiPercentage.Number2 = Convert.ToDouble(workSheet.Cells[i, col+1].Value);
                                     answerMultiPercentage.Radio = Convert.ToBoolean(workSheet.Cells[i, 58].Value);
 
                                     _answerMultiPercentageRepository.Edit(answerMultiPercentage);

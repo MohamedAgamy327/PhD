@@ -334,25 +334,25 @@ namespace API.Controllers
             foreach (var research in researchs)
             {
                 var answersQ8 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 8).ToList();
-                research.Q8 = answersQ8.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ8.Count();
+                research.Q8 = answersQ8.Sum(s => Convert.ToDouble(s.Checked)) / answersQ8.Count();
 
                 var answersQ9 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 9).ToList();
-                research.Q9 = answersQ9.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ9.Count();
+                research.Q9 = answersQ9.Sum(s => Convert.ToDouble(s.Checked)) / answersQ9.Count();
 
                 var answersQ10 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 10).ToList();
-                research.Q10 = answersQ10.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ10.Count();
+                research.Q10 = answersQ10.Sum(s => Convert.ToDouble(s.Checked)) / answersQ10.Count();
 
                 var answersQ12 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 12).ToList();
-                research.Q12 = answersQ12.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ12.Count();
+                research.Q12 = answersQ12.Sum(s => Convert.ToDouble(s.Checked)) / answersQ12.Count();
 
                 var answersQ13 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 13).ToList();
-                research.Q13 = answersQ13.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ13.Count();
+                research.Q13 = answersQ13.Sum(s => Convert.ToDouble(s.Checked)) / answersQ13.Count();
 
                 var answersQ16 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 16).ToList();
-                research.Q16 = answersQ16.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ16.Count();
+                research.Q16 = answersQ16.Sum(s => Convert.ToDouble(s.Checked)) / answersQ16.Count();
 
                 var answersQ17 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 17).ToList();
-                research.Q17 = answersQ17.Sum(s => Convert.ToDecimal(s.Checked)) / answersQ17.Count();
+                research.Q17 = answersQ17.Sum(s => Convert.ToDouble(s.Checked)) / answersQ17.Count();
 
                 _researchRepository.Edit(research);
             }
@@ -389,7 +389,7 @@ namespace API.Controllers
             foreach (var research in researchs)
             {
                 var answersQ15 = checkboxes.Where(w => w.ResearchId == research.Id && w.QuestionId == 15).ToList();
-                research.Q15 = (answersQ15.Sum(s => Convert.ToDecimal(s.Checked1)) + answersQ15.Sum(s => Convert.ToDecimal(s.Checked2))) / (answersQ15.Count() * 2);
+                research.Q15 = (answersQ15.Sum(s => Convert.ToDouble(s.Checked1)) + answersQ15.Sum(s => Convert.ToDouble(s.Checked2))) / (answersQ15.Count() * 2);
                 _researchRepository.Edit(research);
             }
             await _unitOfWork.CompleteAsync().ConfigureAwait(false);
@@ -414,7 +414,6 @@ namespace API.Controllers
             await _unitOfWork.CompleteAsync().ConfigureAwait(false);
             return Ok();
         }
-
 
         [HttpGet("GroupByField")]
         [AllowAnonymous]

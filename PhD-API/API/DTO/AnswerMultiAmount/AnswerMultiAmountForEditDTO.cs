@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public int? AnswerId { get; set; }
         public int QuestionId { get; set; }
-        public decimal? Amount { get; set; }
+        public double? Amount { get; set; }
     }
 }

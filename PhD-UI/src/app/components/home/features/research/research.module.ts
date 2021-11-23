@@ -11,6 +11,7 @@ import { ResearchRoutingModule } from './research-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
+import { ResearchsFinalResultsComponent } from './researchs-final-results/researchs-final-results.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ChartsModule } from 'ng2-charts';
     ResearchChangePasswordDialogComponent,
     ResearchsResultsComponent,
     ResearchsDescriptiveStatisticsComponent,
-    ResearchsChartsComponent
+    ResearchsChartsComponent,
+    ResearchsFinalResultsComponent
   ],
   entryComponents: [
     ResearchChangePasswordDialogComponent

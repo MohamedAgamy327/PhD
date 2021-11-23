@@ -142,7 +142,7 @@ namespace API.Controllers
                                 var answerMultiAmount = multiAmounts.FirstOrDefault(d => d.ResearchId == research.Id && d.AnswerId == Convert.ToInt32(textSplit[1]));
                                 if (answerMultiAmount != null)
                                 {
-                                    answerMultiAmount.Amount = Convert.ToDecimal(workSheet.Cells[i, col].Value);
+                                    answerMultiAmount.Amount = Convert.ToDouble(workSheet.Cells[i, col].Value);
 
                                     _answerMultiAmountRepository.Edit(answerMultiAmount);
                                 }
