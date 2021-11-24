@@ -3,8 +3,10 @@ import {
   ResearchsChartsComponent,
   ResearchsComponent,
   ResearchsDescriptiveStatisticsComponent,
+  ResearchsFieldResultsComponent,
   ResearchsFinalResultsComponent,
   ResearchsFirstResultsComponent,
+  ResearchsProgramResultsComponent,
   ResearchsResultsComponent,
   ResearchsSecondResultsComponent,
   ResearchsThirdResultsComponent
@@ -16,7 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 
-
 @NgModule({
   declarations: [
     ResearchsComponent,
@@ -27,7 +28,9 @@ import { ChartsModule } from 'ng2-charts';
     ResearchsFinalResultsComponent,
     ResearchsFirstResultsComponent,
     ResearchsSecondResultsComponent,
-    ResearchsThirdResultsComponent
+    ResearchsThirdResultsComponent,
+    ResearchsFieldResultsComponent,
+    ResearchsProgramResultsComponent
   ],
   entryComponents: [
     ResearchChangePasswordDialogComponent

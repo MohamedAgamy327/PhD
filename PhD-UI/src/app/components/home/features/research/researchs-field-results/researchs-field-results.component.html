@@ -1,0 +1,88 @@
+<mat-card style="margin-bottom: 50px;">
+
+    <mat-card-content>
+        <h1>الاحصاءات الوصفية للدليل المركب وتوزيعه وفق المجال البحثى (**)</h1>
+
+        <table id="customers">
+            <tr>
+                <th rowspan="2">الدليل المركب وتأثيره الاقتصادى حسب المجال البحثى(*)
+                </th>
+                <th colspan="4">الاحصاءات الوصفية</th>
+            </tr>
+            <tr>
+                <th>المتوسط</th>
+                <th>الانحراف المعيارى</th>
+                <th>القيمة القصوى</th>
+                <th>القيمة الدنيا</th>
+            </tr>
+            <tr>
+                <th>المجال
+                </th>
+            </tr>
+            <tr>
+                <th> طب وصيدلة
+                </th>
+                <td>{{calculateFinal('طب وصيدلة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('طب وصيدلة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('طب وصيدلة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('طب وصيدلة') | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th> طاقة
+                </th>
+                <td>{{calculateFinal('طاقة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('طاقة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('طاقة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('طاقة') | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th> مياه وبيئة
+                </th>
+                <td>{{calculateFinal('مياه وبيئة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('مياه وبيئة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('مياه وبيئة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('مياه وبيئة') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> تكنولوجيا معلومات
+                </th>
+                <td>{{calculateFinal('تكنولوجيا معلومات') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('تكنولوجيا معلومات') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('تكنولوجيا معلومات') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('تكنولوجيا معلومات') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> بيوتكنولوجي
+                </th>
+                <td>{{calculateFinal('بيوتكنولوجي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('بيوتكنولوجي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('بيوتكنولوجي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('بيوتكنولوجي') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> زراعة
+                </th>
+                <td>{{calculateFinal('زراعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('زراعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('زراعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('زراعة') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> صناعة
+                </th>
+                <td>{{calculateFinal('صناعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('صناعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('صناعة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('صناعة') | number : '1.2-2'}}</td>
+            </tr>
+
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

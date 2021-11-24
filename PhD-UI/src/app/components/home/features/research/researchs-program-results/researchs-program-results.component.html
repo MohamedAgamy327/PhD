@@ -1,0 +1,79 @@
+<mat-card style="margin-bottom: 50px;">
+
+    <mat-card-content>
+        <h1>الاحصاءات الوصفية للدليل المركب وتوزيعه وفق البرنامج البحثى (**)</h1>
+
+        <table id="customers">
+            <tr>
+                <th rowspan="2">الدليل المركب وتأثيره الاقتصادى حسب البرنامج البحثى(*)
+                </th>
+                <th colspan="4">الاحصاءات الوصفية</th>
+            </tr>
+            <tr>
+                <th>المتوسط</th>
+                <th>الانحراف المعيارى</th>
+                <th>القيمة القصوى</th>
+                <th>القيمة الدنيا</th>
+            </tr>
+            <tr>
+                <th>البرنامج
+                </th>
+            </tr>
+            <tr>
+                <th> تحالف
+                </th>
+                <td>{{calculateFinal('تحالف') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('تحالف') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('تحالف') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('تحالف') | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th> مبادرة
+                </th>
+                <td>{{calculateFinal('مبادرة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('مبادرة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('مبادرة') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('مبادرة') | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th> حاضنة تكنولوجية
+                </th>
+                <td>{{calculateFinal('حاضنة تكنولوجية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('حاضنة تكنولوجية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('حاضنة تكنولوجية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('حاضنة تكنولوجية') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> جسور
+                </th>
+                <td>{{calculateFinal('جسور') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('جسور') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('جسور') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('جسور') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> تعاون دولي
+                </th>
+                <td>{{calculateFinal('تعاون دولي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('تعاون دولي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('تعاون دولي') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('تعاون دولي') | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th> تنمية مراكز اقليمية
+                </th>
+                <td>{{calculateFinal('تنمية مراكز اقليمية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalStandardDeviation('تنمية مراكز اقليمية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMax('تنمية مراكز اقليمية') | number : '1.2-2'}}</td>
+                <td>{{calculateFinalMin('تنمية مراكز اقليمية') | number : '1.2-2'}}</td>
+            </tr>
+
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

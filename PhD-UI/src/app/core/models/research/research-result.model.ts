@@ -1,6 +1,8 @@
 export interface ResearchResult {
   id: number;
   name: string;
+  program: string;
+  field: string;
   first: number;
   firstOne: number;
   firstTwo: number;

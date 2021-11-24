@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Program { get; set; }
+        public string Field { get; set; }
         public double? First { get; set; }
         public double? FirstOne { get; set; }
         public double? FirstTwo { get; set; }
