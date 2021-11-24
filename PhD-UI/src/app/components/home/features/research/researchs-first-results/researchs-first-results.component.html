@@ -1,0 +1,85 @@
+<mat-card style="margin-bottom: 50px;">
+
+    <mat-card-content>
+        <h1>الاحصاءات الوصفية لمحور الدليل الرئيسى الأول ومؤشراته الفرعية</h1>
+
+        <table id="customers">
+            <tr>
+                <th rowspan="2">المحور الرئيسى الأول ومؤشراته الفرعية (*)
+                </th>
+                <th colspan="4">الاحصاءات الوصفية</th>
+            </tr>
+            <tr>
+                <th>المتوسط</th>
+                <th>الانحراف المعيارى</th>
+                <th>القيمة القصوى</th>
+                <th>القيمة الدنيا</th>
+            </tr>
+            <tr>
+                <th> المحور الأول: المردود الخاص (المباشر)
+                </th>
+                <td>{{calculateFirst() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstMax() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstMin() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>1.التحسن فى مخرجات جهة تنفيذ المشروع
+                </th>
+                <td>{{calculateFirstOne() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstOneStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstOneMax() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstOneMin() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>1.1 تطوير سلعة أو خدمة</th>
+                <td>{{calculateQ8() | number : '1.2-2'}}</td>
+                <td>{{calculateQ8StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ8Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ8Min() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>1.2 تطوير أنشطة ابتكارية</th>
+                <td>{{calculateQ9() | number : '1.2-2'}}</td>
+                <td>{{calculateQ9StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ9Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ9Min() | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th>1.3 استثماؤ فى أصول غير ملموسة</th>
+                <td>{{calculateQ10() | number : '1.2-2'}}</td>
+                <td>{{calculateQ10StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ10Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ10Min() | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th>2.تخفيض تكلفة الانتاج (بجهة التنفيذ)
+                </th>
+                <td>{{calculateFirstTwo() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstTwoStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstTwoMax() | number : '1.2-2'}}</td>
+                <td>{{calculateFirstTwoMin() | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th>2.1 تخفيض تكلفة الانفاق الجارى</th>
+                <td>{{calculateQ14() | number : '1.2-2'}}</td>
+                <td>{{calculateQ14StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ14Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ14Min() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>2.2 تخفيض فى الانفاق الرأسمالى</th>
+                <td>{{calculateQ15() | number : '1.2-2'}}</td>
+                <td>{{calculateQ15StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ15Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ15Min() | number : '1.2-2'}}</td>
+            </tr>
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

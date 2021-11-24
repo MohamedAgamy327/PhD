@@ -43,6 +43,8 @@ namespace Domain.Entities
         public double? Q16 { get; set; }
         public double? Q17 { get; set; }
         public double? First { get; set; }
+        public double? FirstOne { get; set; }
+        public double? FirstTwo { get; set; }
         public double? Second { get; set; }
         public double? Third { get; set; }
         public double? Final { get; set; }

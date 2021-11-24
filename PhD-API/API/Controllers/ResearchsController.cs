@@ -406,6 +406,9 @@ namespace API.Controllers
             foreach (var research in researchs)
             {
                 research.First = (research.Q8 + research.Q9 + research.Q10 + research.Q14 + research.Q15) / 5;
+                research.FirstOne = (research.Q8 + research.Q9 + research.Q10 ) / 3;
+                research.FirstTwo = (research.Q14 + research.Q15 ) / 2;
+                research.First = (research.Q8 + research.Q9 + research.Q10 + research.Q14 + research.Q15) / 5;
                 research.Second = (research.Q12 + research.Q13) / 2;
                 research.Third = (research.Q17 + research.Q16) / 2;
                 research.Final = (research.Q8 + research.Q9 + research.Q10 + research.Q12 + research.Q13 + research.Q14 + research.Q15 + research.Q16 + research.Q17) / 9;
