@@ -1,0 +1,27 @@
+.mat-column-name {
+    width: 55%;
+}
+
+.mat-column-email {
+    width: 10%;
+}
+
+.mat-column-entity {
+    width: 10%;
+}
+
+.mat-column-percent {
+    width: 10%;
+}
+
+.mat-column-canEdit {
+    width: 5%;
+}
+
+.mat-column-status {
+    width: 5%;
+}
+
+.mat-column-actions {
+    width: 5%;
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Color, Label } from 'ng2-charts';
 import { PageTitleService, ResearchService } from 'src/app/core/services';
 
 @Component({
@@ -30,6 +30,13 @@ export class ResearchsChartsComponent implements OnInit {
       }
     }
   };
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'blue',
+    },
+  ];
 
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
