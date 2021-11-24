@@ -1,32 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input } from '@angular/core';
 import { ResearchResult } from 'src/app/core/models';
-import { ResearchService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-researchs-first-results',
   templateUrl: './researchs-first-results.component.html',
   styleUrls: ['./researchs-first-results.component.css']
 })
-export class ResearchsFirstResultsComponent implements OnInit {
+export class ResearchsFirstResultsComponent {
 
-  researchs: ResearchResult[];
-
-  constructor(
-    private researchService: ResearchService,
-    private translate: TranslateService
-  ) { }
-
-  ngOnInit(): void {
-    this.getResearchs();
-  }
-
-  getResearchs() {
-    this.researchService.getAllResults().subscribe(
-      (res: any) => {
-        this.researchs = res;
-      });
-  }
+  @Input() researchs: ResearchResult[];
 
   calculateFirst() {
     return this.researchs?.reduce((total, next) => total + next.first, 0) / this.researchs?.length;

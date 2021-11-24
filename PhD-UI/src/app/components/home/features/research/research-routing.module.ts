@@ -9,9 +9,9 @@ const routes: Routes = [
   {
     path: '', children: [
       { path: '', component: ResearchsComponent },
+      { path: 'charts', component: ResearchsChartsComponent },
       { path: 'results', component: ResearchsResultsComponent },
-      { path: 'descriptive-statistics', component: ResearchsDescriptiveStatisticsComponent },
-      { path: 'charts', component: ResearchsChartsComponent }
+      { path: 'descriptive-statistics', component: ResearchsDescriptiveStatisticsComponent }
     ]
 
   }

@@ -1,0 +1,55 @@
+<mat-card style="margin-bottom: 50px;">
+
+    <mat-card-content>
+        <h1>الاحصاءات الوصفية لمحور الدليل الرئيسى الثانى ومؤشراته الفرعية</h1>
+
+        <table id="customers">
+            <tr>
+                <th rowspan="2">المحور الرئيسى الثانى ومؤشراته الفرعية (*)
+                </th>
+                <th colspan="4">الاحصاءات الوصفية</th>
+            </tr>
+            <tr>
+                <th>المتوسط</th>
+                <th>الانحراف المعيارى</th>
+                <th>القيمة القصوى</th>
+                <th>القيمة الدنيا</th>
+            </tr>
+            <tr>
+                <th> المحور الثانى: العائد الاجتماعى غير المباشر
+                </th>
+                <td>{{calculateSecond() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondMax() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondMin() | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+                <th>1.التحسن فى مخرجات مؤسسات الانتاج المماثلة (الأخرى)</th>
+                <td>{{calculateSecond() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondMax() | number : '1.2-2'}}</td>
+                <td>{{calculateSecondMin() | number : '1.2-2'}}</td>
+            </tr>
+
+            <tr>
+
+                <th>1.1 الوفرات الخارجية المتولدة عن مخرجات المشروع</th>
+                <td>{{calculateQ12() | number : '1.2-2'}}</td>
+                <td>{{calculateQ12StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ12Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ12Min() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>1.2 الوفرات الخارجية المتولدة عن الاستثمار فى الأصول غير الملموسة</th>
+                <td>{{calculateQ13() | number : '1.2-2'}}</td>
+                <td>{{calculateQ13StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ13Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ13Min() | number : '1.2-2'}}</td>
+            </tr>
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

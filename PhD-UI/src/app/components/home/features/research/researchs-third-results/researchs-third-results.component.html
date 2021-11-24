@@ -1,0 +1,48 @@
+<mat-card style="margin-bottom: 50px;">
+
+    <mat-card-content>
+        <h1>الاحصاءات الوصفية لمحور الدليل الرئيسى الثالث ومؤشراته الفرعية</h1>
+
+        <table id="customers">
+            <tr>
+                <th rowspan="2">المحور الرئيسى الثالث ومؤشراته الفرعية (*)
+                </th>
+                <th colspan="4">الاحصاءات الوصفية</th>
+            </tr>
+            <tr>
+                <th>المتوسط</th>
+                <th>الانحراف المعيارى</th>
+                <th>القيمة القصوى</th>
+                <th>القيمة الدنيا</th>
+            </tr>
+            <tr>
+                <th> المحور الثالث: الفوائض (الانعاكسات) الاقتصادية الكلية
+                </th>
+                <td>{{calculateThird() | number : '1.2-2'}}</td>
+                <td>{{calculateThirdStandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateThirdMax() | number : '1.2-2'}}</td>
+                <td>{{calculateThirdMin() | number : '1.2-2'}}</td>
+            </tr>
+
+
+            <tr>
+
+                <th>1. تحسن أداء ( أو تخفيض فى تكلفة) الخدمات الانتاجية</th>
+                <td>{{calculateQ16() | number : '1.2-2'}}</td>
+                <td>{{calculateQ16StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ16Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ16Min() | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <th>2. تحسن أداء ( أو تخفيض فى تكلفة) الخدمات الاجتماعية والثقافية والشخصية</th>
+                <td>{{calculateQ17() | number : '1.2-2'}}</td>
+                <td>{{calculateQ17StandardDeviation() | number : '1.2-2'}}</td>
+                <td>{{calculateQ17Max() | number : '1.2-2'}}</td>
+                <td>{{calculateQ17Min() | number : '1.2-2'}}</td>
+            </tr>
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

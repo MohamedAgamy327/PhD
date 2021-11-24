@@ -1,32 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input } from '@angular/core';
 import { ResearchResult } from 'src/app/core/models';
-import { ResearchService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-researchs-final-results',
   templateUrl: './researchs-final-results.component.html',
   styleUrls: ['./researchs-final-results.component.css']
 })
-export class ResearchsFinalResultsComponent implements OnInit {
+export class ResearchsFinalResultsComponent {
 
-  researchs: ResearchResult[];
-
-  constructor(
-    private researchService: ResearchService,
-    private translate: TranslateService
-  ) { }
-
-  ngOnInit(): void {
-    this.getResearchs();
-  }
-
-  getResearchs() {
-    this.researchService.getAllResults().subscribe(
-      (res: any) => {
-        this.researchs = res;
-      });
-  }
+  @Input() researchs: ResearchResult[];
 
   calculateFinal() {
     return this.researchs?.reduce((total, next) => total + next.final, 0) / this.researchs?.length;

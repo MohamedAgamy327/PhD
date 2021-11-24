@@ -1,2 +1,4 @@
-<app-researchs-final-results></app-researchs-final-results>
-<app-researchs-first-results></app-researchs-first-results>
+<app-researchs-final-results *ngIf="researchs" [researchs]="researchs"></app-researchs-final-results>
+<app-researchs-first-results *ngIf="researchs" [researchs]="researchs"></app-researchs-first-results>
+<app-researchs-second-results *ngIf="researchs" [researchs]="researchs"></app-researchs-second-results>
+<app-researchs-third-results *ngIf="researchs" [researchs]="researchs"></app-researchs-third-results>

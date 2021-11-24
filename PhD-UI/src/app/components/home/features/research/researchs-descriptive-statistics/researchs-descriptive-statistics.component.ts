@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { PageTitleService } from 'src/app/core/services';
+import { ResearchResult } from 'src/app/core/models';
+import { PageTitleService, ResearchService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-researchs-descriptive-statistics',
@@ -10,8 +11,10 @@ import { PageTitleService } from 'src/app/core/services';
 })
 export class ResearchsDescriptiveStatisticsComponent implements OnInit {
 
+  researchs: ResearchResult[];
 
   constructor(
+    private researchService: ResearchService,
     private pageTitleService: PageTitleService,
     private titleService: Title,
     private translate: TranslateService
@@ -20,8 +23,15 @@ export class ResearchsDescriptiveStatisticsComponent implements OnInit {
   ngOnInit() {
     this.pageTitleService.setTitle('Descriptive');
     this.titleService.setTitle(this.translate.instant('Descriptive'));
+    this.getResearchs();
   }
 
+  getResearchs() {
+    this.researchService.getAllResults().subscribe(
+      (res: any) => {
+        this.researchs = res;
+      });
+  }
 
 
 }
