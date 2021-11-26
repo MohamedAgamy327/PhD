@@ -17,7 +17,7 @@ export class ResearchsThirdResultsComponent {
   calculateThirdStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.third, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.third - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.third - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateThirdMax() {
@@ -35,7 +35,7 @@ export class ResearchsThirdResultsComponent {
   calculateQ16StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q16, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q16 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q16 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ16Max() {
@@ -54,7 +54,7 @@ export class ResearchsThirdResultsComponent {
   calculateQ17StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q17, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q17 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q17 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ17Max() {

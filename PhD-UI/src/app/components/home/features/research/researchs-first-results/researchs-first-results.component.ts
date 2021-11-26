@@ -17,7 +17,7 @@ export class ResearchsFirstResultsComponent {
   calculateFirstStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.first, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.first - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.first - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFirstMax() {
@@ -35,7 +35,7 @@ export class ResearchsFirstResultsComponent {
   calculateFirstOneStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.firstOne, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.firstOne - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.firstOne - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFirstOneMax() {
@@ -53,7 +53,7 @@ export class ResearchsFirstResultsComponent {
   calculateFirstTwoStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.firstTwo, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.firstTwo - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.firstTwo - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFirstTwoMax() {
@@ -71,7 +71,7 @@ export class ResearchsFirstResultsComponent {
   calculateQ8StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q8, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q8 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q8 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ8Max() {
@@ -90,7 +90,7 @@ export class ResearchsFirstResultsComponent {
   calculateQ9StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q9, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q9 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q9 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ9Max() {
@@ -109,7 +109,7 @@ export class ResearchsFirstResultsComponent {
   calculateQ10StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q10, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q10 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q10 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ10Max() {
@@ -128,7 +128,7 @@ export class ResearchsFirstResultsComponent {
   calculateQ14StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q14, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q14 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q14 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ14Max() {
@@ -147,7 +147,7 @@ export class ResearchsFirstResultsComponent {
   calculateQ15StandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.q15, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q15 - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.q15 - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateQ15Max() {

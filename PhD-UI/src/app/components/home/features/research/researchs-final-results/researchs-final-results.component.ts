@@ -29,25 +29,25 @@ export class ResearchsFinalResultsComponent {
   calculateFinalStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.final, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.final - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.final - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFirstStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.first, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.first - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.first - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateSecondStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.second, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.second - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.second - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateThirdStandardDeviation() {
     const n = this.researchs?.length
     const mean = this.researchs?.reduce((a, b) => a + b.third, 0) / n
-    return Math.sqrt(this.researchs?.map(x => Math.pow(x.third - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.map(x => Math.pow(x.third - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFinalMax() {

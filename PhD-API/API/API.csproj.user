@@ -12,5 +12,9 @@
     <NameOfLastUsedPublishProfile>D:\Projects\Working\يوسف شوقى\PhD\PhD-API\API\Properties\PublishProfiles\IISProfile.pubxml</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_DbContextTypeFullName>Data.Context.ApplicationContext</WebStackScaffolding_DbContextTypeFullName>
     <ShowAllFiles>false</ShowAllFiles>
+    <ActiveDebugProfile>API</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

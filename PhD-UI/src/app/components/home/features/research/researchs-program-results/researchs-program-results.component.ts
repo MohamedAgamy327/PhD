@@ -17,7 +17,7 @@ export class ResearchsProgramResultsComponent {
   calculateFinalStandardDeviation(program: string) {
     const n = this.researchs?.filter(f => f.program == program).length
     const mean = this.researchs?.filter(f => f.program == program).reduce((a, b) => a + b.final, 0) / n
-    return Math.sqrt(this.researchs?.filter(f => f.program == program).map(x => Math.pow(x.final - mean, 2)).reduce((a, b) => a + b) / n)
+    return Math.sqrt(this.researchs?.filter(f => f.program == program).map(x => Math.pow(x.final - mean, 2)).reduce((a, b) => a + b) / (n - 1))
   }
 
   calculateFinalMax(program: string) {
