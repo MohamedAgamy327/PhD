@@ -10,6 +10,7 @@ Boost(Highcharts);
 noData(Highcharts);
 More(Highcharts);
 noData(Highcharts);
+
 @Component({
   selector: 'app-researchs-third-results',
   templateUrl: './researchs-third-results.component.html',
