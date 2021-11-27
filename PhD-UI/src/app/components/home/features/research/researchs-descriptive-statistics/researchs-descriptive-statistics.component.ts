@@ -4,6 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ResearchResult } from 'src/app/core/models';
 import { PageTitleService, ResearchService } from 'src/app/core/services';
 
+
+
+
 @Component({
   selector: 'app-researchs-descriptive-statistics',
   templateUrl: './researchs-descriptive-statistics.component.html',
@@ -32,6 +35,5 @@ export class ResearchsDescriptiveStatisticsComponent implements OnInit {
         this.researchs = res;
       });
   }
-
 
 }

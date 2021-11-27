@@ -13,6 +13,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { NgAisModule } from 'angular-instantsearch';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NgAisModule } from 'angular-instantsearch';
     NgAisModule,
     SlickCarouselModule,
     FileUploadModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    ChartModule
   ],
   exports: [
     AddSpacePipe,
@@ -51,7 +53,8 @@ import { NgAisModule } from 'angular-instantsearch';
     ToastrModule,
     SlickCarouselModule,
     FileUploadModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    ChartModule
   ]
 })
 export class SharedModule { }
