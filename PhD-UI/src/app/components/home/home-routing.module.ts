@@ -6,6 +6,7 @@ import {
   ResearchLoginComponent, ResearchTeamComponent, UserLoginComponent
 } from '.';
 import { RoleEnum } from 'src/app/core/enums';
+import { ShortIntroductionComponent } from './short-introduction/short-introduction.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'login', component: ResearchLoginComponent },
       { path: 'admin-login', component: UserLoginComponent },
       { path: 'introduction', component: IntroductionComponent },
+      { path: 'short-introduction', component: ShortIntroductionComponent },
       { path: 'research-team', component: ResearchTeamComponent },
       { path: 'users', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin] }, loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
       { path: 'researches', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin] }, loadChildren: () => import('./features/research/research.module').then(m => m.ResearchModule) },

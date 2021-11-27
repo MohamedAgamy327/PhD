@@ -11,9 +11,16 @@ export const MenuItemList: MenuItem[] = [
   },
   {
     state: 'home/introduction',
-    name: 'Introduction',
+    name: 'تقديم',
     type: 'link',
     icon: 'lightbulb',
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
+  },
+  {
+    state: 'home/short-introduction',
+    name: 'مقدمة مختصرة عن المؤشر',
+    type: 'link',
+    icon: 'description',
     roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
   },
   {
