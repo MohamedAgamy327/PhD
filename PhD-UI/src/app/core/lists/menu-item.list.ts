@@ -67,7 +67,7 @@ export const MenuItemList: MenuItem[] = [
   },
   {
     state: 'home/researches/descriptive-statistics',
-    name: 'Descriptive',
+    name: 'المقاييس الوصفية',
     type: 'link',
     icon: 'stacked_bar_chart',
     roles: [RoleEnum.Admin]
