@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 .mat-red { background-color: mat.get-color-from-palette(mat.$red-palette, 500)!important; color: mat.get-contrast-color-from-palette(mat.$red-palette, 500)!important;}
 .mat-red-50 { background-color: mat.get-color-from-palette(mat.$red-palette, 50)!important; color: mat.get-contrast-color-from-palette(mat.$red-palette, 50)!important;}
 .mat-red-100 { background-color: mat.get-color-from-palette(mat.$red-palette, 100)!important; color: mat.get-contrast-color-from-palette(mat.$red-palette, 100)!important;}

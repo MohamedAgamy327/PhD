@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 body {
   .mat-select-panel {
     background-color: mat.get-color-from-palette($background, card);

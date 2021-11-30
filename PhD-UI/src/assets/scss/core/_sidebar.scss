@@ -1,5 +1,5 @@
 /*=============|Sidebar|============*/
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 .mat-drawer-transition .mat-drawer-content {
   transition: margin 0.4s ease 0s !important;

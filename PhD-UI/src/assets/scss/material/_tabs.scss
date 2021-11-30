@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 .mat-tab-label {
 	color: rgba(mat.get-color-from-palette($foreground, base), 0.87);
 	align-items: center;
