@@ -1,4 +1,5 @@
 /*=============|Table|=============*/
+@use '~@angular/material' as mat;
 td {
     padding: 14px;
 }
@@ -58,18 +59,18 @@ body .ngx-datatable.material .datatable-footer .datatable-pager li.active a {
 }
 .app-dark {
     .ngx-datatable.material {
-        color: mat-color($dark-foreground, base);
-        background: mat-color($dark-background, card);
+        color: mat.get-color-from-palette($dark-foreground, base);
+        background: mat.get-color-from-palette($dark-background, card);
         .datatable-header .datatable-row-right,
         .ngx-datatable.material .datatable-body .datatable-row-right,
         .ngx-datatable.material .datatable-header .datatable-row-right,
         .ngx-datatable.material .datatable-body .datatable-row-right {
-            background: mat-color($dark-background, card);
+            background: mat.get-color-from-palette($dark-background, card);
         }
     }
     .datatable-body-cell-label,
     .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
-        color: mat-color($dark-foreground, base);
+        color: mat.get-color-from-palette($dark-foreground, base);
     }
     .datatable-body-row {
         &:hover {

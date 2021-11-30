@@ -1,4 +1,5 @@
 /*=============|Chat|=============*/
+@use '~@angular/material' as mat;
 $chat-area-bg: #fff;
 $chat-sidebar-bg: #fff;
 body .gene-chat-page .mat-sidenav-content {
@@ -86,12 +87,12 @@ body .gene-chat-page .mat-sidenav-content {
 }
 .app-dark {
     .chat-content-area .mat-sidenav-content {
-        background: mat-color($dark-background, card);
+        background: mat.get-color-from-palette($dark-background, card);
         height: auto;
     }
     .chat-content-area {
         .cdk-focus-trap-content {
-            background: mat-color($dark-background, card);
+            background: mat.get-color-from-palette($dark-background, card);
         }
     }
 }

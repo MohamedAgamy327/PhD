@@ -1,4 +1,5 @@
 /*==============|Dark|=================*/
+@use '~@angular/material' as mat;
 .mails-container {
     background: $light-color;
 }
@@ -13,7 +14,7 @@
 }
 
     .mails-container {
-        background: mat-color($dark-background, card);
+        background: mat.get-color-from-palette($dark-background, card);
         .mails .mail{
             color: $light-color !important;
             &:hover{
@@ -23,31 +24,31 @@
     }
     .content-container {
         .search {
-            background: mat-color($dark-background, card);
+            background: mat.get-color-from-palette($dark-background, card);
         }
     }
     .cal-month-view .cal-cell-row:hover {
-        background-color: mat-color($dark-background, card);
+        background-color: mat.get-color-from-palette($dark-background, card);
     }
     .cal-month-view .cal-cell-row .cal-cell:hover,
     .cal-month-view .cal-cell.cal-has-events.cal-open {
-        background: mat-color($dark-background, card);
+        background: mat.get-color-from-palette($dark-background, card);
     }
     code {
-        background: mat-color($dark-background, card);
+        background: mat.get-color-from-palette($dark-background, card);
     }
     .ngx-datatable.material .datatable-header .datatable-row-right,
     .ngx-datatable.material .datatable-body .datatable-row-right,
     .ngx-datatable.material .datatable-header .datatable-row-left,
     .ngx-datatable.material .datatable-body .datatable-row-left {
-        background-color: mat-color($dark-background, card);
+        background-color: mat.get-color-from-palette($dark-background, card);
     }
     .mat-white{
         background: transparent;
     }
 }
 body .app-dark .gene-icon-display mat-icon {
-    color: mat-color($dark-foreground, base);
+    color: mat.get-color-from-palette($dark-foreground, base);
 }
  body .app-dark .mat-form-field-appearance-legacy .mat-form-field-label, body .mat-form-field-appearance-legacy .mat-hint {
 	color: rgba(255,255,255,0.5) !important;

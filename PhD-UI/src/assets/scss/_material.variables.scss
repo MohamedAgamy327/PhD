@@ -1,42 +1,43 @@
 // 1.0    Material Variables
+@use '~@angular/material' as mat;
 
 @import '~@angular/material/theming/';
 
-$primary: mat-palette($mat-blue,800);
-$accent:  mat-palette($mat-cyan,700);
-$warn: mat-palette($mat-red,600);
-$success: mat-palette($mat-green,600);
-$theme: mat-light-theme($primary, $accent, $warn);
+$primary: mat.define-palette(mat.$blue-palette,800);
+$accent:  mat.define-palette(mat.$cyan-palette,700);
+$warn: mat.define-palette(mat.$red-palette,600);
+$success: mat.define-palette(mat.$green-palette,600);
+$theme: mat.define-light-theme($primary, $accent, $warn);
 $background: map-get($theme, background);
 $foreground: map-get($theme, foreground);
 
-@include mat-core();
+@include mat.core();
 
-$dark-primary: mat-palette($mat-blue,900);
-$dark-accent:  mat-palette($mat-teal,600);
-$dark-success:  mat-palette($mat-green,800);
-$dark-warn: mat-palette($mat-pink,400);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-primary: mat.define-palette(mat.$blue-palette,900);
+$dark-accent:  mat.define-palette(mat.$teal-palette,600);
+$dark-success:  mat.define-palette(mat.$green-palette,800);
+$dark-warn: mat.define-palette(mat.$pink-palette,400);
+$dark-theme: mat.define-dark-theme($dark-primary, $dark-accent, $dark-warn);
 $dark-background: map-get($dark-theme, background);
 $dark-foreground: map-get($dark-theme, foreground);
 
 // Default Theme
-@include angular-material-theme($theme);
+@include mat.all-component-themes($theme);
 // Dark Theme
 .app-dark {  
-  @include angular-material-theme($dark-theme);
+  @include mat.all-component-themes($dark-theme);
 }
 
 // Create your Sass color vars (will be available in all the project)
-$my-primary: mat-color($primary);
-$my-accent: mat-color($accent);
-$my-warn: mat-color($warn);
-$my-success: mat-color($success);
+$my-primary: mat.get-color-from-palette($primary);
+$my-accent: mat.get-color-from-palette($accent);
+$my-warn: mat.get-color-from-palette($warn);
+$my-success: mat.get-color-from-palette($success);
 
-$my-dark-primary: mat-color($dark-primary);
-$my-dark-accent: mat-color($dark-accent);
-$my-dark-warn: mat-color($dark-warn);
-$my-dark-success: mat-color($dark-success);
+$my-dark-primary: mat.get-color-from-palette($dark-primary);
+$my-dark-accent: mat.get-color-from-palette($dark-accent);
+$my-dark-warn: mat.get-color-from-palette($dark-warn);
+$my-dark-success: mat.get-color-from-palette($dark-success);
 
    //custom-variables
 $light-color:#ffffff;

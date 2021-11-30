@@ -1,4 +1,5 @@
 /*==========|Weather|==========*/
+@use '~@angular/material' as mat;
 .wheather-future-day ul li {
    display: inline-block;
    width: 13%;
@@ -50,8 +51,8 @@
    border-bottom: 2px solid #f0f2f9;
 }
 .app-dark .gene-customizer {
-   background: mat-color($dark-background, card);
-   color: mat-color($dark-foreground, base);
+   background: mat.get-color-from-palette($dark-background, card);
+   color: mat.get-color-from-palette($dark-foreground, base);
 }
 [dir="rtl"] {
    .current-day.gene-relative {
