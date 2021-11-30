@@ -35,6 +35,7 @@ PhD-API/API/API.csproj.user
 PhD-API/.vs/PhD-API/config/applicationhost.config
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
 /coverage
