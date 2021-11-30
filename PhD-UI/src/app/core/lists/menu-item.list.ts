@@ -63,21 +63,21 @@ export const MenuItemList: MenuItem[] = [
     name: 'Researchs Results List',
     type: 'link',
     icon: 'format_list_numbered',
-    roles: [RoleEnum.Admin]
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
     state: 'home/researches/descriptive-statistics',
     name: 'المقاييس الوصفية',
     type: 'link',
     icon: 'stacked_bar_chart',
-    roles: [RoleEnum.Admin]
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
     state: 'home/researches/charts',
     name: 'Charts',
     type: 'link',
     icon: 'bar_chart',
-    roles: [RoleEnum.Admin]
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
     state: 'home/research-team',

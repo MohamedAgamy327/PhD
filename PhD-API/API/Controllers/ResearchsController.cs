@@ -186,7 +186,7 @@ namespace API.Controllers
         }
 
         [HttpGet("results")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForResultsGetDTO>>> GetResults()
         {
@@ -195,7 +195,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{status}")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<ResearchForGetDTO>>> Get(string status)
         {

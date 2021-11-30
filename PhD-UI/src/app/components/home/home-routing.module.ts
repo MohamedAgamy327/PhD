@@ -19,7 +19,7 @@ const routes: Routes = [
       { path: 'short-introduction', component: ShortIntroductionComponent },
       { path: 'research-team', component: ResearchTeamComponent },
       { path: 'users', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin] }, loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
-      { path: 'researches', canActivate: [AuthGuard], data: { roles: [RoleEnum.Admin] }, loadChildren: () => import('./features/research/research.module').then(m => m.ResearchModule) },
+      { path: 'researches', loadChildren: () => import('./features/research/research.module').then(m => m.ResearchModule) },
       { path: 'register', loadChildren: () => import('./features/register/register.module').then(m => m.RegisterModule) },
       { path: 'survey', canActivate: [AuthGuard], data: { roles: [RoleEnum.Researcher, RoleEnum.Admin] }, loadChildren: () => import('./features/survey/survey.module').then(m => m.SurveyModule) },
       {

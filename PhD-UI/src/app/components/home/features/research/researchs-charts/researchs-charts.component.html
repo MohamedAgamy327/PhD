@@ -1,9 +1,21 @@
-<div style="display: block;width: 70%; margin: 0 auto; margin-bottom: 50px;">
-    <canvas [colors]="lineChartColors" *ngIf="typeBarChartData" baseChart [datasets]="typeBarChartData" [labels]="typeBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
-  </canvas>
-</div>
+<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <mat-card fxFlex.gt-sm="47" fxFlex.gt-xs="47" fxFlex="100" fxFlex.gt-md="47">
+        <mat-card-content>
+            <div style="display: block;width: 70%; margin: 0 auto; margin-bottom: 50px;">
+                <canvas [colors]="lineChartColors" *ngIf="typeBarChartData" baseChart [datasets]="typeBarChartData" [labels]="typeBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+            </div>
+        </mat-card-content>
+    </mat-card>
 
-<div style="display: block;width: 70%; margin: 0 auto;">
-    <canvas [colors]="lineChartColors" *ngIf="fieldBarChartData" baseChart [datasets]="fieldBarChartData" [labels]="fieldBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
-  </canvas>
+    <mat-card fxFlex.gt-sm="47" fxFlex.gt-xs="47" fxFlex="100" fxFlex.gt-md="47">
+        <mat-card-content>
+            <div style="display: block;width: 70%; margin: 0 auto;">
+                <canvas [colors]="lineChartColors" *ngIf="fieldBarChartData" baseChart [datasets]="fieldBarChartData" [labels]="fieldBarChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
 </div>
