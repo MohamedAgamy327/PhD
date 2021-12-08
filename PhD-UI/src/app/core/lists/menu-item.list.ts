@@ -18,7 +18,7 @@ export const MenuItemList: MenuItem[] = [
   },
   {
     state: 'home/short-introduction',
-    name: 'مقدمة مختصرة عن المؤشر',
+    name: 'مقدمة مختصرة عن الدليل',
     type: 'link',
     icon: 'description',
     roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
@@ -73,7 +73,7 @@ export const MenuItemList: MenuItem[] = [
     name: 'Researchs Results List',
     type: 'link',
     icon: 'format_list_numbered',
-    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
+    roles: [RoleEnum.Admin]
   },
   {
     state: 'home/researches/charts',
