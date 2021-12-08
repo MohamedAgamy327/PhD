@@ -1,6 +1,18 @@
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+mat-card {
+    text-align: center;
+}
+
+.intro-title {
+    font-family: Katibeh-Regular;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    align-items: center;
+}
+
+.intro-content {
+    font-family: MOHAMMAD_BOLD_ART;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 2;
 }

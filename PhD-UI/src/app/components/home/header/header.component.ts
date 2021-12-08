@@ -39,7 +39,9 @@ export class HeaderComponent implements OnInit {
   addBreadcrumb() {
     this.breadcrumbService.addFriendlyNameForRoute('/home', this.translate.instant('Home'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/introduction', this.translate.instant('تقديم'));
-    this.breadcrumbService.addFriendlyNameForRoute('/home/short-introduction', this.translate.instant('مقدمة مختصرة عن المؤشر'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/short-introduction', this.translate.instant('منهجية بناء الدليل'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/structure', this.translate.instant('هيكل الدليل المركب للمردود الاقتصادى للمشروع البحثى'));
+    this.breadcrumbService.addFriendlyNameForRoute('/home/classification', this.translate.instant('تصنيف  المردود الاقتصادى لمشروعات البحثية الابتكارية'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/research-team', this.translate.instant('research-team'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/survey', this.translate.instant('Survey'));
     this.breadcrumbService.addFriendlyNameForRoute('/home/users', this.translate.instant('Users'));

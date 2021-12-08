@@ -20,6 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShortIntroductionComponent } from './static-pages/short-introduction/short-introduction.component';
+import { ClassificationComponent } from './static-pages/classification/classification.component';
+import { StructureComponent } from './static-pages/structure/structure.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -40,7 +42,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResearchTeamComponent,
     ResearchLoginComponent,
     UserLoginComponent,
-    ShortIntroductionComponent
+    ShortIntroductionComponent,
+    ClassificationComponent,
+    StructureComponent
   ],
   entryComponents: [
     DeleteDialogComponent,
