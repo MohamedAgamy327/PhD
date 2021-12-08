@@ -19,7 +19,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { ShortIntroductionComponent } from './short-introduction/short-introduction.component';
+import { ShortIntroductionComponent } from './static-pages/short-introduction/short-introduction.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

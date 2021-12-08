@@ -16,12 +16,17 @@ export const MenuItemList: MenuItem[] = [
     icon: 'lightbulb',
     roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
   },
+
   {
-    state: 'home/short-introduction',
-    name: 'مقدمة مختصرة عن الدليل',
-    type: 'link',
-    icon: 'description',
-    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
+    name: 'مقدمة',
+    type: 'sub',
+    icon: 'event_note',
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous],
+    children: [
+      { state: 'home/short-introduction', name: 'منهجية بناء الدليل', roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous] },
+      { state: 'home/classification', name: 'تصنيف  المردود الاقتصادى لمشروعات البحثية الابتكارية', roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous] },
+      { state: 'home/structure', name: 'هيكل الدليل المركب للمردود الاقتصادى للمشروع البحثى', roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous] }
+    ]
   },
   {
     state: 'home/survey',
@@ -62,19 +67,13 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin]
   },
   {
-    state: 'home/researches/descriptive-statistics',
-    name: 'المقاييس الوصفية',
-    type: 'link',
-    icon: 'stacked_bar_chart',
-    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
-  },
-  {
     state: 'home/researches/results',
     name: 'Researchs Results List',
     type: 'link',
     icon: 'format_list_numbered',
-    roles: [RoleEnum.Admin]
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
+
   {
     state: 'home/researches/charts',
     name: 'Charts',

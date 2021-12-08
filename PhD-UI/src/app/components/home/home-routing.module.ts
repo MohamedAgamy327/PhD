@@ -6,7 +6,7 @@ import {
   ResearchLoginComponent, ResearchTeamComponent, UserLoginComponent
 } from '.';
 import { RoleEnum } from 'src/app/core/enums';
-import { ShortIntroductionComponent } from './short-introduction/short-introduction.component';
+import { ShortIntroductionComponent } from './static-pages/short-introduction/short-introduction.component';
 
 
 const routes: Routes = [
