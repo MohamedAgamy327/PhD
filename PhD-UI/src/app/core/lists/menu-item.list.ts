@@ -38,11 +38,14 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
-    state: 'home/login',
     name: 'Login',
-    type: 'link',
+    type: 'sub',
     icon: 'login',
-    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous]
+    roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous],
+    children: [
+      { state: 'home/login', name: 'Researcher Login', roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous] },
+      { state: 'home/admin-login', name: 'Admin Login', roles: [RoleEnum.Admin, RoleEnum.Researcher, RoleEnum.Anonymous] }
+    ]
   },
   {
     state: 'home/users',
@@ -59,17 +62,17 @@ export const MenuItemList: MenuItem[] = [
     roles: [RoleEnum.Admin]
   },
   {
-    state: 'home/researches/results',
-    name: 'Researchs Results List',
-    type: 'link',
-    icon: 'format_list_numbered',
-    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
-  },
-  {
     state: 'home/researches/descriptive-statistics',
     name: 'المقاييس الوصفية',
     type: 'link',
     icon: 'stacked_bar_chart',
+    roles: [RoleEnum.Admin, RoleEnum.Anonymous]
+  },
+  {
+    state: 'home/researches/results',
+    name: 'Researchs Results List',
+    type: 'link',
+    icon: 'format_list_numbered',
     roles: [RoleEnum.Admin, RoleEnum.Anonymous]
   },
   {
