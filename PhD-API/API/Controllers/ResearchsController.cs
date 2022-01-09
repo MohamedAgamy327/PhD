@@ -87,7 +87,7 @@ namespace API.Controllers
 
             Research research = _mapper.Map<Research>(model);
 
-            SecurePassword.CreatePasswordHash(SecurePassword.GeneratePassword(8), out byte[] passwordHash, out byte[] passwordSalt);
+            SecurePassword.CreatePasswordHash("12341234", out byte[] passwordHash, out byte[] passwordSalt);
             research.PasswordSalt = passwordSalt;
             research.PasswordHash = passwordHash;
 
@@ -96,7 +96,7 @@ namespace API.Controllers
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
 
-            Email.Send("PhD", research.Email, "Register", _researchService.CreateRegisterMailTemplate(research.Name));
+        //    Email.Send("PhD", research.Email, "Register", _researchService.CreateRegisterMailTemplate(research.Name));
 
             return Ok();
         }
@@ -142,7 +142,8 @@ namespace API.Controllers
             switch (status)
             {
                 case ResearchStatusEnum.Accepted:
-                    string ranadomPassword = SecurePassword.GeneratePassword(8);
+                //    string ranadomPassword = SecurePassword.GeneratePassword(8);
+                    string ranadomPassword = "12341234";
                     SecurePassword.CreatePasswordHash(ranadomPassword, out byte[] passwordHash, out byte[] passwordSalt);
                     research.PasswordHash = passwordHash;
                     research.PasswordSalt = passwordSalt;
@@ -157,7 +158,7 @@ namespace API.Controllers
                     await _answerMultiCheckboxService.AddInitAnswer(research.Id).ConfigureAwait(true);
                     await _researchQuestionService.AddInitResearchQuestions(research.Id).ConfigureAwait(true);
 
-                    Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research, _jwtManager.GenerateToken(research), ranadomPassword, Request));
+                    //Email.Send("PhD", research.Email, "PhD Accepted", _researchService.CreateAcceptMailTemplate(research, _jwtManager.GenerateToken(research), ranadomPassword, Request));
                     break;
 
                 case ResearchStatusEnum.Pending:

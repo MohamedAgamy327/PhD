@@ -7,12 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAbJjpm90B6UuCaZUwXJC3eQAAAAACAAAAAAAQZgAAAAEAACAAAADFVzLj6ERzXNScqeq5MaA4Nau56DODn9jrRDDMdlayngAAAAAOgAAAAAIAACAAAAB7MuY8rjO2XLemag2uukokZaxuXQmeCE8/pbWhs4nwDyAAAABnuFASnXEAroH/U9JUVaLNzm6xgfTR39q4hyi+0Tdsi0AAAACMwrDdWNgAyZGAluyLbl1H2lb1OfDcJ6pPG8f9SXk0jDmwRtYYky5btJ0ZlO6PeOcq/glxCYjxyyxSypmC4nFK</EncryptedPassword>
-    <_PublishTargetUrl>D:\Projects\Working\يوسف شوقى\PhD\PhD</_PublishTargetUrl>
-    <History>True|2021-11-11T15:47:15.5660737Z;True|2021-11-10T11:16:46.6457949+02:00;True|2021-06-05T07:46:57.2016178+02:00;True|2021-05-27T16:14:09.9010633+02:00;</History>
+    <_PublishTargetUrl>D:\Projects\Working\Youssef Shawky\PhD\PhD</_PublishTargetUrl>
+    <History>True|2021-12-22T15:25:54.0507591Z;True|2021-11-11T17:47:15.5660737+02:00;True|2021-11-10T11:16:46.6457949+02:00;True|2021-06-05T07:46:57.2016178+02:00;True|2021-05-27T16:14:09.9010633+02:00;</History>
   </PropertyGroup>
-  <ItemGroup>
-    <DestinationConnectionStrings Include="DefaultConnection">
-      <Value>Data Source=SQL5097.site4now.net%3bInitial Catalog=db_a70fed_odeliadb%3bUser Id=db_a70fed_odeliadb_admin%3bPassword=MS01063273270%3b</Value>
-    </DestinationConnectionStrings>
-  </ItemGroup>
 </Project>
