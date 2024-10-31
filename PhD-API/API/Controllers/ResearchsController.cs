@@ -96,7 +96,7 @@ namespace API.Controllers
             await _unitOfWork.CompleteAsync().ConfigureAwait(true);
 
 
-        //    Email.Send("PhD", research.Email, "Register", _researchService.CreateRegisterMailTemplate(research.Name));
+           Email.Send("PhD", research.Email, "Register", _researchService.CreateRegisterMailTemplate(research.Name));
 
             return Ok();
         }
